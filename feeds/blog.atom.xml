@@ -1,0 +1,1545 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>dchess - Blog</title><link href="http://dchess.github.io/" rel="alternate"></link><link href="http://dchess.github.io/feeds/blog.atom.xml" rel="self"></link><id>http://dchess.github.io/</id><updated>2020-11-07T17:50:00-08:00</updated><subtitle>Software Engineer</subtitle><entry><title>Python Notebook Test</title><link href="http://dchess.github.io/python-notebook-test.html" rel="alternate"></link><published>2020-11-07T17:50:00-08:00</published><updated>2020-11-07T17:50:00-08:00</updated><author><name>dc.hess@gmail.com</name></author><id>tag:dchess.github.io,2020-11-07:/python-notebook-test.html</id><summary type="html">&lt;p&gt;Pelican Notebooks&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+*
+* IPython notebook
+*
+*/
+/* CSS font colors for translated ANSI escape sequences */
+/* The color values are a mix of
+   http://www.xcolors.net/dl/baskerville-ivorylight and
+   http://www.xcolors.net/dl/euphrasia */
+.ansi-black-fg {
+  color: #3E424D;
+}
+.ansi-black-bg {
+  background-color: #3E424D;
+}
+.ansi-black-intense-fg {
+  color: #282C36;
+}
+.ansi-black-intense-bg {
+  background-color: #282C36;
+}
+.ansi-red-fg {
+  color: #E75C58;
+}
+.ansi-red-bg {
+  background-color: #E75C58;
+}
+.ansi-red-intense-fg {
+  color: #B22B31;
+}
+.ansi-red-intense-bg {
+  background-color: #B22B31;
+}
+.ansi-green-fg {
+  color: #00A250;
+}
+.ansi-green-bg {
+  background-color: #00A250;
+}
+.ansi-green-intense-fg {
+  color: #007427;
+}
+.ansi-green-intense-bg {
+  background-color: #007427;
+}
+.ansi-yellow-fg {
+  color: #DDB62B;
+}
+.ansi-yellow-bg {
+  background-color: #DDB62B;
+}
+.ansi-yellow-intense-fg {
+  color: #B27D12;
+}
+.ansi-yellow-intense-bg {
+  background-color: #B27D12;
+}
+.ansi-blue-fg {
+  color: #208FFB;
+}
+.ansi-blue-bg {
+  background-color: #208FFB;
+}
+.ansi-blue-intense-fg {
+  color: #0065CA;
+}
+.ansi-blue-intense-bg {
+  background-color: #0065CA;
+}
+.ansi-magenta-fg {
+  color: #D160C4;
+}
+.ansi-magenta-bg {
+  background-color: #D160C4;
+}
+.ansi-magenta-intense-fg {
+  color: #A03196;
+}
+.ansi-magenta-intense-bg {
+  background-color: #A03196;
+}
+.ansi-cyan-fg {
+  color: #60C6C8;
+}
+.ansi-cyan-bg {
+  background-color: #60C6C8;
+}
+.ansi-cyan-intense-fg {
+  color: #258F8F;
+}
+.ansi-cyan-intense-bg {
+  background-color: #258F8F;
+}
+.ansi-white-fg {
+  color: #C5C1B4;
+}
+.ansi-white-bg {
+  background-color: #C5C1B4;
+}
+.ansi-white-intense-fg {
+  color: #A1A6B2;
+}
+.ansi-white-intense-bg {
+  background-color: #A1A6B2;
+}
+.ansi-default-inverse-fg {
+  color: #FFFFFF;
+}
+.ansi-default-inverse-bg {
+  background-color: #000000;
+}
+.ansi-bold {
+  font-weight: bold;
+}
+.ansi-underline {
+  text-decoration: underline;
+}
+/* The following styles are deprecated an will be removed in a future version */
+.ansibold {
+  font-weight: bold;
+}
+.ansi-inverse {
+  outline: 0.5px dotted;
+}
+/* use dark versions for foreground, to improve visibility */
+.ansiblack {
+  color: black;
+}
+.ansired {
+  color: darkred;
+}
+.ansigreen {
+  color: darkgreen;
+}
+.ansiyellow {
+  color: #c4a000;
+}
+.ansiblue {
+  color: darkblue;
+}
+.ansipurple {
+  color: darkviolet;
+}
+.ansicyan {
+  color: steelblue;
+}
+.ansigray {
+  color: gray;
+}
+/* and light for background, for the same reason */
+.ansibgblack {
+  background-color: black;
+}
+.ansibgred {
+  background-color: red;
+}
+.ansibggreen {
+  background-color: green;
+}
+.ansibgyellow {
+  background-color: yellow;
+}
+.ansibgblue {
+  background-color: blue;
+}
+.ansibgpurple {
+  background-color: magenta;
+}
+.ansibgcyan {
+  background-color: cyan;
+}
+.ansibggray {
+  background-color: gray;
+}
+div.cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  width: 100%;
+  padding: 5px;
+  /* This acts as a spacer between cells, that is outside the border */
+  margin: 0px;
+  outline: none;
+  position: relative;
+  overflow: visible;
+}
+div.cell:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: transparent;
+}
+div.cell.jupyter-soft-selected {
+  border-left-color: #E3F2FD;
+  border-left-width: 1px;
+  padding-left: 5px;
+  border-right-color: #E3F2FD;
+  border-right-width: 1px;
+  background: #E3F2FD;
+}
+@media print {
+  div.cell.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected,
+div.cell.selected.jupyter-soft-selected {
+  border-color: #ababab;
+}
+div.cell.selected:before,
+div.cell.selected.jupyter-soft-selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #42A5F5;
+}
+@media print {
+  div.cell.selected,
+  div.cell.selected.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+.edit_mode div.cell.selected {
+  border-color: #66BB6A;
+}
+.edit_mode div.cell.selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #66BB6A;
+}
+@media print {
+  .edit_mode div.cell.selected {
+    border-color: transparent;
+  }
+}
+.prompt {
+  /* This needs to be wide enough for 3 digit prompt numbers: In[100]: */
+  min-width: 14ex;
+  /* This padding is tuned to match the padding on the CodeMirror editor. */
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace;
+  text-align: right;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+  /* Don't highlight prompt number selection */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Use default cursor */
+  cursor: default;
+}
+@media (max-width: 540px) {
+  .prompt {
+    text-align: left;
+  }
+}
+div.inner_cell {
+  min-width: 0;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_area {
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  background: #f7f7f7;
+  line-height: 1.21429em;
+}
+/* This is needed so that empty prompt areas can collapse to zero height when there
+   is no content in the output_subarea and the prompt. The main purpose of this is
+   to make sure that empty JavaScript output_subareas have no height. */
+div.prompt:empty {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+div.unrecognized_cell {
+  padding: 5px 5px 5px 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.unrecognized_cell .inner_cell {
+  border-radius: 2px;
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+  border: 1px solid #cfcfcf;
+  background: #eaeaea;
+}
+div.unrecognized_cell .inner_cell a {
+  color: inherit;
+  text-decoration: none;
+}
+div.unrecognized_cell .inner_cell a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+@media (max-width: 540px) {
+  div.unrecognized_cell &gt; div.prompt {
+    display: none;
+  }
+}
+div.code_cell {
+  /* avoid page breaking on code cells when printing */
+}
+@media print {
+  div.code_cell {
+    page-break-inside: avoid;
+  }
+}
+/* any special styling for code cells that are currently running goes here */
+div.input {
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.input {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_prompt {
+  color: #303F9F;
+  border-top: 1px solid transparent;
+}
+div.input_area &gt; div.highlight {
+  margin: 0.4em;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+div.input_area &gt; div.highlight &gt; pre {
+  margin: 0px;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+/* The following gets added to the &lt;head&gt; if it is detected that the user has a
+ * monospace font with inconsistent normal/bold/italic height.  See
+ * notebookmain.js.  Such fonts will have keywords vertically offset with
+ * respect to the rest of the text.  The user should select a better font.
+ * See: https://github.com/ipython/ipython/issues/1503
+ *
+ * .CodeMirror span {
+ *      vertical-align: bottom;
+ * }
+ */
+.CodeMirror {
+  line-height: 1.21429em;
+  /* Changed from 1em to our global default */
+  font-size: 14px;
+  height: auto;
+  /* Changed to auto to autogrow */
+  background: none;
+  /* Changed from white to allow our bg to show through */
+}
+.CodeMirror-scroll {
+  /*  The CodeMirror docs are a bit fuzzy on if overflow-y should be hidden or visible.*/
+  /*  We have found that if it is visible, vertical scrollbars appear with font size changes.*/
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+.CodeMirror-lines {
+  /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
+  /* we have set a different line-height and want this to scale with that. */
+  /* Note that this should set vertical padding only, since CodeMirror assumes
+       that horizontal padding will be set on CodeMirror pre */
+  padding: 0.4em 0;
+}
+.CodeMirror-linenumber {
+  padding: 0 8px 0 4px;
+}
+.CodeMirror-gutters {
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.CodeMirror pre {
+  /* In CM3 this went to 4px from 0 in CM2. This sets horizontal padding only,
+    use .CodeMirror-lines for vertical */
+  padding: 0 0.4em;
+  border: 0;
+  border-radius: 0;
+}
+.CodeMirror-cursor {
+  border-left: 1.4px solid black;
+}
+@media screen and (min-width: 2138px) and (max-width: 4319px) {
+  .CodeMirror-cursor {
+    border-left: 2px solid black;
+  }
+}
+@media screen and (min-width: 4320px) {
+  .CodeMirror-cursor {
+    border-left: 4px solid black;
+  }
+}
+/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev &lt;Maniac@SoftwareManiacs.Org&gt;
+Adapted from GitHub theme
+
+*/
+.highlight-base {
+  color: #000;
+}
+.highlight-variable {
+  color: #000;
+}
+.highlight-variable-2 {
+  color: #1a1a1a;
+}
+.highlight-variable-3 {
+  color: #333333;
+}
+.highlight-string {
+  color: #BA2121;
+}
+.highlight-comment {
+  color: #408080;
+  font-style: italic;
+}
+.highlight-number {
+  color: #080;
+}
+.highlight-atom {
+  color: #88F;
+}
+.highlight-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.highlight-builtin {
+  color: #008000;
+}
+.highlight-error {
+  color: #f00;
+}
+.highlight-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.highlight-meta {
+  color: #AA22FF;
+}
+/* previously not defined, copying from default codemirror */
+.highlight-def {
+  color: #00f;
+}
+.highlight-string-2 {
+  color: #f50;
+}
+.highlight-qualifier {
+  color: #555;
+}
+.highlight-bracket {
+  color: #997;
+}
+.highlight-tag {
+  color: #170;
+}
+.highlight-attribute {
+  color: #00c;
+}
+.highlight-header {
+  color: blue;
+}
+.highlight-quote {
+  color: #090;
+}
+.highlight-link {
+  color: #00c;
+}
+/* apply the same style to codemirror */
+.cm-s-ipython span.cm-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-atom {
+  color: #88F;
+}
+.cm-s-ipython span.cm-number {
+  color: #080;
+}
+.cm-s-ipython span.cm-def {
+  color: #00f;
+}
+.cm-s-ipython span.cm-variable {
+  color: #000;
+}
+.cm-s-ipython span.cm-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-variable-2 {
+  color: #1a1a1a;
+}
+.cm-s-ipython span.cm-variable-3 {
+  color: #333333;
+}
+.cm-s-ipython span.cm-comment {
+  color: #408080;
+  font-style: italic;
+}
+.cm-s-ipython span.cm-string {
+  color: #BA2121;
+}
+.cm-s-ipython span.cm-string-2 {
+  color: #f50;
+}
+.cm-s-ipython span.cm-meta {
+  color: #AA22FF;
+}
+.cm-s-ipython span.cm-qualifier {
+  color: #555;
+}
+.cm-s-ipython span.cm-builtin {
+  color: #008000;
+}
+.cm-s-ipython span.cm-bracket {
+  color: #997;
+}
+.cm-s-ipython span.cm-tag {
+  color: #170;
+}
+.cm-s-ipython span.cm-attribute {
+  color: #00c;
+}
+.cm-s-ipython span.cm-header {
+  color: blue;
+}
+.cm-s-ipython span.cm-quote {
+  color: #090;
+}
+.cm-s-ipython span.cm-link {
+  color: #00c;
+}
+.cm-s-ipython span.cm-error {
+  color: #f00;
+}
+.cm-s-ipython span.cm-tab {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+  background-position: right;
+  background-repeat: no-repeat;
+}
+div.output_wrapper {
+  /* this position must be relative to enable descendents to be absolute within it */
+  position: relative;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 1;
+}
+/* class for the output area when it should be height-limited */
+div.output_scroll {
+  /* ideally, this would be max-height, but FF barfs all over that */
+  height: 24em;
+  /* FF needs this *and the wrapper* to specify full width, or it will shrinkwrap */
+  width: 100%;
+  overflow: auto;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  display: block;
+}
+/* output div while it is collapsed */
+div.output_collapsed {
+  margin: 0px;
+  padding: 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+div.out_prompt_overlay {
+  height: 100%;
+  padding: 0px 0.4em;
+  position: absolute;
+  border-radius: 2px;
+}
+div.out_prompt_overlay:hover {
+  /* use inner shadow to get border that is computed the same on WebKit/FF */
+  -webkit-box-shadow: inset 0 0 1px #000;
+  box-shadow: inset 0 0 1px #000;
+  background: rgba(240, 240, 240, 0.5);
+}
+div.output_prompt {
+  color: #D84315;
+}
+/* This class is the outer container of all output sections. */
+div.output_area {
+  padding: 0px;
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.output_area .MathJax_Display {
+  text-align: left !important;
+}
+div.output_area 
+div.output_area 
+div.output_area img,
+div.output_area svg {
+  max-width: 100%;
+  height: auto;
+}
+div.output_area img.unconfined,
+div.output_area svg.unconfined {
+  max-width: none;
+}
+div.output_area .mglyph &gt; img {
+  max-width: none;
+}
+/* This is needed to protect the pre formating from global settings such
+   as that of bootstrap */
+.output {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.output_area {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+div.output_area pre {
+  margin: 0;
+  padding: 1px 0 1px 0;
+  border: 0;
+  vertical-align: baseline;
+  color: black;
+  background-color: transparent;
+  border-radius: 0;
+}
+/* This class is for the output subarea inside the output_area and after
+   the prompt div. */
+div.output_subarea {
+  overflow-x: auto;
+  padding: 0.4em;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+  max-width: calc(100% - 14ex);
+}
+div.output_scroll div.output_subarea {
+  overflow-x: visible;
+}
+/* The rest of the output_* classes are for special styling of the different
+   output types */
+/* all text output has this class: */
+div.output_text {
+  text-align: left;
+  color: #000;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+}
+/* stdout/stderr are 'text' as well as 'stream', but execute_result/error are *not* streams */
+div.output_stderr {
+  background: #fdd;
+  /* very light red background for stderr */
+}
+div.output_latex {
+  text-align: left;
+}
+/* Empty output_javascript divs should have no height */
+div.output_javascript:empty {
+  padding: 0;
+}
+.js-error {
+  color: darkred;
+}
+/* raw_input styles */
+div.raw_input_container {
+  line-height: 1.21429em;
+  padding-top: 5px;
+}
+pre.raw_input_prompt {
+  /* nothing needed here. */
+}
+input.raw_input {
+  font-family: monospace;
+  font-size: inherit;
+  color: inherit;
+  width: auto;
+  /* make sure input baseline aligns with prompt */
+  vertical-align: baseline;
+  /* padding + margin = 0.5em between prompt and cursor */
+  padding: 0em 0.25em;
+  margin: 0em 0.25em;
+}
+input.raw_input:focus {
+  box-shadow: none;
+}
+p.p-space {
+  margin-bottom: 10px;
+}
+div.output_unrecognized {
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+}
+div.output_unrecognized a {
+  color: inherit;
+  text-decoration: none;
+}
+div.output_unrecognized a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.rendered_html {
+  color: #000;
+  /* any extras will just be numbers: */
+}
+
+
+
+.rendered_html :link {
+  text-decoration: underline;
+}
+.rendered_html :visited {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+.rendered_html h1:first-child {
+  margin-top: 0.538em;
+}
+.rendered_html h2:first-child {
+  margin-top: 0.636em;
+}
+.rendered_html h3:first-child {
+  margin-top: 0.777em;
+}
+.rendered_html h4:first-child {
+  margin-top: 1em;
+}
+.rendered_html h5:first-child {
+  margin-top: 1em;
+}
+.rendered_html h6:first-child {
+  margin-top: 1em;
+}
+.rendered_html ul:not(.list-inline),
+.rendered_html ol:not(.list-inline) {
+  padding-left: 2em;
+}
+
+
+
+
+
+
+
+
+.rendered_html * + ul {
+  margin-top: 1em;
+}
+.rendered_html * + ol {
+  margin-top: 1em;
+}
+
+
+
+
+
+.rendered_html pre,
+
+
+
+
+.rendered_html tr,
+.rendered_html th,
+
+
+.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+.rendered_html * + table {
+  margin-top: 1em;
+}
+
+.rendered_html * + p {
+  margin-top: 1em;
+}
+
+.rendered_html * + img {
+  margin-top: 1em;
+}
+.rendered_html img,
+
+.rendered_html img.unconfined,
+
+
+.rendered_html * + .alert {
+  margin-top: 1em;
+}
+[dir="rtl"] 
+div.text_cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.text_cell &gt; div.prompt {
+    display: none;
+  }
+}
+div.text_cell_render {
+  /*font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;*/
+  outline: none;
+  resize: none;
+  width: inherit;
+  border-style: none;
+  padding: 0.5em 0.5em 0.5em 0.4em;
+  color: #000;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+a.anchor-link:link {
+  text-decoration: none;
+  padding: 0px 20px;
+  visibility: hidden;
+}
+h1:hover .anchor-link,
+h2:hover .anchor-link,
+h3:hover .anchor-link,
+h4:hover .anchor-link,
+h5:hover .anchor-link,
+h6:hover .anchor-link {
+  visibility: visible;
+}
+.text_cell.rendered .input_area {
+  display: none;
+}
+.text_cell.rendered 
+.text_cell.rendered .rendered_html tr,
+.text_cell.rendered .rendered_html th,
+.text_cell.rendered 
+.text_cell.unrendered .text_cell_render {
+  display: none;
+}
+.text_cell .dropzone .input_area {
+  border: 2px dashed #bababa;
+  margin: -1px;
+}
+.cm-header-1,
+.cm-header-2,
+.cm-header-3,
+.cm-header-4,
+.cm-header-5,
+.cm-header-6 {
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.cm-header-1 {
+  font-size: 185.7%;
+}
+.cm-header-2 {
+  font-size: 157.1%;
+}
+.cm-header-3 {
+  font-size: 128.6%;
+}
+.cm-header-4 {
+  font-size: 110%;
+}
+.cm-header-5 {
+  font-size: 100%;
+  font-style: italic;
+}
+.cm-header-6 {
+  font-size: 100%;
+  font-style: italic;
+}
+&lt;/style&gt;
+&lt;style type="text/css"&gt; .highlight pre  .hll { background-color: #ffffcc }
+ .highlight pre   { background: #f8f8f8; }
+ .highlight pre  .c { color: #408080; font-style: italic } /* Comment */
+ .highlight pre  .err { border: 1px solid #FF0000 } /* Error */
+ .highlight pre  .k { color: #008000; font-weight: bold } /* Keyword */
+ .highlight pre  .o { color: #666666 } /* Operator */
+ .highlight pre  .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+ .highlight pre  .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+ .highlight pre  .cp { color: #BC7A00 } /* Comment.Preproc */
+ .highlight pre  .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+ .highlight pre  .c1 { color: #408080; font-style: italic } /* Comment.Single */
+ .highlight pre  .cs { color: #408080; font-style: italic } /* Comment.Special */
+ .highlight pre  .gd { color: #A00000 } /* Generic.Deleted */
+ .highlight pre  .ge { font-style: italic } /* Generic.Emph */
+ .highlight pre  .gr { color: #FF0000 } /* Generic.Error */
+ .highlight pre  .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+ .highlight pre  .gi { color: #00A000 } /* Generic.Inserted */
+ .highlight pre  .go { color: #888888 } /* Generic.Output */
+ .highlight pre  .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+ .highlight pre  .gs { font-weight: bold } /* Generic.Strong */
+ .highlight pre  .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+ .highlight pre  .gt { color: #0044DD } /* Generic.Traceback */
+ .highlight pre  .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+ .highlight pre  .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+ .highlight pre  .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+ .highlight pre  .kp { color: #008000 } /* Keyword.Pseudo */
+ .highlight pre  .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+ .highlight pre  .kt { color: #B00040 } /* Keyword.Type */
+ .highlight pre  .m { color: #666666 } /* Literal.Number */
+ .highlight pre  .s { color: #BA2121 } /* Literal.String */
+ .highlight pre  .na { color: #7D9029 } /* Name.Attribute */
+ .highlight pre  .nb { color: #008000 } /* Name.Builtin */
+ .highlight pre  .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+ .highlight pre  .no { color: #880000 } /* Name.Constant */
+ .highlight pre  .nd { color: #AA22FF } /* Name.Decorator */
+ .highlight pre  .ni { color: #999999; font-weight: bold } /* Name.Entity */
+ .highlight pre  .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+ .highlight pre  .nf { color: #0000FF } /* Name.Function */
+ .highlight pre  .nl { color: #A0A000 } /* Name.Label */
+ .highlight pre  .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+ .highlight pre  .nt { color: #008000; font-weight: bold } /* Name.Tag */
+ .highlight pre  .nv { color: #19177C } /* Name.Variable */
+ .highlight pre  .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+ .highlight pre  .w { color: #bbbbbb } /* Text.Whitespace */
+ .highlight pre  .mb { color: #666666 } /* Literal.Number.Bin */
+ .highlight pre  .mf { color: #666666 } /* Literal.Number.Float */
+ .highlight pre  .mh { color: #666666 } /* Literal.Number.Hex */
+ .highlight pre  .mi { color: #666666 } /* Literal.Number.Integer */
+ .highlight pre  .mo { color: #666666 } /* Literal.Number.Oct */
+ .highlight pre  .sa { color: #BA2121 } /* Literal.String.Affix */
+ .highlight pre  .sb { color: #BA2121 } /* Literal.String.Backtick */
+ .highlight pre  .sc { color: #BA2121 } /* Literal.String.Char */
+ .highlight pre  .dl { color: #BA2121 } /* Literal.String.Delimiter */
+ .highlight pre  .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+ .highlight pre  .s2 { color: #BA2121 } /* Literal.String.Double */
+ .highlight pre  .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+ .highlight pre  .sh { color: #BA2121 } /* Literal.String.Heredoc */
+ .highlight pre  .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+ .highlight pre  .sx { color: #008000 } /* Literal.String.Other */
+ .highlight pre  .sr { color: #BB6688 } /* Literal.String.Regex */
+ .highlight pre  .s1 { color: #BA2121 } /* Literal.String.Single */
+ .highlight pre  .ss { color: #19177C } /* Literal.String.Symbol */
+ .highlight pre  .bp { color: #008000 } /* Name.Builtin.Pseudo */
+ .highlight pre  .fm { color: #0000FF } /* Name.Function.Magic */
+ .highlight pre  .vc { color: #19177C } /* Name.Variable.Class */
+ .highlight pre  .vg { color: #19177C } /* Name.Variable.Global */
+ .highlight pre  .vi { color: #19177C } /* Name.Variable.Instance */
+ .highlight pre  .vm { color: #19177C } /* Name.Variable.Magic */
+ .highlight pre  .il { color: #666666 } /* Literal.Number.Integer.Long */&lt;/style&gt;&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[1]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Hello World!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;Hello World!
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+ 
+
+
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        " linebreaks: { automatic: true, width: '95% container' }, " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;
+</content><category term="Blog"></category></entry><entry><title>My Manager README</title><link href="http://dchess.github.io/my-manager-readme.html" rel="alternate"></link><published>2018-08-08T21:00:00-07:00</published><updated>2018-08-08T21:00:00-07:00</updated><author><name>dc.hess@gmail.com</name></author><id>tag:dchess.github.io,2018-08-08:/my-manager-readme.html</id><summary type="html">&lt;p&gt;Sharing my manager readme helped me reflect on who I am as a leader.&lt;/p&gt;</summary><content type="html">&lt;p&gt;When I transitioned from being primarily a software engineer who was an individual
+contributor on a team to managing a team of engineers, I didn't have a clear sense
+of who I was going to be as a manager. I knew the sort of manager I &lt;em&gt;wanted&lt;/em&gt; to be,
+but the shift from peer to leader isn't always clear cut. &lt;/p&gt;
+&lt;p&gt;After close to two years in the role, I learned a lot about who I am and who
+I still want to be as a leader, but had no clear way to communicate that to my team.&lt;/p&gt;
+&lt;p&gt;One of the engineers on our team left the organization after five years in the role,
+and while hiring their replacement I took the opportunity to get a fresh start and
+reset.&lt;/p&gt;
+&lt;p&gt;About six months prior I had come across a few posts about the practice of creating
+a &lt;a href="https://medium.com/@kawomersley/why-and-how-to-share-your-manager-readme-plus-heres-mine-8a4fe188ee1b"&gt;manager readme&lt;/a&gt;
+as a way to reflect on who you are as a leader as well as provide new hires a sort
+of guidebook or operating manual for how to work with you as their manager.&lt;/p&gt;
+&lt;p&gt;I wanted to start my new engineer off with not only a clear understanding of how
+I saw my role but also what I expected out of them. &lt;/p&gt;
+&lt;p&gt;To do this, I looked over &lt;a href="https://hackernoon.com/12-manager-readmes-from-silicon-valleys-top-tech-companies-26588a660afe"&gt;many examples&lt;/a&gt;
+of great manager readmes from top tech companies to draw inspiration from.&lt;/p&gt;
+&lt;p&gt;Ultimately, I wanted this document to be both explanatory and inspirational for
+&lt;em&gt;my team&lt;/em&gt; as well as aspirational for &lt;em&gt;myself&lt;/em&gt;. A sort of contract I could hold myself
+to. So that my team could say, "You said you were going to do &lt;em&gt;X&lt;/em&gt;." And
+I could make sure I was holding myself up to that same standard.&lt;/p&gt;
+&lt;p&gt;So, I drafted a welcome letter and appended my &lt;a href="https://github.com/dchess/manager_readme"&gt;Manager README&lt;/a&gt;
+in the true python spirit of:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;explicit is better than implicit&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Being a programmer, I also couldn't help seeing this as yet another program to write.
+A set of instructions for myself to operate by. So, of course, I had to check it
+into source control and track changes. Like any other codebase, I knew it would
+inevitably evolve and grow. And I wanted to be able to git blame myself if it
+went off the rails. =)&lt;/p&gt;
+&lt;p&gt;Without further ado, here's what I've come up with, so far:&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1&gt;Manager README&lt;/h1&gt;
+&lt;p&gt;In an attempt to be transparent about my leadership philosophy and my expectations (both for myself and my team), I have put together this document. I think &lt;a href="https://www.python.org/dev/peps/pep-0020/"&gt;explicit is better than implicit&lt;/a&gt; and I want this to serve as a way to hold myself accountable as well as to clearly articulate my expectations for my team.&lt;/p&gt;
+&lt;h2&gt;My Role&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;I strive to be a &lt;a href="https://en.wikipedia.org/wiki/Servant_leadership"&gt;servant leader&lt;/a&gt;: I believe managers work &lt;strong&gt;for&lt;/strong&gt; their teams, not the other way around&lt;/li&gt;
+&lt;li&gt;I am an advocate for you and the team with the rest of the organization&lt;/li&gt;
+&lt;li&gt;I will set the context for your work, not tell you how to do it&lt;/li&gt;
+&lt;li&gt;I want to support your growth and provide you with opportunities to learn and apply your skills&lt;/li&gt;
+&lt;li&gt;I am also an individual contributor on this team and hold myself accountable to the same expectations I set for the team&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;My Availability&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;While I usually have a lot on my plate, very little is more important to me than talking to you if you need to talk.&lt;/strong&gt; If you want to talk, let's talk.&lt;/li&gt;
+&lt;li&gt;If you have questions, have a roadblock in your work, or just need a thought partner I'd love to hear about it as soon as possible. You don't have to wait until our scheduled one-on-one meetings. Come by my desk, stop me in the hall, catch me on slack, call me, or just put some time on my calendar anywhere that's open.&lt;/li&gt;
+&lt;li&gt;If my schedule is blocked when you need me, let me know so I can make sure we find time to connect&lt;/li&gt;
+&lt;li&gt;My commute is hell. I tend to work from home frequently and work non-standard hours. My regular schedule is M-W-F in office from 9:30/10-6ish and T-TH at home 8ish-5ish. If you need to schedule something in person, early morning, let me know and I will take extras steps to be there on time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;My Assumptions About You&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;You are agile and adaptable.&lt;/strong&gt; We wear many hats and our roles and work evolve as the organization's needs change. I will expect you to change gears as needed and work on things you may have no prior experience in. Innovation means trying new things and not always knowing how to do it right away.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;You are a &lt;a href="https://medium.com/@mmamet/directly-responsible-individuals-f5009f465da4"&gt;directly responsible individual&lt;/a&gt;.&lt;/strong&gt; I expect you to take ownership for your work and your mistakes. I will create a safe space for productive failure as well as give you credit for your successes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;You are good at your job.&lt;/strong&gt; I wouldn't have hired you if I thought otherwise. If it feels like I'm questioning you it's because I am trying to gather context or trying to be a sounding board and rubber duck for your ideas. However, you know best how to do your work. I'll ask questions and vet your ideas, but won't override your decisions. I will expect you to own those decisions though.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;You feel safe debating with me.&lt;/strong&gt; I believe in productive disagreement. I find that ideas improve by being examined from all angles. If it sounds like I'm disagreeing I'm most likely just playing devil's advocate and want you to articulate and refine your position. This does rely on us being able to have a safe debate. Sometimes the right answer is one neither of us started with.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Values&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;I value your transparency.&lt;/strong&gt; I want you to keep me in the loop and let me know about issues as they arise. Be transparent with me. I will do the same for you.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;I value your learning.&lt;/strong&gt; I know that it takes time to learn new things and that novel projects will require additional time to experiment and iterate. &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;I value your time.&lt;/strong&gt; I don't want you to waste your time on busy work. I want you to provide value and feel valued. I want you to have pride in your work and feel inspired and purposeful in the work you do here. That doesn't mean we won't ever have a slog or work we have to power through. However, if you feel like you are wasting your time on menial work, let's find a way to automate it!&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;I value your input.&lt;/strong&gt; I put processes in place to make us more effective. I don't believe in just going through the motions or process for the sake of process. If you think something is getting in the way of your work, let me know. I want to improve our processes so they work effectively for all of us.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Focus&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;The quality of our development work increases with the amount of concentration we give it. &lt;/li&gt;
+&lt;li&gt;Attention is a valuable resource. Be prepared to defend it. &lt;a href="http://calnewport.com/books/deep-work/"&gt;Deep work&lt;/a&gt; is vital to quality.&lt;/li&gt;
+&lt;li&gt;We work in an open space. Feel free to use headphones or move to a quiet space if you need to concentrate. I find I do some of my best coding when I'm not at the office.&lt;/li&gt;
+&lt;li&gt;You are not paid to maintain your inbox or attend meetings. Block off time on your calendar if you need to. It's okay to say no to an immediate request for your attention or to ask to circle back later. &lt;/li&gt;
+&lt;li&gt;Troubleshooting a problem with a teammate, though, is a valuable exercise. There are always things to learn from unplanned collaboration. Be open to help others when they need it and they will return the favor. Just be judicious with how much of your time you dole out for interruptions. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Feedback&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.radicalcandor.com/the-book/"&gt;Radical Candor&lt;/a&gt; makes a lot of sense to me. I want to give you feedback because I care about you and want to help you grow. &lt;/li&gt;
+&lt;li&gt;I prefer to offer and receive direct feedback in a timely manner. The tighter the feedback loop, the better. &lt;/li&gt;
+&lt;li&gt;I expect people to call BS when they see it and not be afraid to speak up.&lt;/li&gt;
+&lt;li&gt;Feedback is best when it is actionable and explicit about what improvement looks like.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Work/Life Balance&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;I want you to work smarter, not harder. Don't burn yourself out. There is always more work to do. You don't have to solve everything today.&lt;/li&gt;
+&lt;li&gt;I believe in working to live, not living to work. We are mission driven and everyone wants to give 110%, but we have to be mindful of the stress this imbalance can cause.&lt;/li&gt;
+&lt;li&gt;Unless there's an emergency, I don't expect to communicate with you outside of business hours. If you get an email from me late at night or first thing in the morning, I don't expect you to respond immediately. That's me working when I need to. Pick it up when you get a chance during your preferred schedule. If I call your cell or text you directly, it's likely urgent. Please respond accordingly. &lt;/li&gt;
+&lt;li&gt;Most people work somewhere between 7am (earliest) to 7pm (latest). Figure out what works for you and let me know. I'm flexible about your schedule and know that things come up that may require coming in late or leaving early.&lt;/li&gt;
+&lt;li&gt;I support working from home. It's good for mental health, supports deep work and productivity, and is definitely a quality of life issue for me. I also recognize the value of in person meetings, face-to-face collaboration, and informal discussion. We are not full-time remote. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;One on Ones&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;I think 1:1s are important and want us to check in regularly. I will strive to prioritize our 1:1s ahead of other commitments and be there on-time and committed to listening. I will give you my full attention.&lt;/li&gt;
+&lt;li&gt;These meetings are for you and I expect you to set the agenda. It's not just a time for status updates (although I am happy to chat about your project status). If I have things I want to ask you, I will, but this is your time.&lt;/li&gt;
+&lt;li&gt;I think hard discussions are frequently facilitated by taking a walk. That doesn't mean if I ask you to go for a walk that something is wrong though. I like stretching my legs and walking meetings can get the mind moving in different directions. I am also open to taking a meeting over the ping-pong table or grabbing some coffee.&lt;/li&gt;
+&lt;li&gt;For remote 1:1s, I have a difficult time focusing and connecting unless I can see your face over video. If you're doing the whole work in your pajamas thing, fine by me. You don't have to dress up.&lt;/li&gt;
+&lt;li&gt;I expect to check in at least once per sprint, usually at the mid way point. But the length, frequency, and medium are up to you. I will carve out at least 60 minutes for these but if you need less time or want to run over, let me know. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Relationships&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;I think strong teams come from great working relationships. I encourage you to connect with your peers as well as other teammates across Aspire. &lt;/li&gt;
+&lt;li&gt;A former Aspire teammate once coined the term &lt;em&gt;frolleague&lt;/em&gt;(friend-colleague) and I find it very fitting. I consider a lot of current and former teammates to be friends. I hang out with folks at Aspire on my personal time and am usually up for happy hour. There is no expectation that anyone here is your new best friend, but I do think that the presence of someone you work with you consider a friend to be a strong indicator of healthy working relationships. &lt;/li&gt;
+&lt;li&gt;I'm happy to make introductions for you or provide networking suggestions to help you do that.&lt;/li&gt;
+&lt;li&gt;I think it is important to get out to school sites and see the work of the organization in action. I will make efforts to provide you opportunities to do so as soon as possible. &lt;/li&gt;
+&lt;/ul&gt;</content><category term="Blog"></category></entry><entry><title>Automating Developer Environment Setup</title><link href="http://dchess.github.io/automating-developer-environment-setup.html" rel="alternate"></link><published>2018-02-18T13:30:00-08:00</published><updated>2018-02-18T13:30:00-08:00</updated><author><name>dc.hess@gmail.com</name></author><id>tag:dchess.github.io,2018-02-18:/automating-developer-environment-setup.html</id><summary type="html">&lt;p&gt;Scripting my setup for development has made my life easier&lt;/p&gt;</summary><content type="html">&lt;p&gt;I develop on Linux. Ubuntu to be specific. Most of the web apps I build I end
+up deploying to Heroku. Since their stack is based on Ubuntu and Postgres, I 
+try to make my local environment as close to production as possible. &lt;/p&gt;
+&lt;p&gt;That means I don't use simpler development databases like SQLite in my local
+setup and I don't build on Windows or Mac and then hope my code will deploy
+properly in production. I don't want any suprises!&lt;/p&gt;
+&lt;p&gt;To that effect, I try to automate my setup as much as possible. &lt;/p&gt;
+&lt;p&gt;For work, I develop within a Linux virtual machine (using Virtualbox). At home, 
+I'm already using linux as my main os. But I want my setup, tools, and 
+configurations to be identical no matter where I am working. I also want to be
+able to spin up a new VM at a moment's notice and be ready to go in no time.&lt;/p&gt;
+&lt;p&gt;To help facilitate that need, I have a &lt;a href="https://github.com/dchess/dev-env-setup"&gt;github repo&lt;/a&gt;
+where I store my dotfiles and a few shell scripts to easily setup my
+development environment. &lt;/p&gt;
+&lt;p&gt;I prefer to work in the terminal as much as possible and so I use Vim as my
+text editor with a few custom configurations to emulate some IDE like features.&lt;/p&gt;
+&lt;p&gt;I also prefer to handle version control with git in the terminal and have a few
+custom aliases I like to make sure are available wherever I'm working.&lt;/p&gt;
+&lt;p&gt;But the most valuable script I have is my database setup script. Installing
+Postgres can be daunting, particularly at the start of a new project. I don't
+want that to be a hindrance for myself or other developers on my team. While I
+have a generic postgres setup script, I also have a more custom one for use in
+Django web apps that I store in the source code of each app I deploy. That can
+be a huge help when handing off to another developer on the team, so they have
+exactly the same database configuration as every other developer working on the
+project, with single button deployment.&lt;/p&gt;
+&lt;h1&gt;VIM Config&lt;/h1&gt;
+&lt;p&gt;My Vim config is pretty simple compared to many I've seen, but there are a few
+things I can't live without. I was big on Sublime before I moved to Vim and so
+I really appreciate having a fuzzy finder and file tree available. So I use
+NERDTree and CtrlP for that. I also like being able to easily comment blocks of
+code and use NERDCommenter for that. &lt;/p&gt;
+&lt;p&gt;As I've shifted to using Python more, I found &lt;a href="https://realpython.com/blog/python/vim-and-python-a-match-made-in-heaven/"&gt;this tutorial from Real Python&lt;/a&gt;
+really helpful for thinking about how I wanted Vim configured to better support
+Python specifically. The main call outs are white space config (both indents and
+trailing whitespace), code-completion, and PEP8 compliance. Using static 
+analysis tools like Flake8 has greatly cut down on the need for those arguments
+during code review.&lt;/p&gt;
+&lt;p&gt;Beyond those Vundle plugins, I keep a copy of my current .vimrc file in my repo
+for easy syncing. If I make a change locally, I push it to the repo so I can
+pull it down in any other environment I'm working in. I also like a certain
+color scheme and run a support script during setup to ensure both my terminal
+and Vim use the same colors. It cuts down on context switching when I have to 
+hop in and out of my editor to run commands.&lt;/p&gt;
+&lt;h1&gt;Git Config&lt;/h1&gt;
+&lt;p&gt;My git settings mostly consist of setting up my editor to be Vim by default and
+a series of helpful aliases. I drew a lot of inspiration from
+&lt;a href="https://haacked.com/archive/2014/07/28/github-flow-aliases/"&gt;this article from You've Been Haacked&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I use the quick commit and pretty formatted git log constantly. Likewise the
+grep functionality for the commit history is incredibly useful.&lt;/p&gt;
+&lt;h1&gt;Bash Config&lt;/h1&gt;
+&lt;p&gt;My .bashrc is pretty standard, with one key exception. I really like being
+able to see the git branch name in my prompt. I incorporated
+&lt;a href="https://coderwall.com/p/fasnya/add-git-branch-name-to-bash-prompt"&gt;this tip from Coderwall&lt;/a&gt;,
+which couldn't be any easier. Other than that I mostly have aliases to quickly
+jump to current project directories I'm working on. Although lately, I've been
+experimenting with some aliases for Django. Typing out &lt;code&gt;python manage.py runserver&lt;/code&gt;
+or even &lt;code&gt;./manage.py makemigrations&lt;/code&gt; all the time can be a little tedious. I
+know I could use &lt;a href="https://github.com/jgorset/django-shortcuts"&gt;django-shortcuts&lt;/a&gt;
+but it really seems like a bash function ought to be able to handle my needs. &lt;/p&gt;
+&lt;h1&gt;Postgres Installation&lt;/h1&gt;
+&lt;p&gt;When I first was working in Rails and trying to set up PostgreSQL, I had a lot
+of hiccups initially. I'd install with the wrong account permissions, or I was
+missing some dependency. I'd get it configured, then port to a new system and 
+have to spend time trying to get it all back to working order. It was a serious
+headache.&lt;/p&gt;
+&lt;p&gt;Then, I found this great resource for installing Ruby on Rails on Ubuntu from 
+&lt;a href="https://gorails.com/setup/ubuntu/16.04"&gt;Go Rails&lt;/a&gt; which had a small aside
+about Postgres. I was inspired by the simplicity of their directions and
+&lt;a href="https://github.com/dchess/dev-env-setup/blob/master/rails.sh"&gt;translated it into a shell script&lt;/a&gt;
+to automate it. &lt;/p&gt;
+&lt;p&gt;While I have since largely put Rails behind me (I still have a few legacy apps
+that I maintain), I am absolutely indebted to the advice about databse setup.&lt;/p&gt;
+&lt;p&gt;Just to show how simple this is, here is my postgre setup script. It's 7 lines.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class="nv"&gt;user&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;whoami&lt;span class="k"&gt;)&lt;/span&gt;
+
+sudo sh -c &lt;span class="s2"&gt;&amp;quot;echo &amp;#39;deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main&amp;#39; &amp;gt; /etc/apt/sources.list.d/pgdg.list&amp;quot;&lt;/span&gt;
+wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc &lt;span class="p"&gt;|&lt;/span&gt; sudo apt-key add -
+sudo apt-get update
+sudo apt-get install -y postgresql-common
+sudo apt-get install -y postgresql libpq-dev
+
+sudo -u postgres createuser &lt;span class="nv"&gt;$user&lt;/span&gt; -s
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;It does all the heavy lifting. Figures out what account I am installing with,
+gets the necessary repository info, installs postgres, and even sets up a user
+based on my account to access it with. &lt;/p&gt;
+&lt;p&gt;I've taken this idea a little further for Django and now run something a
+little more complicated. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Exit if command fails&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt; -e
+&lt;span class="c1"&gt;# Treat unset variables as errors&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt; -u
+
+&lt;span class="c1"&gt;# Set user as current account&lt;/span&gt;
+&lt;span class="nv"&gt;user&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;whoami&lt;span class="k"&gt;)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Install Postgres 10&lt;/span&gt;
+sudo sh -c &lt;span class="s2"&gt;&amp;quot;echo &amp;#39;deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main&amp;#39; &amp;gt;&amp;gt; /etc/apt/sources.list.d/pgdg.list&amp;quot;&lt;/span&gt;
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc &lt;span class="p"&gt;|&lt;/span&gt; sudo apt-key add -
+sudo apt-get update
+sudo apt-get install -y postgresql-common
+sudo apt-get install -y postgresql-10 postgresql-contrib libpq-dev
+
+&lt;span class="c1"&gt;# Create superuser account as self for local management&lt;/span&gt;
+sudo -u postgres createuser &lt;span class="nv"&gt;$user&lt;/span&gt; -s
+
+&lt;span class="c1"&gt;# Set env vars for colors&lt;/span&gt;
+&lt;span class="nv"&gt;YELLOW&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;\033[1;33m&amp;#39;&lt;/span&gt;
+&lt;span class="nv"&gt;NC&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;\033[0m&amp;#39;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Collect arguments from user&lt;/span&gt;
+&lt;span class="c1"&gt;# Project specific values&lt;/span&gt;
+&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;YELLOW&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;Database name:\n&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;NC&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;read&lt;/span&gt; database
+&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;YELLOW&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;Username:\n&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;NC&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;read&lt;/span&gt; username
+&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;YELLOW&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;Password:\n&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;NC&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;read&lt;/span&gt; password
+
+&lt;span class="c1"&gt;# Create database and user&lt;/span&gt;
+&lt;span class="nv"&gt;RUN_ON_PSQL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;psql -X -U &lt;/span&gt;&lt;span class="nv"&gt;$user&lt;/span&gt;&lt;span class="s2"&gt; --set ON_ERROR_STOP=on --set AUTOCOMMIT=off postgres&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;$RUN_ON_PSQL&lt;/span&gt; &lt;span class="s"&gt;&amp;lt;&amp;lt;SQL&lt;/span&gt;
+&lt;span class="s"&gt;CREATE DATABASE $database;&lt;/span&gt;
+&lt;span class="s"&gt;CREATE USER $username WITH PASSWORD &amp;#39;$password&amp;#39;;&lt;/span&gt;
+&lt;span class="s"&gt;ALTER ROLE $username SET client_encoding TO &amp;#39;utf8&amp;#39;;&lt;/span&gt;
+&lt;span class="s"&gt;ALTER ROLE $username SET default_transaction_isolation TO &amp;#39;read committed&amp;#39;;&lt;/span&gt;
+&lt;span class="s"&gt;ALTER ROLE $username SET timezone TO &amp;#39;UTC&amp;#39;;&lt;/span&gt;
+&lt;span class="s"&gt;GRANT ALL PRIVILEGES ON DATABASE $database TO $username; &lt;/span&gt;
+&lt;span class="s"&gt;ALTER USER $username CREATEDB;&lt;/span&gt;
+&lt;span class="s"&gt;commit;&lt;/span&gt;
+&lt;span class="s"&gt;SQL&lt;/span&gt;
+
+&lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now my team can clone my repo, run this app and be good to go in seconds. It
+could not be any easier to hand off my code!&lt;/p&gt;
+&lt;h1&gt;Conclusion&lt;/h1&gt;
+&lt;p&gt;There are always ways to automate your workflow. I am constantly on the look
+out for ways I can take the guess work out of my development configuration.&lt;/p&gt;
+&lt;p&gt;There are other things I rely on that I haven't mentioned here in detail (but 
+you can find them in my &lt;a href="https://github.com/dchess/dev-env-setup"&gt;repo&lt;/a&gt;) like
+installing &lt;a href="https://devcenter.heroku.com/articles/heroku-cli"&gt;Heroku CLI&lt;/a&gt; or 
+&lt;a href="https://ngrok.com/"&gt;ngrok&lt;/a&gt;. &lt;/p&gt;
+&lt;p&gt;I keep adding more automation to my setup as I go. In fact, I'm pretty sure 
+that's my most active public repo!&lt;/p&gt;</content><category term="Blog"></category></entry><entry><title>Resolutions for the New Year</title><link href="http://dchess.github.io/resolutions-for-the-new-year.html" rel="alternate"></link><published>2018-01-21T15:00:00-08:00</published><updated>2018-01-21T15:00:00-08:00</updated><author><name>dc.hess@gmail.com</name></author><id>tag:dchess.github.io,2018-01-21:/resolutions-for-the-new-year.html</id><summary type="html">&lt;p&gt;New year, new blog&lt;/p&gt;</summary><content type="html">&lt;p&gt;Well, it's 2018 and it's been two years since I last made an update to my blog.
+I originally published it to test out &lt;a href="https://jekyllrb.com/"&gt;Jekyll&lt;/a&gt; and to put
+something basic on my personal domain. I was working with Ruby on Rails at the time
+and Jekyll seemed the natural choice. &lt;/p&gt;
+&lt;p&gt;In the intervening time, my work has shifted and we are more and more aligning on
+standardizing our entire stack to be Python based (the advantages of which, I will
+expound upon in another post). With that has come a desire to teach more of my
+colleagues (particularly those not directly involved in programming) to take
+advantage of Python in their work. Data analysts can leverage it for data science
+and predictive analytics work and back-office folks like our accountants and financial
+analysts can leverage it for task automation. &lt;/p&gt;
+&lt;p&gt;I've also been getting requests from some friends and family to teach them a bit of
+programming and Python seems like a natural choice for beginners. With that in mind,
+I've made it my New Year's resolution to teach as many people as possible this year 
+to program.&lt;/p&gt;
+&lt;p&gt;I'm rebooting my blog to post helpful resources and connect with folks interested in 
+learning and that means giving my site a much needed boost of new energy. I've rebuilt
+it from the ground up in &lt;a href="http://docs.getpelican.com/en/stable/"&gt;Pelican&lt;/a&gt; so that it'll
+be in Python as well.&lt;/p&gt;
+&lt;p&gt;Here's to 2018, the year of Python!&lt;/p&gt;</content><category term="Blog"></category></entry><entry><title>How Memes Inform My Work</title><link href="http://dchess.github.io/how-memes-inform-my-work.html" rel="alternate"></link><published>2018-01-21T14:11:00-08:00</published><updated>2018-01-21T14:11:00-08:00</updated><author><name>dc.hess@gmail.com</name></author><id>tag:dchess.github.io,2018-01-21:/how-memes-inform-my-work.html</id><summary type="html">&lt;p&gt;Certain memes stick with us and can even affect our philosophies about work&lt;/p&gt;</summary><content type="html">&lt;p&gt;I remember fondly how excited I was the first time I understood an obscure coding joke
+on &lt;a href="https://www.reddit.com/r/ProgrammerHumor/"&gt;r/programmerhumor&lt;/a&gt;. It felt like finally
+being in "the club" and not feeling like such an outsider. &lt;/p&gt;
+&lt;p&gt;While I've been programming in some capacity or another for over 20 years, I didn't get
+here through the regular channels. I didn't get a degree in Computer Science. I've never
+worked at a startup or one of the Big 4 (or is it &lt;a href="https://www.nytimes.com/2016/01/21/technology/techs-frightful-5-will-dominate-digital-life-for-foreseeable-future.html"&gt;Frightful 5&lt;/a&gt; now?). And as a result, I (like
+many programmers) often succumb to bouts of &lt;a href="https://en.wikipedia.org/wiki/Impostor_syndrome"&gt;Imposter Syndrome&lt;/a&gt;. 
+So finally feeling like I was part of the in-crowd was a victory in and of itself back then.&lt;/p&gt;
+&lt;p&gt;Part of that victory is not only understanding those in-jokes and memes, but also
+internalizing many of the lessons they have to teach. I've definitely purloined many a
+meme, joke, or comic along the way and made it my own. &lt;/p&gt;
+&lt;p&gt;&lt;img alt="I made this meme" src="http://i2.kym-cdn.com/photos/images/newsfeed/001/079/173/ed2.png"&gt;&lt;/p&gt;
+&lt;p&gt;Ok. Not like that. I don't mean, I've claimed ownership in the conventional sense, 
+but I mean I have taken quite a few to heart in ways that make them a part of who 
+I am professionally and philosophically.&lt;/p&gt;
+&lt;p&gt;What follows is my attempt to call out some of those that have impacted me the most, 
+as well as explain why so many of these are pinned to the walls of my cubicle. &lt;/p&gt;
+&lt;h1&gt;Pick Two&lt;/h1&gt;
+&lt;p&gt;&lt;img alt="Pick Two Triangle" src="https://livehumancam.files.wordpress.com/2015/05/original.png"&gt;&lt;/p&gt;
+&lt;p&gt;This is probably one of the first memes I actually felt spoke to me and my frustrations
+with the limitations of project work in the software world. I remember just going, "Yeah. That."
+And then feeling a deep need to print it out, stick it to the wall of my cubicle for reference
+the next time somebody asked for the impossible. Also known as all three.&lt;/p&gt;
+&lt;p&gt;All too often, we as developers, are asked to build quality products while still meeting deadlines
+and budgets with limited resources. Because so much of what we do is invisible to stakeholders
+and end-users, it is often hand-waved away as "magic" while somehow also simultaneously being 
+dismissed as the type of work you can just hand off to the interchangable cogs. And if they can't
+meet the feature requests then it's likely just their competency that's at issue.&lt;/p&gt;
+&lt;p&gt;We've all been spoiled by the free high-tech apps we consume on a daily basis and assume similar
+quality can be built by tiny teams. I am often comforted in those moments by the fundamental
+laws of production this meme espouses.&lt;/p&gt;
+&lt;h1&gt;The Two States of Every Programmer&lt;/h1&gt;
+&lt;p&gt;&lt;img alt="The Two States of Every Programmer" src="https://pbs.twimg.com/media/BzmDP_yCEAAvXdx.png"&gt;&lt;/p&gt;
+&lt;p&gt;While we're on the topic of imposter syndrome and our own limitations, this meme is one
+I identify with all the time. It doesn't matter how good you get at programming. The field
+of what we know and what is possible is constantly shifting and growing. And there isn't a 
+day that goes by while debugging something or trying to get a new feature implemented that
+I don't find myself osciallating between these states.&lt;/p&gt;
+&lt;p&gt;It's important to remember we all feel this way and to remind ourselves of the opposite state
+when we're stuck in the other. &lt;/p&gt;
+&lt;p&gt;I think what truly separates those that drown in the imposter syndrome river and those that
+keep paddling on is a healthy level of the &lt;a href="https://www.mindsetworks.com/science/"&gt;growth mindset&lt;/a&gt;.
+I'm not afraid of failure and feeling like that confused dog, if every now and then I crack some 
+puzzling code and feel lke a damn genius. That dopamine rush, however temporary or illusory, 
+is a bit of an addiction. One I am more than happy to indulge at the cost of a little 
+ego-death now and then.&lt;/p&gt;
+&lt;h1&gt;Is it Worth the Time?&lt;/h1&gt;
+&lt;p&gt;&lt;img alt="XKCD &amp;quot;Is it Worth the Time?&amp;quot;" src="https://imgs.xkcd.com/comics/is_it_worth_the_time.png"&gt;&lt;/p&gt;
+&lt;p&gt;There are plenty of XKCD comics with jokes and references that fly right over my head,
+but this one not only speaks to me, it is damn well a guidepost in my work. This one
+is likewise hanging above my desk as a constant reminder and reference.&lt;/p&gt;
+&lt;p&gt;I spend a lot of time automating tasks. My own, my teams, and more often than not, those
+of other departments in the org. The automation of boring stuff is one of the most
+powerful impacts of code and one that I think gets at the heart of why we do what we do.&lt;/p&gt;
+&lt;p&gt;That being said, it's incredibly easy to fall down your own rabbit hole trying to build
+the perfect solution in search of time savings. At the start of every new project request,
+I consult this chart and think deeply about the time being invested in the solution versus
+the time it's actually saving. Return on investment is an important concept to grasp early
+on as a developer, because we're inquisitive types who are more than willing to live in 
+that damn rabbit hole if it means catching a white rabbit. Even if he is just a figment of
+our imagination.&lt;/p&gt;
+&lt;h1&gt;You Don't Have to Solve Everything Today&lt;/h1&gt;
+&lt;p&gt;&lt;img alt="You don't have to solve everything today" src="https://i.imgur.com/jbcq2d8.png"&gt;&lt;/p&gt;
+&lt;p&gt;I'm pretty sure this meme's original context was in regards to depression, but one that
+nonetheless serves as a daily reminder to walk away sometimes. It's easy to get so wrapped
+up in a problem to completely lose track of time. I can be hacking away while the office 
+slowly clears out. It's easy to think "I'll go home once I solve this problem, or make 
+this commit" but that can spiral out of control fast. &lt;/p&gt;
+&lt;p&gt;The older I get and the more my priorities focus on family and sustaining a healthy work/life
+balance, the more I look to this meme as a reminder that it really can "wait until tomorrow".&lt;/p&gt;
+&lt;p&gt;Remember, burn out is real and no one says on their death bed that they wish they had worked
+more. In the work/life balance equation, you've got to work to live not live to work. i&lt;/p&gt;
+&lt;p&gt;It's corny. I know. But that doesn't make it any less true.&lt;/p&gt;
+&lt;h1&gt;Exploits of a Mom (AKA Little Bobby Tables)&lt;/h1&gt;
+&lt;p&gt;&lt;img alt="XKCD &amp;quot;Exploits of a Mom&amp;quot;" src="https://imgs.xkcd.com/comics/exploits_of_a_mom.png"&gt;&lt;/p&gt;
+&lt;p&gt;I started my professional career as a programmer largely working with SQL. And it's still a
+daily part of my workload. Security has been everyone's minds in the last few years with all
+the data breaches and hacks. Education is not immune either, and this comic about 
+&lt;a href="https://en.wikipedia.org/wiki/SQL_injection"&gt;SQL injection&lt;/a&gt; is a good reminder that it's 
+important to tighten up those holes in your apps lest someone exploit them for fun or profit!&lt;/p&gt;
+&lt;p&gt;Even in 2017, SQL injection was still the number one risk in the &lt;a href="https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf"&gt;OWASP Top Ten Most Critical Web
+Application Security Risks&lt;/a&gt;. &lt;/p&gt;
+&lt;h1&gt;Office Space Lumberg&lt;/h1&gt;
+&lt;p&gt;&lt;img alt="Lumberg That Would be Great" src="http://s2.quickmeme.com/img/67/67851be4d08f9a4ffb3f0a48ef6e136eacae8e0fc0d0f7dfb9a53c36f388b097.jpg"&gt;&lt;/p&gt;
+&lt;p&gt;I don't think I truly appreciated the brilliance of Mike Judge's &lt;em&gt;Office Space&lt;/em&gt; until I started to
+work in an office job. Although, even as a teacher I identified with beating the crap out of a 
+copier/fax machine. I laughed at all the jokes and obvious exaggerations, but now I find myself
+trying to figure out which of the characters I am and which ones I never want to be.&lt;/p&gt;
+&lt;p&gt;This is particularly true now that I've moved into a role as a manager. Lumberg is the quintessential
+terrible boss and every time I find myself leaning on one of my teammate's cubicles with coffee cup in
+hand, I can't help feeling like I might accidentally utter, "Yeah if you could just... that'd be great."&lt;/p&gt;
+&lt;p&gt;Don't be that guy. Don't be that guy. Don't be that guy.&lt;/p&gt;
+&lt;p&gt;I joke about it practically every time, but I really have internalized the idea that being someone's boss
+isn't about assigning them work and cracking the whip. That never helped me as an employee and I would
+never want to be that to someone else. &lt;/p&gt;
+&lt;p&gt;I'm still trying to find my way as I transition into this role, but so far, I'm finding that leading
+from the front is much more effective than shouting orders from the back. "Come with me" is so much more
+potent than "Go that way".&lt;/p&gt;
+&lt;p&gt;What memes have you taken to heart in your work or personal life? Which comics or jokes
+do you comfort yourself with in your moments of desparation or exhilaration?&lt;/p&gt;</content><category term="Blog"></category></entry></feed>
