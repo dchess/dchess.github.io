@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom"><title>dchess - Tutorial</title><link href="http://dchess.github.io/" rel="alternate"></link><link href="http://dchess.github.io/feeds/tutorial.atom.xml" rel="self"></link><id>http://dchess.github.io/</id><updated>2021-01-12T21:00:00-07:00</updated><subtitle>Software Engineer</subtitle><entry><title>Normalize JSON with Pandas</title><link href="http://dchess.github.io/normalize-json-with-pandas.html" rel="alternate"></link><published>2021-01-12T21:00:00-07:00</published><updated>2021-01-12T21:00:00-07:00</updated><author><name>dc.hess@gmail.com</name></author><id>tag:dchess.github.io,2021-01-12:/normalize-json-with-pandas.html</id><summary type="html">&lt;p&gt;An explanation about using the pandas json_normalize function to handle nested JSON data.&lt;/p&gt;</summary><content type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;When processing nested &lt;code&gt;JSON&lt;/code&gt; data into a flat structure for importing into a relational database, it can be tricky to structure the data into the right shape. &lt;a href="https://pandas.pydata.org/"&gt;Pandas&lt;/a&gt; has a great tool for doing this called &lt;code&gt;pandas.json_normalize()&lt;/code&gt; but the &lt;a href="(https://pandas.pydata.org/docs/reference/api/pandas.json_normalize.html?highlight=json_normalize"&gt;documentation&lt;/a&gt;) doesn't make it obvious how to leverage its capabilities for handling nested data structures.&lt;/p&gt;
+&lt;p&gt;When processing nested &lt;code&gt;JSON&lt;/code&gt; data into a flat structure for importing into a relational database, it can be tricky to structure the data into the right shape. &lt;a href="https://pandas.pydata.org/"&gt;Pandas&lt;/a&gt; has a great tool for doing this called &lt;code&gt;pandas.json_normalize()&lt;/code&gt; but the &lt;a href="https://pandas.pydata.org/docs/reference/api/pandas.json_normalize.html?highlight=json_normalize"&gt;documentation&lt;/a&gt; doesn't make it obvious how to leverage its capabilities for handling nested data structures.&lt;/p&gt;
 &lt;p&gt;I thought I could provide a brief example using some randomly generated survey response data (using the &lt;a href="https://faker.readthedocs.io/en/master/"&gt;Faker&lt;/a&gt; library) to illustrate it's advantages.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -11,14 +11,14 @@
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Setup"&gt;Setup&lt;a class="anchor-link" href="#Setup"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;To start, I'm going to be using pandas and Faker so we'll import those. I'm also going to need to easily display the parsed json as well as the returned dataframes, so I'm importing the json module from the standard lib as well as some IPython notebook helpers for displaying dataframes as HTMl tables.&lt;/p&gt;
+&lt;h2 id="Setup"&gt;Setup&lt;a class="anchor-link" href="#Setup"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;To start, I'm going to be using pandas and Faker so we'll import those. I'm also going to need to easily display the parsed json as well as the returned dataframes, so I'm importing the json module from the standard lib as well as some IPython notebook helpers for displaying dataframes as HTML tables.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
 &lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[67]:&lt;/div&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[63]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
 &lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
@@ -43,7 +43,7 @@
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
 &lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[68]:&lt;/div&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[64]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
 &lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;print_df&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
@@ -65,7 +65,7 @@
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
 &lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[69]:&lt;/div&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[65]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
 &lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyProvider&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BaseProvider&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
@@ -94,7 +94,7 @@
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
 &lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[79]:&lt;/div&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[66]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
 &lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;fake&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Faker&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
@@ -106,7 +106,7 @@
     &lt;span class="p"&gt;{&lt;/span&gt;
         &lt;span class="s2"&gt;&amp;quot;respondent_id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;fake&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bothify&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;#?##??###?#&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
         &lt;span class="s2"&gt;&amp;quot;survey_date&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;fake&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;date&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
-        &lt;span class="s2"&gt;&amp;quot;email&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;fake&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;@example.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s2"&gt;&amp;quot;email&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;fake&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;domain&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;example.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
         &lt;span class="s2"&gt;&amp;quot;responses&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
             &lt;span class="p"&gt;{&lt;/span&gt;
                 &lt;span class="s2"&gt;&amp;quot;question_id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;fake&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bothify&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;#??#??###?#&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
@@ -138,7 +138,7 @@
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
 &lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[80]:&lt;/div&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[67]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
 &lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dumps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sample_data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;indent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
@@ -159,57 +159,57 @@
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
 &lt;pre&gt;{
-  &amp;#34;respondent_id&amp;#34;: &amp;#34;6q96SI993a7&amp;#34;,
-  &amp;#34;survey_date&amp;#34;: &amp;#34;2013-08-12&amp;#34;,
-  &amp;#34;email&amp;#34;: &amp;#34;Tracy Foster@example.com&amp;#34;,
+  &amp;#34;respondent_id&amp;#34;: &amp;#34;9U69hZ538l1&amp;#34;,
+  &amp;#34;survey_date&amp;#34;: &amp;#34;1994-03-20&amp;#34;,
+  &amp;#34;email&amp;#34;: &amp;#34;lindsey24@example.com&amp;#34;,
   &amp;#34;responses&amp;#34;: [
     {
-      &amp;#34;question_id&amp;#34;: &amp;#34;7Hq2ZB052H0&amp;#34;,
-      &amp;#34;question_text&amp;#34;: &amp;#34;Why does several bad job hotel measure machine draw already?&amp;#34;,
+      &amp;#34;question_id&amp;#34;: &amp;#34;7YB4ZO864I7&amp;#34;,
+      &amp;#34;question_text&amp;#34;: &amp;#34;How does speak beat ever tree?&amp;#34;,
       &amp;#34;choices&amp;#34;: [
         {
-          &amp;#34;choice&amp;#34;: &amp;#34;Strongly Disagree&amp;#34;,
+          &amp;#34;choice&amp;#34;: &amp;#34;Strongly Agree&amp;#34;,
           &amp;#34;number&amp;#34;: 4
         }
       ]
     },
     {
-      &amp;#34;question_id&amp;#34;: &amp;#34;7sF5Rc966u2&amp;#34;,
-      &amp;#34;question_text&amp;#34;: &amp;#34;Why does prepare financial garden several power group?&amp;#34;,
-      &amp;#34;choices&amp;#34;: [
-        {
-          &amp;#34;choice&amp;#34;: &amp;#34;Disagree&amp;#34;,
-          &amp;#34;number&amp;#34;: 6
-        }
-      ]
-    },
-    {
-      &amp;#34;question_id&amp;#34;: &amp;#34;3eW3tB947k7&amp;#34;,
-      &amp;#34;question_text&amp;#34;: &amp;#34;How does scene high early still read?&amp;#34;,
+      &amp;#34;question_id&amp;#34;: &amp;#34;8uD0WY155Q9&amp;#34;,
+      &amp;#34;question_text&amp;#34;: &amp;#34;How does write popular Mr know develop?&amp;#34;,
       &amp;#34;choices&amp;#34;: [
         {
           &amp;#34;choice&amp;#34;: &amp;#34;Agree&amp;#34;,
-          &amp;#34;number&amp;#34;: 6
-        }
-      ]
-    },
-    {
-      &amp;#34;question_id&amp;#34;: &amp;#34;3xZ1up030p7&amp;#34;,
-      &amp;#34;question_text&amp;#34;: &amp;#34;Does than not economy toward short than stand?&amp;#34;,
-      &amp;#34;choices&amp;#34;: [
-        {
-          &amp;#34;choice&amp;#34;: &amp;#34;Neutral&amp;#34;,
-          &amp;#34;number&amp;#34;: 1
-        }
-      ]
-    },
-    {
-      &amp;#34;question_id&amp;#34;: &amp;#34;4jt0Kn805O4&amp;#34;,
-      &amp;#34;question_text&amp;#34;: &amp;#34;Which once yourself program?&amp;#34;,
-      &amp;#34;choices&amp;#34;: [
-        {
-          &amp;#34;choice&amp;#34;: &amp;#34;Neutral&amp;#34;,
           &amp;#34;number&amp;#34;: 9
+        }
+      ]
+    },
+    {
+      &amp;#34;question_id&amp;#34;: &amp;#34;8bN0OP829A8&amp;#34;,
+      &amp;#34;question_text&amp;#34;: &amp;#34;Why does democratic represent far my pressure series third?&amp;#34;,
+      &amp;#34;choices&amp;#34;: [
+        {
+          &amp;#34;choice&amp;#34;: &amp;#34;Strongly Agree&amp;#34;,
+          &amp;#34;number&amp;#34;: 9
+        }
+      ]
+    },
+    {
+      &amp;#34;question_id&amp;#34;: &amp;#34;2Rt9mk140E8&amp;#34;,
+      &amp;#34;question_text&amp;#34;: &amp;#34;How does understand network old?&amp;#34;,
+      &amp;#34;choices&amp;#34;: [
+        {
+          &amp;#34;choice&amp;#34;: &amp;#34;Agree&amp;#34;,
+          &amp;#34;number&amp;#34;: 2
+        }
+      ]
+    },
+    {
+      &amp;#34;question_id&amp;#34;: &amp;#34;8tf2SU934m8&amp;#34;,
+      &amp;#34;question_text&amp;#34;: &amp;#34;Why does western next put?&amp;#34;,
+      &amp;#34;choices&amp;#34;: [
+        {
+          &amp;#34;choice&amp;#34;: &amp;#34;Neutral&amp;#34;,
+          &amp;#34;number&amp;#34;: 8
         }
       ]
     }
@@ -226,14 +226,14 @@
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Reading-with-Pandas"&gt;Reading with Pandas&lt;a class="anchor-link" href="#Reading-with-Pandas"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;As you can see below, simply reading this directly into a dataframe only parses the top level respondent data, but then keeps the responses data as a json array. Which isn't great for simple analysis. Could you load that as is in a jsonb field in PostgreSQL? Sure. If you like parsing json with SQL. Yuck!&lt;/p&gt;
+&lt;h2 id="Reading-with-Pandas"&gt;Reading with Pandas&lt;a class="anchor-link" href="#Reading-with-Pandas"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;As you can see below, simply reading this directly into a dataframe only parses the top level respondent data, but then keeps the responses data as a json array. Which isn't great for simple analysis. Could you load that "as is" into a jsonb field in PostgreSQL? Sure. If you like parsing json with SQL. Yuck!&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
 &lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[81]:&lt;/div&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[68]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
 &lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DataFrame&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sample_data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -268,17 +268,17 @@
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
-      &lt;td&gt;[{'question_id': '7Hq2ZB052H0', 'question_text': 'Why does several bad job hotel measure machine draw already?', 'choices': [{'choice': 'Strongly Disagree', 'number': 4}]}, {'question_id': '7sF5Rc966u2', 'question_text': 'Why does prepare financial garden several power group?', 'choices': [{'choice': 'Disagree', 'number': 6}]}, {'question_id': '3eW3tB947k7', 'question_text': 'How does scene high early still read?', 'choices': [{'choice': 'Agree', 'number': 6}]}, {'question_id': '3xZ1up030p7', 'question_text': 'Does than not economy toward short than stand?', 'choices': [{'choice': 'Neutral', 'number': 1}]}, {'question_id': '4jt0Kn805O4', 'question_text': 'Which once yourself program?', 'choices': [{'choice': 'Neutral', 'number': 9}]}]&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;[{'question_id': '7YB4ZO864I7', 'question_text': 'How does speak beat ever tree?', 'choices': [{'choice': 'Strongly Agree', 'number': 4}]}, {'question_id': '8uD0WY155Q9', 'question_text': 'How does write popular Mr know develop?', 'choices': [{'choice': 'Agree', 'number': 9}]}, {'question_id': '8bN0OP829A8', 'question_text': 'Why does democratic represent far my pressure series third?', 'choices': [{'choice': 'Strongly Agree', 'number': 9}]}, {'question_id': '2Rt9mk140E8', 'question_text': 'How does understand network old?', 'choices': [{'choice': 'Agree', 'number': 2}]}, {'question_id': '8tf2SU934m8', 'question_text': 'Why does western next put?', 'choices': [{'choice': 'Neutral', 'number': 8}]}]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
-      &lt;td&gt;[{'question_id': '8ZY2IL469Z3', 'question_text': 'Does care training manage idea green produce machine?', 'choices': [{'choice': 'Disagree', 'number': 6}]}, {'question_id': '3jX8ix783b5', 'question_text': 'Which idea very care entire support rich?', 'choices': [{'choice': 'Neutral', 'number': 2}]}, {'question_id': '5ip4Sm635P6', 'question_text': 'Why does by collection leader well?', 'choices': [{'choice': 'Disagree', 'number': 6}]}, {'question_id': '4Hb8hr280u5', 'question_text': 'Which hospital father education build star through hospital?', 'choices': [{'choice': 'Agree', 'number': 5}]}, {'question_id': '3jJ6oU916M5', 'question_text': 'How does fire break material skill?', 'choices': [{'choice': 'Agree', 'number': 8}]}]&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;[{'question_id': '2CP2AW568v2', 'question_text': 'Why does whatever play office move alone class part wish?', 'choices': [{'choice': 'Neutral', 'number': 0}]}, {'question_id': '2YV7SR528f0', 'question_text': 'Why does which phone return much door?', 'choices': [{'choice': 'Disagree', 'number': 7}]}, {'question_id': '3PJ8eR903v4', 'question_text': 'Why does despite be class various great stay Republican person?', 'choices': [{'choice': 'Neutral', 'number': 4}]}, {'question_id': '2GV2kH553o3', 'question_text': 'Does become create store store?', 'choices': [{'choice': 'Disagree', 'number': 8}]}, {'question_id': '9aX3NJ910f8', 'question_text': 'Which team life although rate science I pattern?', 'choices': [{'choice': 'Strongly Disagree', 'number': 7}]}]&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -293,18 +293,203 @@
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="JSON-Normalize"&gt;JSON Normalize&lt;a class="anchor-link" href="#JSON-Normalize"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Thankfully there is the &lt;code&gt;json_normalize()&lt;/code&gt; function, but it requires a little understanding to get it to satisfactorily parse flat. Simply passing it the sample data without any parameters results in a very familiar result that's get us no further than we started in the last attempt.&lt;/p&gt;
+&lt;h2 id="A-messy-custom-parser"&gt;A messy custom parser&lt;a class="anchor-link" href="#A-messy-custom-parser"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;We could attempt to reshape this by writing some custom functions to handle extracting the responses and merging that data with the top-level meta data about the respondent with some dictionary unpacking, but this gets messy and would fall apart quickly as the structure changed. While this approach works, it's not ideal.&lt;/p&gt;
+&lt;p&gt;Sure this code could be further refactored to simplify the logic, but it's not worth it since the &lt;code&gt;pandas.json_normalize()&lt;/code&gt; can do this for us easily.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
 &lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[82]:&lt;/div&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[69]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df3&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;json_normalize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sample_data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;print_df&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;record_format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;responses&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;response&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;responses&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;record&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;question_id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;question_id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;question_text&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;question_text&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;choice&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;choices&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;choice&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;number&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;choices&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;number&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;record&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;parse_json&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;records&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;record&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;sample_data&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;meta&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;respondent_id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;record&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;respondent_id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;survey_date&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;record&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;survey_date&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;email&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;record&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;email&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="n"&gt;responses&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;record&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;responses&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;formatted_responses&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;record_format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;responses&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;response&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;formatted_responses&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;combined&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;meta&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+            &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;combined&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;
+
+&lt;span class="n"&gt;clean_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;parse_json&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sample_data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DataFrame&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;clean_data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;print_df&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+
+&lt;div class="output_html rendered_html output_subarea "&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;respondent_id&lt;/th&gt;
+      &lt;th&gt;survey_date&lt;/th&gt;
+      &lt;th&gt;email&lt;/th&gt;
+      &lt;th&gt;question_id&lt;/th&gt;
+      &lt;th&gt;question_text&lt;/th&gt;
+      &lt;th&gt;choice&lt;/th&gt;
+      &lt;th&gt;number&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;7YB4ZO864I7&lt;/td&gt;
+      &lt;td&gt;How does speak beat ever tree?&lt;/td&gt;
+      &lt;td&gt;Strongly Agree&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;8uD0WY155Q9&lt;/td&gt;
+      &lt;td&gt;How does write popular Mr know develop?&lt;/td&gt;
+      &lt;td&gt;Agree&lt;/td&gt;
+      &lt;td&gt;9&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;8bN0OP829A8&lt;/td&gt;
+      &lt;td&gt;Why does democratic represent far my pressure series third?&lt;/td&gt;
+      &lt;td&gt;Strongly Agree&lt;/td&gt;
+      &lt;td&gt;9&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;2Rt9mk140E8&lt;/td&gt;
+      &lt;td&gt;How does understand network old?&lt;/td&gt;
+      &lt;td&gt;Agree&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;8tf2SU934m8&lt;/td&gt;
+      &lt;td&gt;Why does western next put?&lt;/td&gt;
+      &lt;td&gt;Neutral&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;5&lt;/th&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;2CP2AW568v2&lt;/td&gt;
+      &lt;td&gt;Why does whatever play office move alone class part wish?&lt;/td&gt;
+      &lt;td&gt;Neutral&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;6&lt;/th&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;2YV7SR528f0&lt;/td&gt;
+      &lt;td&gt;Why does which phone return much door?&lt;/td&gt;
+      &lt;td&gt;Disagree&lt;/td&gt;
+      &lt;td&gt;7&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;7&lt;/th&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;3PJ8eR903v4&lt;/td&gt;
+      &lt;td&gt;Why does despite be class various great stay Republican person?&lt;/td&gt;
+      &lt;td&gt;Neutral&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;8&lt;/th&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;2GV2kH553o3&lt;/td&gt;
+      &lt;td&gt;Does become create store store?&lt;/td&gt;
+      &lt;td&gt;Disagree&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;9&lt;/th&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;9aX3NJ910f8&lt;/td&gt;
+      &lt;td&gt;Which team life although rate science I pattern?&lt;/td&gt;
+      &lt;td&gt;Strongly Disagree&lt;/td&gt;
+      &lt;td&gt;7&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h2 id="JSON-Normalize"&gt;JSON Normalize&lt;a class="anchor-link" href="#JSON-Normalize"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Thankfully there is the &lt;code&gt;json_normalize()&lt;/code&gt; function, but it requires a little understanding to get it to satisfactorily parse flat. Simply passing it the sample data without any parameters results in a very familiar result that gets us no further than we started in the first attempt.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[70]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;json_normalize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sample_data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;print_df&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
     &lt;/div&gt;
@@ -335,17 +520,17 @@
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
-      &lt;td&gt;[{'question_id': '7Hq2ZB052H0', 'question_text': 'Why does several bad job hotel measure machine draw already?', 'choices': [{'choice': 'Strongly Disagree', 'number': 4}]}, {'question_id': '7sF5Rc966u2', 'question_text': 'Why does prepare financial garden several power group?', 'choices': [{'choice': 'Disagree', 'number': 6}]}, {'question_id': '3eW3tB947k7', 'question_text': 'How does scene high early still read?', 'choices': [{'choice': 'Agree', 'number': 6}]}, {'question_id': '3xZ1up030p7', 'question_text': 'Does than not economy toward short than stand?', 'choices': [{'choice': 'Neutral', 'number': 1}]}, {'question_id': '4jt0Kn805O4', 'question_text': 'Which once yourself program?', 'choices': [{'choice': 'Neutral', 'number': 9}]}]&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;[{'question_id': '7YB4ZO864I7', 'question_text': 'How does speak beat ever tree?', 'choices': [{'choice': 'Strongly Agree', 'number': 4}]}, {'question_id': '8uD0WY155Q9', 'question_text': 'How does write popular Mr know develop?', 'choices': [{'choice': 'Agree', 'number': 9}]}, {'question_id': '8bN0OP829A8', 'question_text': 'Why does democratic represent far my pressure series third?', 'choices': [{'choice': 'Strongly Agree', 'number': 9}]}, {'question_id': '2Rt9mk140E8', 'question_text': 'How does understand network old?', 'choices': [{'choice': 'Agree', 'number': 2}]}, {'question_id': '8tf2SU934m8', 'question_text': 'Why does western next put?', 'choices': [{'choice': 'Neutral', 'number': 8}]}]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
-      &lt;td&gt;[{'question_id': '8ZY2IL469Z3', 'question_text': 'Does care training manage idea green produce machine?', 'choices': [{'choice': 'Disagree', 'number': 6}]}, {'question_id': '3jX8ix783b5', 'question_text': 'Which idea very care entire support rich?', 'choices': [{'choice': 'Neutral', 'number': 2}]}, {'question_id': '5ip4Sm635P6', 'question_text': 'Why does by collection leader well?', 'choices': [{'choice': 'Disagree', 'number': 6}]}, {'question_id': '4Hb8hr280u5', 'question_text': 'Which hospital father education build star through hospital?', 'choices': [{'choice': 'Agree', 'number': 5}]}, {'question_id': '3jJ6oU916M5', 'question_text': 'How does fire break material skill?', 'choices': [{'choice': 'Agree', 'number': 8}]}]&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;[{'question_id': '2CP2AW568v2', 'question_text': 'Why does whatever play office move alone class part wish?', 'choices': [{'choice': 'Neutral', 'number': 0}]}, {'question_id': '2YV7SR528f0', 'question_text': 'Why does which phone return much door?', 'choices': [{'choice': 'Disagree', 'number': 7}]}, {'question_id': '3PJ8eR903v4', 'question_text': 'Why does despite be class various great stay Republican person?', 'choices': [{'choice': 'Neutral', 'number': 4}]}, {'question_id': '2GV2kH553o3', 'question_text': 'Does become create store store?', 'choices': [{'choice': 'Disagree', 'number': 8}]}, {'question_id': '9aX3NJ910f8', 'question_text': 'Which team life although rate science I pattern?', 'choices': [{'choice': 'Strongly Disagree', 'number': 7}]}]&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -361,21 +546,20 @@
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;A few optional parameters can be used here to parse the first nested array called &lt;code&gt;responses&lt;/code&gt;. We can direct the pandas json parser to a specific key as the source of records. The &lt;code&gt;record_path&lt;/code&gt; parameter takes either a string or list of strings to construct that path. The name of this parameter is a hint about how to think of this when passed as a list as we'll see later.&lt;/p&gt;
-&lt;p&gt;We&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
 &lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[85]:&lt;/div&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[71]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df4&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;json_normalize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;json_normalize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="n"&gt;sample_data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
     &lt;span class="n"&gt;record_path&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;responses&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
 &lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;print_df&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;print_df&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
     &lt;/div&gt;
@@ -405,63 +589,63 @@
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;7Hq2ZB052H0&lt;/td&gt;
-      &lt;td&gt;Why does several bad job hotel measure machine draw already?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Strongly Disagree', 'number': 4}]&lt;/td&gt;
+      &lt;td&gt;7YB4ZO864I7&lt;/td&gt;
+      &lt;td&gt;How does speak beat ever tree?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Strongly Agree', 'number': 4}]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;7sF5Rc966u2&lt;/td&gt;
-      &lt;td&gt;Why does prepare financial garden several power group?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Disagree', 'number': 6}]&lt;/td&gt;
+      &lt;td&gt;8uD0WY155Q9&lt;/td&gt;
+      &lt;td&gt;How does write popular Mr know develop?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Agree', 'number': 9}]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;3eW3tB947k7&lt;/td&gt;
-      &lt;td&gt;How does scene high early still read?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Agree', 'number': 6}]&lt;/td&gt;
+      &lt;td&gt;8bN0OP829A8&lt;/td&gt;
+      &lt;td&gt;Why does democratic represent far my pressure series third?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Strongly Agree', 'number': 9}]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;3&lt;/th&gt;
-      &lt;td&gt;3xZ1up030p7&lt;/td&gt;
-      &lt;td&gt;Does than not economy toward short than stand?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Neutral', 'number': 1}]&lt;/td&gt;
+      &lt;td&gt;2Rt9mk140E8&lt;/td&gt;
+      &lt;td&gt;How does understand network old?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Agree', 'number': 2}]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;4&lt;/th&gt;
-      &lt;td&gt;4jt0Kn805O4&lt;/td&gt;
-      &lt;td&gt;Which once yourself program?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Neutral', 'number': 9}]&lt;/td&gt;
+      &lt;td&gt;8tf2SU934m8&lt;/td&gt;
+      &lt;td&gt;Why does western next put?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Neutral', 'number': 8}]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;5&lt;/th&gt;
-      &lt;td&gt;8ZY2IL469Z3&lt;/td&gt;
-      &lt;td&gt;Does care training manage idea green produce machine?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Disagree', 'number': 6}]&lt;/td&gt;
+      &lt;td&gt;2CP2AW568v2&lt;/td&gt;
+      &lt;td&gt;Why does whatever play office move alone class part wish?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Neutral', 'number': 0}]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;6&lt;/th&gt;
-      &lt;td&gt;3jX8ix783b5&lt;/td&gt;
-      &lt;td&gt;Which idea very care entire support rich?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Neutral', 'number': 2}]&lt;/td&gt;
+      &lt;td&gt;2YV7SR528f0&lt;/td&gt;
+      &lt;td&gt;Why does which phone return much door?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Disagree', 'number': 7}]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;7&lt;/th&gt;
-      &lt;td&gt;5ip4Sm635P6&lt;/td&gt;
-      &lt;td&gt;Why does by collection leader well?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Disagree', 'number': 6}]&lt;/td&gt;
+      &lt;td&gt;3PJ8eR903v4&lt;/td&gt;
+      &lt;td&gt;Why does despite be class various great stay Republican person?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Neutral', 'number': 4}]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;8&lt;/th&gt;
-      &lt;td&gt;4Hb8hr280u5&lt;/td&gt;
-      &lt;td&gt;Which hospital father education build star through hospital?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Agree', 'number': 5}]&lt;/td&gt;
+      &lt;td&gt;2GV2kH553o3&lt;/td&gt;
+      &lt;td&gt;Does become create store store?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Disagree', 'number': 8}]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;9&lt;/th&gt;
-      &lt;td&gt;3jJ6oU916M5&lt;/td&gt;
-      &lt;td&gt;How does fire break material skill?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Agree', 'number': 8}]&lt;/td&gt;
+      &lt;td&gt;9aX3NJ910f8&lt;/td&gt;
+      &lt;td&gt;Which team life although rate science I pattern?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Strongly Disagree', 'number': 7}]&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -483,10 +667,10 @@
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
 &lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[87]:&lt;/div&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[72]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df4&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;json_normalize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;json_normalize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="n"&gt;sample_data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
     &lt;span class="n"&gt;record_path&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;responses&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
      &lt;span class="n"&gt;meta&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;
@@ -495,7 +679,7 @@
         &lt;span class="s2"&gt;&amp;quot;email&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
     &lt;span class="p"&gt;],&lt;/span&gt;
 &lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;print_df&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;print_df&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
    
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -529,93 +713,93 @@
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;7Hq2ZB052H0&lt;/td&gt;
-      &lt;td&gt;Why does several bad job hotel measure machine draw already?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Strongly Disagree', 'number': 4}]&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
+      &lt;td&gt;7YB4ZO864I7&lt;/td&gt;
+      &lt;td&gt;How does speak beat ever tree?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Strongly Agree', 'number': 4}]&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;7sF5Rc966u2&lt;/td&gt;
-      &lt;td&gt;Why does prepare financial garden several power group?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Disagree', 'number': 6}]&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
+      &lt;td&gt;8uD0WY155Q9&lt;/td&gt;
+      &lt;td&gt;How does write popular Mr know develop?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Agree', 'number': 9}]&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;3eW3tB947k7&lt;/td&gt;
-      &lt;td&gt;How does scene high early still read?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Agree', 'number': 6}]&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
+      &lt;td&gt;8bN0OP829A8&lt;/td&gt;
+      &lt;td&gt;Why does democratic represent far my pressure series third?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Strongly Agree', 'number': 9}]&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;3&lt;/th&gt;
-      &lt;td&gt;3xZ1up030p7&lt;/td&gt;
-      &lt;td&gt;Does than not economy toward short than stand?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Neutral', 'number': 1}]&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
+      &lt;td&gt;2Rt9mk140E8&lt;/td&gt;
+      &lt;td&gt;How does understand network old?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Agree', 'number': 2}]&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;4&lt;/th&gt;
-      &lt;td&gt;4jt0Kn805O4&lt;/td&gt;
-      &lt;td&gt;Which once yourself program?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Neutral', 'number': 9}]&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
+      &lt;td&gt;8tf2SU934m8&lt;/td&gt;
+      &lt;td&gt;Why does western next put?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Neutral', 'number': 8}]&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;5&lt;/th&gt;
-      &lt;td&gt;8ZY2IL469Z3&lt;/td&gt;
-      &lt;td&gt;Does care training manage idea green produce machine?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Disagree', 'number': 6}]&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
+      &lt;td&gt;2CP2AW568v2&lt;/td&gt;
+      &lt;td&gt;Why does whatever play office move alone class part wish?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Neutral', 'number': 0}]&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;6&lt;/th&gt;
-      &lt;td&gt;3jX8ix783b5&lt;/td&gt;
-      &lt;td&gt;Which idea very care entire support rich?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Neutral', 'number': 2}]&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
+      &lt;td&gt;2YV7SR528f0&lt;/td&gt;
+      &lt;td&gt;Why does which phone return much door?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Disagree', 'number': 7}]&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;7&lt;/th&gt;
-      &lt;td&gt;5ip4Sm635P6&lt;/td&gt;
-      &lt;td&gt;Why does by collection leader well?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Disagree', 'number': 6}]&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
+      &lt;td&gt;3PJ8eR903v4&lt;/td&gt;
+      &lt;td&gt;Why does despite be class various great stay Republican person?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Neutral', 'number': 4}]&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;8&lt;/th&gt;
-      &lt;td&gt;4Hb8hr280u5&lt;/td&gt;
-      &lt;td&gt;Which hospital father education build star through hospital?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Agree', 'number': 5}]&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
+      &lt;td&gt;2GV2kH553o3&lt;/td&gt;
+      &lt;td&gt;Does become create store store?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Disagree', 'number': 8}]&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;9&lt;/th&gt;
-      &lt;td&gt;3jJ6oU916M5&lt;/td&gt;
-      &lt;td&gt;How does fire break material skill?&lt;/td&gt;
-      &lt;td&gt;[{'choice': 'Agree', 'number': 8}]&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
+      &lt;td&gt;9aX3NJ910f8&lt;/td&gt;
+      &lt;td&gt;Which team life although rate science I pattern?&lt;/td&gt;
+      &lt;td&gt;[{'choice': 'Strongly Disagree', 'number': 7}]&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -648,10 +832,10 @@
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
 &lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[91]:&lt;/div&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[73]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df5&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;json_normalize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;json_normalize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="n"&gt;sample_data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
     &lt;span class="n"&gt;record_path&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;responses&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;choices&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; 
     &lt;span class="n"&gt;meta&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;
@@ -660,7 +844,7 @@
         &lt;span class="s2"&gt;&amp;quot;email&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
     &lt;span class="p"&gt;],&lt;/span&gt;
 &lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;print_df&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;print_df&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
     &lt;/div&gt;
@@ -692,83 +876,83 @@
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;Strongly Disagree&lt;/td&gt;
+      &lt;td&gt;Strongly Agree&lt;/td&gt;
       &lt;td&gt;4&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;Disagree&lt;/td&gt;
-      &lt;td&gt;6&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
+      &lt;td&gt;Agree&lt;/td&gt;
+      &lt;td&gt;9&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;Agree&lt;/td&gt;
-      &lt;td&gt;6&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
+      &lt;td&gt;Strongly Agree&lt;/td&gt;
+      &lt;td&gt;9&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;3&lt;/th&gt;
-      &lt;td&gt;Neutral&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
+      &lt;td&gt;Agree&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;4&lt;/th&gt;
       &lt;td&gt;Neutral&lt;/td&gt;
-      &lt;td&gt;9&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;5&lt;/th&gt;
-      &lt;td&gt;Disagree&lt;/td&gt;
-      &lt;td&gt;6&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
+      &lt;td&gt;Neutral&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;6&lt;/th&gt;
-      &lt;td&gt;Neutral&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
+      &lt;td&gt;Disagree&lt;/td&gt;
+      &lt;td&gt;7&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;7&lt;/th&gt;
-      &lt;td&gt;Disagree&lt;/td&gt;
-      &lt;td&gt;6&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
+      &lt;td&gt;Neutral&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;8&lt;/th&gt;
-      &lt;td&gt;Agree&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
+      &lt;td&gt;Disagree&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;9&lt;/th&gt;
-      &lt;td&gt;Agree&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
+      &lt;td&gt;Strongly Disagree&lt;/td&gt;
+      &lt;td&gt;7&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -790,10 +974,10 @@
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
 &lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[92]:&lt;/div&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[74]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df5&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;json_normalize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;json_normalize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="n"&gt;sample_data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
     &lt;span class="n"&gt;record_path&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;responses&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;choices&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; 
     &lt;span class="n"&gt;meta&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;
@@ -804,7 +988,7 @@
         &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;responses&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;question_text&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
     &lt;span class="p"&gt;],&lt;/span&gt;
 &lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;print_df&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;print_df&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
     &lt;/div&gt;
@@ -838,103 +1022,103 @@
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;Strongly Disagree&lt;/td&gt;
+      &lt;td&gt;Strongly Agree&lt;/td&gt;
       &lt;td&gt;4&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
-      &lt;td&gt;7Hq2ZB052H0&lt;/td&gt;
-      &lt;td&gt;Why does several bad job hotel measure machine draw already?&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;7YB4ZO864I7&lt;/td&gt;
+      &lt;td&gt;How does speak beat ever tree?&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;Disagree&lt;/td&gt;
-      &lt;td&gt;6&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
-      &lt;td&gt;7sF5Rc966u2&lt;/td&gt;
-      &lt;td&gt;Why does prepare financial garden several power group?&lt;/td&gt;
+      &lt;td&gt;Agree&lt;/td&gt;
+      &lt;td&gt;9&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;8uD0WY155Q9&lt;/td&gt;
+      &lt;td&gt;How does write popular Mr know develop?&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;Agree&lt;/td&gt;
-      &lt;td&gt;6&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
-      &lt;td&gt;3eW3tB947k7&lt;/td&gt;
-      &lt;td&gt;How does scene high early still read?&lt;/td&gt;
+      &lt;td&gt;Strongly Agree&lt;/td&gt;
+      &lt;td&gt;9&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;8bN0OP829A8&lt;/td&gt;
+      &lt;td&gt;Why does democratic represent far my pressure series third?&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;3&lt;/th&gt;
-      &lt;td&gt;Neutral&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
-      &lt;td&gt;3xZ1up030p7&lt;/td&gt;
-      &lt;td&gt;Does than not economy toward short than stand?&lt;/td&gt;
+      &lt;td&gt;Agree&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;2Rt9mk140E8&lt;/td&gt;
+      &lt;td&gt;How does understand network old?&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;4&lt;/th&gt;
       &lt;td&gt;Neutral&lt;/td&gt;
-      &lt;td&gt;9&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
-      &lt;td&gt;4jt0Kn805O4&lt;/td&gt;
-      &lt;td&gt;Which once yourself program?&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;8tf2SU934m8&lt;/td&gt;
+      &lt;td&gt;Why does western next put?&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;5&lt;/th&gt;
-      &lt;td&gt;Disagree&lt;/td&gt;
-      &lt;td&gt;6&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
-      &lt;td&gt;8ZY2IL469Z3&lt;/td&gt;
-      &lt;td&gt;Does care training manage idea green produce machine?&lt;/td&gt;
+      &lt;td&gt;Neutral&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;2CP2AW568v2&lt;/td&gt;
+      &lt;td&gt;Why does whatever play office move alone class part wish?&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;6&lt;/th&gt;
-      &lt;td&gt;Neutral&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
-      &lt;td&gt;3jX8ix783b5&lt;/td&gt;
-      &lt;td&gt;Which idea very care entire support rich?&lt;/td&gt;
+      &lt;td&gt;Disagree&lt;/td&gt;
+      &lt;td&gt;7&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;2YV7SR528f0&lt;/td&gt;
+      &lt;td&gt;Why does which phone return much door?&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;7&lt;/th&gt;
-      &lt;td&gt;Disagree&lt;/td&gt;
-      &lt;td&gt;6&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
-      &lt;td&gt;5ip4Sm635P6&lt;/td&gt;
-      &lt;td&gt;Why does by collection leader well?&lt;/td&gt;
+      &lt;td&gt;Neutral&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;3PJ8eR903v4&lt;/td&gt;
+      &lt;td&gt;Why does despite be class various great stay Republican person?&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;8&lt;/th&gt;
-      &lt;td&gt;Agree&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
-      &lt;td&gt;4Hb8hr280u5&lt;/td&gt;
-      &lt;td&gt;Which hospital father education build star through hospital?&lt;/td&gt;
+      &lt;td&gt;Disagree&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;2GV2kH553o3&lt;/td&gt;
+      &lt;td&gt;Does become create store store?&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;9&lt;/th&gt;
-      &lt;td&gt;Agree&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
-      &lt;td&gt;3jJ6oU916M5&lt;/td&gt;
-      &lt;td&gt;How does fire break material skill?&lt;/td&gt;
+      &lt;td&gt;Strongly Disagree&lt;/td&gt;
+      &lt;td&gt;7&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;9aX3NJ910f8&lt;/td&gt;
+      &lt;td&gt;Which team life although rate science I pattern?&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -956,10 +1140,10 @@
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
 &lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[95]:&lt;/div&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[75]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df5&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;json_normalize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;json_normalize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="n"&gt;sample_data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
     &lt;span class="n"&gt;sep&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;_&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
     &lt;span class="n"&gt;record_path&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;responses&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;choices&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; 
@@ -971,7 +1155,7 @@
         &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;responses&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;question_text&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
     &lt;span class="p"&gt;],&lt;/span&gt;
 &lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;print_df&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;print_df&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
     &lt;/div&gt;
@@ -1005,103 +1189,103 @@
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;Strongly Disagree&lt;/td&gt;
+      &lt;td&gt;Strongly Agree&lt;/td&gt;
       &lt;td&gt;4&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
-      &lt;td&gt;7Hq2ZB052H0&lt;/td&gt;
-      &lt;td&gt;Why does several bad job hotel measure machine draw already?&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;7YB4ZO864I7&lt;/td&gt;
+      &lt;td&gt;How does speak beat ever tree?&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;Disagree&lt;/td&gt;
-      &lt;td&gt;6&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
-      &lt;td&gt;7sF5Rc966u2&lt;/td&gt;
-      &lt;td&gt;Why does prepare financial garden several power group?&lt;/td&gt;
+      &lt;td&gt;Agree&lt;/td&gt;
+      &lt;td&gt;9&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;8uD0WY155Q9&lt;/td&gt;
+      &lt;td&gt;How does write popular Mr know develop?&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;Agree&lt;/td&gt;
-      &lt;td&gt;6&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
-      &lt;td&gt;3eW3tB947k7&lt;/td&gt;
-      &lt;td&gt;How does scene high early still read?&lt;/td&gt;
+      &lt;td&gt;Strongly Agree&lt;/td&gt;
+      &lt;td&gt;9&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;8bN0OP829A8&lt;/td&gt;
+      &lt;td&gt;Why does democratic represent far my pressure series third?&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;3&lt;/th&gt;
-      &lt;td&gt;Neutral&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
-      &lt;td&gt;3xZ1up030p7&lt;/td&gt;
-      &lt;td&gt;Does than not economy toward short than stand?&lt;/td&gt;
+      &lt;td&gt;Agree&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;2Rt9mk140E8&lt;/td&gt;
+      &lt;td&gt;How does understand network old?&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;4&lt;/th&gt;
       &lt;td&gt;Neutral&lt;/td&gt;
-      &lt;td&gt;9&lt;/td&gt;
-      &lt;td&gt;6q96SI993a7&lt;/td&gt;
-      &lt;td&gt;2013-08-12&lt;/td&gt;
-      &lt;td&gt;Tracy Foster@example.com&lt;/td&gt;
-      &lt;td&gt;4jt0Kn805O4&lt;/td&gt;
-      &lt;td&gt;Which once yourself program?&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;8tf2SU934m8&lt;/td&gt;
+      &lt;td&gt;Why does western next put?&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;5&lt;/th&gt;
-      &lt;td&gt;Disagree&lt;/td&gt;
-      &lt;td&gt;6&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
-      &lt;td&gt;8ZY2IL469Z3&lt;/td&gt;
-      &lt;td&gt;Does care training manage idea green produce machine?&lt;/td&gt;
+      &lt;td&gt;Neutral&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;2CP2AW568v2&lt;/td&gt;
+      &lt;td&gt;Why does whatever play office move alone class part wish?&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;6&lt;/th&gt;
-      &lt;td&gt;Neutral&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
-      &lt;td&gt;3jX8ix783b5&lt;/td&gt;
-      &lt;td&gt;Which idea very care entire support rich?&lt;/td&gt;
+      &lt;td&gt;Disagree&lt;/td&gt;
+      &lt;td&gt;7&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;2YV7SR528f0&lt;/td&gt;
+      &lt;td&gt;Why does which phone return much door?&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;7&lt;/th&gt;
-      &lt;td&gt;Disagree&lt;/td&gt;
-      &lt;td&gt;6&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
-      &lt;td&gt;5ip4Sm635P6&lt;/td&gt;
-      &lt;td&gt;Why does by collection leader well?&lt;/td&gt;
+      &lt;td&gt;Neutral&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;3PJ8eR903v4&lt;/td&gt;
+      &lt;td&gt;Why does despite be class various great stay Republican person?&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;8&lt;/th&gt;
-      &lt;td&gt;Agree&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
-      &lt;td&gt;4Hb8hr280u5&lt;/td&gt;
-      &lt;td&gt;Which hospital father education build star through hospital?&lt;/td&gt;
+      &lt;td&gt;Disagree&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;2GV2kH553o3&lt;/td&gt;
+      &lt;td&gt;Does become create store store?&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;9&lt;/th&gt;
-      &lt;td&gt;Agree&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;3s64my293n2&lt;/td&gt;
-      &lt;td&gt;2019-09-05&lt;/td&gt;
-      &lt;td&gt;Mary Chen@example.com&lt;/td&gt;
-      &lt;td&gt;3jJ6oU916M5&lt;/td&gt;
-      &lt;td&gt;How does fire break material skill?&lt;/td&gt;
+      &lt;td&gt;Strongly Disagree&lt;/td&gt;
+      &lt;td&gt;7&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;9aX3NJ910f8&lt;/td&gt;
+      &lt;td&gt;Which team life although rate science I pattern?&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -1116,7 +1300,7 @@
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;Lastly, we'll record the columns to start from the least nested level on the left all the way to the most nested on the right for easier interpretation.&lt;/p&gt;
+&lt;p&gt;Finally, we'll order the columns from the least nested level on the left all the way to the most nested on the right for easier readability.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1127,8 +1311,8 @@
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
 &lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;column_order&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;respondent_id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;survey_date&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;email&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;responses_question_id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;responses_question_text&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;choice&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;number&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="n"&gt;df6&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df5&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;column_order&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="n"&gt;print_df&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df6&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;column_order&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;print_df&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
     &lt;/div&gt;
@@ -1162,103 +1346,103 @@
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;8l80gS238W2&lt;/td&gt;
-      &lt;td&gt;1982-10-31&lt;/td&gt;
-      &lt;td&gt;Dan Thomas@example.com&lt;/td&gt;
-      &lt;td&gt;9ZR5ZR439f4&lt;/td&gt;
-      &lt;td&gt;How does in something of different?&lt;/td&gt;
-      &lt;td&gt;Disagree&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;7YB4ZO864I7&lt;/td&gt;
+      &lt;td&gt;How does speak beat ever tree?&lt;/td&gt;
+      &lt;td&gt;Strongly Agree&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;8l80gS238W2&lt;/td&gt;
-      &lt;td&gt;1982-10-31&lt;/td&gt;
-      &lt;td&gt;Dan Thomas@example.com&lt;/td&gt;
-      &lt;td&gt;9DK0Am643P0&lt;/td&gt;
-      &lt;td&gt;How does impact same move value water?&lt;/td&gt;
-      &lt;td&gt;Strongly Disagree&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;8l80gS238W2&lt;/td&gt;
-      &lt;td&gt;1982-10-31&lt;/td&gt;
-      &lt;td&gt;Dan Thomas@example.com&lt;/td&gt;
-      &lt;td&gt;0NE2jJ853s2&lt;/td&gt;
-      &lt;td&gt;Why does including exactly thus player?&lt;/td&gt;
-      &lt;td&gt;Strongly Agree&lt;/td&gt;
-      &lt;td&gt;7&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;3&lt;/th&gt;
-      &lt;td&gt;8l80gS238W2&lt;/td&gt;
-      &lt;td&gt;1982-10-31&lt;/td&gt;
-      &lt;td&gt;Dan Thomas@example.com&lt;/td&gt;
-      &lt;td&gt;1mK5tX361J2&lt;/td&gt;
-      &lt;td&gt;Why does training deep day group let president?&lt;/td&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;8uD0WY155Q9&lt;/td&gt;
+      &lt;td&gt;How does write popular Mr know develop?&lt;/td&gt;
       &lt;td&gt;Agree&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;4&lt;/th&gt;
-      &lt;td&gt;8l80gS238W2&lt;/td&gt;
-      &lt;td&gt;1982-10-31&lt;/td&gt;
-      &lt;td&gt;Dan Thomas@example.com&lt;/td&gt;
-      &lt;td&gt;3PM4xL997q4&lt;/td&gt;
-      &lt;td&gt;Does her ok lot hour?&lt;/td&gt;
-      &lt;td&gt;Agree&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;5&lt;/th&gt;
-      &lt;td&gt;8o18qO450A6&lt;/td&gt;
-      &lt;td&gt;2015-07-19&lt;/td&gt;
-      &lt;td&gt;Katrina Gross@example.com&lt;/td&gt;
-      &lt;td&gt;9Of3Hc997V6&lt;/td&gt;
-      &lt;td&gt;Why does student mouth any they hair positive?&lt;/td&gt;
-      &lt;td&gt;Neutral&lt;/td&gt;
-      &lt;td&gt;6&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;6&lt;/th&gt;
-      &lt;td&gt;8o18qO450A6&lt;/td&gt;
-      &lt;td&gt;2015-07-19&lt;/td&gt;
-      &lt;td&gt;Katrina Gross@example.com&lt;/td&gt;
-      &lt;td&gt;7Ql0Qg952F3&lt;/td&gt;
-      &lt;td&gt;Does finally majority miss?&lt;/td&gt;
-      &lt;td&gt;Disagree&lt;/td&gt;
       &lt;td&gt;9&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;8bN0OP829A8&lt;/td&gt;
+      &lt;td&gt;Why does democratic represent far my pressure series third?&lt;/td&gt;
+      &lt;td&gt;Strongly Agree&lt;/td&gt;
+      &lt;td&gt;9&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;2Rt9mk140E8&lt;/td&gt;
+      &lt;td&gt;How does understand network old?&lt;/td&gt;
+      &lt;td&gt;Agree&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;9U69hZ538l1&lt;/td&gt;
+      &lt;td&gt;1994-03-20&lt;/td&gt;
+      &lt;td&gt;lindsey24@example.com&lt;/td&gt;
+      &lt;td&gt;8tf2SU934m8&lt;/td&gt;
+      &lt;td&gt;Why does western next put?&lt;/td&gt;
+      &lt;td&gt;Neutral&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;5&lt;/th&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;2CP2AW568v2&lt;/td&gt;
+      &lt;td&gt;Why does whatever play office move alone class part wish?&lt;/td&gt;
+      &lt;td&gt;Neutral&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;6&lt;/th&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;2YV7SR528f0&lt;/td&gt;
+      &lt;td&gt;Why does which phone return much door?&lt;/td&gt;
+      &lt;td&gt;Disagree&lt;/td&gt;
+      &lt;td&gt;7&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
       &lt;th&gt;7&lt;/th&gt;
-      &lt;td&gt;8o18qO450A6&lt;/td&gt;
-      &lt;td&gt;2015-07-19&lt;/td&gt;
-      &lt;td&gt;Katrina Gross@example.com&lt;/td&gt;
-      &lt;td&gt;5GL0iD950d2&lt;/td&gt;
-      &lt;td&gt;Does machine whatever floor mission budget court production?&lt;/td&gt;
-      &lt;td&gt;Strongly Disagree&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;3PJ8eR903v4&lt;/td&gt;
+      &lt;td&gt;Why does despite be class various great stay Republican person?&lt;/td&gt;
+      &lt;td&gt;Neutral&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;8&lt;/th&gt;
-      &lt;td&gt;8o18qO450A6&lt;/td&gt;
-      &lt;td&gt;2015-07-19&lt;/td&gt;
-      &lt;td&gt;Katrina Gross@example.com&lt;/td&gt;
-      &lt;td&gt;5Ie6OO091n8&lt;/td&gt;
-      &lt;td&gt;Why does nearly nothing owner per?&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;2GV2kH553o3&lt;/td&gt;
+      &lt;td&gt;Does become create store store?&lt;/td&gt;
       &lt;td&gt;Disagree&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;9&lt;/th&gt;
-      &lt;td&gt;8o18qO450A6&lt;/td&gt;
-      &lt;td&gt;2015-07-19&lt;/td&gt;
-      &lt;td&gt;Katrina Gross@example.com&lt;/td&gt;
-      &lt;td&gt;9Ca8PI956p7&lt;/td&gt;
-      &lt;td&gt;Does ready whatever quite plant forward yes summer?&lt;/td&gt;
-      &lt;td&gt;Neutral&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
+      &lt;td&gt;3A45gW246W1&lt;/td&gt;
+      &lt;td&gt;1991-07-13&lt;/td&gt;
+      &lt;td&gt;robert21@example.com&lt;/td&gt;
+      &lt;td&gt;9aX3NJ910f8&lt;/td&gt;
+      &lt;td&gt;Which team life although rate science I pattern?&lt;/td&gt;
+      &lt;td&gt;Strongly Disagree&lt;/td&gt;
+      &lt;td&gt;7&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -1273,7 +1457,7 @@
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Parsed-and-read-to-import"&gt;Parsed and read to import&lt;a class="anchor-link" href="#Parsed-and-read-to-import"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;At this point our data is in a tabular format and ready to import into a database table with something like pandas &lt;a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_sql.html?highlight=to_sql"&gt;to_sql()&lt;/a&gt; function, but we'll save that for another post.&lt;/p&gt;
+&lt;h2 id="Parsed-and-ready-to-import"&gt;Parsed and ready to import&lt;a class="anchor-link" href="#Parsed-and-ready-to-import"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;At this point our data is in a simple tabular format and ready to import into a database table with something like &lt;a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_sql.html?highlight=to_sql"&gt;pandas.to_sql()&lt;/a&gt; function, but we'll save that for another post.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;

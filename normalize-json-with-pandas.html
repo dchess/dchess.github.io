@@ -132,7 +132,7 @@
     <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>When processing nested <code>JSON</code> data into a flat structure for importing into a relational database, it can be tricky to structure the data into the right shape. <a href="https://pandas.pydata.org/">Pandas</a> has a great tool for doing this called <code>pandas.json_normalize()</code> but the <a href="(https://pandas.pydata.org/docs/reference/api/pandas.json_normalize.html?highlight=json_normalize">documentation</a>) doesn't make it obvious how to leverage its capabilities for handling nested data structures.</p>
+<p>When processing nested <code>JSON</code> data into a flat structure for importing into a relational database, it can be tricky to structure the data into the right shape. <a href="https://pandas.pydata.org/">Pandas</a> has a great tool for doing this called <code>pandas.json_normalize()</code> but the <a href="https://pandas.pydata.org/docs/reference/api/pandas.json_normalize.html?highlight=json_normalize">documentation</a> doesn't make it obvious how to leverage its capabilities for handling nested data structures.</p>
 <p>I thought I could provide a brief example using some randomly generated survey response data (using the <a href="https://faker.readthedocs.io/en/master/">Faker</a> library) to illustrate it's advantages.</p>
 
 </div>
@@ -141,14 +141,14 @@
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Setup">Setup<a class="anchor-link" href="#Setup">&#182;</a></h2><p>To start, I'm going to be using pandas and Faker so we'll import those. I'm also going to need to easily display the parsed json as well as the returned dataframes, so I'm importing the json module from the standard lib as well as some IPython notebook helpers for displaying dataframes as HTMl tables.</p>
+<h2 id="Setup">Setup<a class="anchor-link" href="#Setup">&#182;</a></h2><p>To start, I'm going to be using pandas and Faker so we'll import those. I'm also going to need to easily display the parsed json as well as the returned dataframes, so I'm importing the json module from the standard lib as well as some IPython notebook helpers for displaying dataframes as HTML tables.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[67]:</div>
+<div class="prompt input_prompt">In&nbsp;[63]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
@@ -173,7 +173,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[68]:</div>
+<div class="prompt input_prompt">In&nbsp;[64]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
@@ -195,7 +195,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[69]:</div>
+<div class="prompt input_prompt">In&nbsp;[65]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">MyProvider</span><span class="p">(</span><span class="n">BaseProvider</span><span class="p">):</span>
@@ -224,7 +224,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[79]:</div>
+<div class="prompt input_prompt">In&nbsp;[66]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fake</span> <span class="o">=</span> <span class="n">Faker</span><span class="p">()</span>
@@ -236,7 +236,7 @@
     <span class="p">{</span>
         <span class="s2">&quot;respondent_id&quot;</span><span class="p">:</span> <span class="n">fake</span><span class="o">.</span><span class="n">bothify</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;#?##??###?#&quot;</span><span class="p">),</span>
         <span class="s2">&quot;survey_date&quot;</span><span class="p">:</span> <span class="n">fake</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span>
-        <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fake</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s2">@example.com&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">fake</span><span class="o">.</span><span class="n">email</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="s2">&quot;example.com&quot;</span><span class="p">),</span>
         <span class="s2">&quot;responses&quot;</span><span class="p">:</span> <span class="p">[</span>
             <span class="p">{</span>
                 <span class="s2">&quot;question_id&quot;</span><span class="p">:</span> <span class="n">fake</span><span class="o">.</span><span class="n">bothify</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;#??#??###?#&quot;</span><span class="p">),</span>
@@ -268,7 +268,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[80]:</div>
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sample_data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
@@ -289,57 +289,57 @@
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>{
-  &#34;respondent_id&#34;: &#34;6q96SI993a7&#34;,
-  &#34;survey_date&#34;: &#34;2013-08-12&#34;,
-  &#34;email&#34;: &#34;Tracy Foster@example.com&#34;,
+  &#34;respondent_id&#34;: &#34;9U69hZ538l1&#34;,
+  &#34;survey_date&#34;: &#34;1994-03-20&#34;,
+  &#34;email&#34;: &#34;lindsey24@example.com&#34;,
   &#34;responses&#34;: [
     {
-      &#34;question_id&#34;: &#34;7Hq2ZB052H0&#34;,
-      &#34;question_text&#34;: &#34;Why does several bad job hotel measure machine draw already?&#34;,
+      &#34;question_id&#34;: &#34;7YB4ZO864I7&#34;,
+      &#34;question_text&#34;: &#34;How does speak beat ever tree?&#34;,
       &#34;choices&#34;: [
         {
-          &#34;choice&#34;: &#34;Strongly Disagree&#34;,
+          &#34;choice&#34;: &#34;Strongly Agree&#34;,
           &#34;number&#34;: 4
         }
       ]
     },
     {
-      &#34;question_id&#34;: &#34;7sF5Rc966u2&#34;,
-      &#34;question_text&#34;: &#34;Why does prepare financial garden several power group?&#34;,
-      &#34;choices&#34;: [
-        {
-          &#34;choice&#34;: &#34;Disagree&#34;,
-          &#34;number&#34;: 6
-        }
-      ]
-    },
-    {
-      &#34;question_id&#34;: &#34;3eW3tB947k7&#34;,
-      &#34;question_text&#34;: &#34;How does scene high early still read?&#34;,
+      &#34;question_id&#34;: &#34;8uD0WY155Q9&#34;,
+      &#34;question_text&#34;: &#34;How does write popular Mr know develop?&#34;,
       &#34;choices&#34;: [
         {
           &#34;choice&#34;: &#34;Agree&#34;,
-          &#34;number&#34;: 6
-        }
-      ]
-    },
-    {
-      &#34;question_id&#34;: &#34;3xZ1up030p7&#34;,
-      &#34;question_text&#34;: &#34;Does than not economy toward short than stand?&#34;,
-      &#34;choices&#34;: [
-        {
-          &#34;choice&#34;: &#34;Neutral&#34;,
-          &#34;number&#34;: 1
-        }
-      ]
-    },
-    {
-      &#34;question_id&#34;: &#34;4jt0Kn805O4&#34;,
-      &#34;question_text&#34;: &#34;Which once yourself program?&#34;,
-      &#34;choices&#34;: [
-        {
-          &#34;choice&#34;: &#34;Neutral&#34;,
           &#34;number&#34;: 9
+        }
+      ]
+    },
+    {
+      &#34;question_id&#34;: &#34;8bN0OP829A8&#34;,
+      &#34;question_text&#34;: &#34;Why does democratic represent far my pressure series third?&#34;,
+      &#34;choices&#34;: [
+        {
+          &#34;choice&#34;: &#34;Strongly Agree&#34;,
+          &#34;number&#34;: 9
+        }
+      ]
+    },
+    {
+      &#34;question_id&#34;: &#34;2Rt9mk140E8&#34;,
+      &#34;question_text&#34;: &#34;How does understand network old?&#34;,
+      &#34;choices&#34;: [
+        {
+          &#34;choice&#34;: &#34;Agree&#34;,
+          &#34;number&#34;: 2
+        }
+      ]
+    },
+    {
+      &#34;question_id&#34;: &#34;8tf2SU934m8&#34;,
+      &#34;question_text&#34;: &#34;Why does western next put?&#34;,
+      &#34;choices&#34;: [
+        {
+          &#34;choice&#34;: &#34;Neutral&#34;,
+          &#34;number&#34;: 8
         }
       ]
     }
@@ -356,14 +356,14 @@
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Reading-with-Pandas">Reading with Pandas<a class="anchor-link" href="#Reading-with-Pandas">&#182;</a></h2><p>As you can see below, simply reading this directly into a dataframe only parses the top level respondent data, but then keeps the responses data as a json array. Which isn't great for simple analysis. Could you load that as is in a jsonb field in PostgreSQL? Sure. If you like parsing json with SQL. Yuck!</p>
+<h2 id="Reading-with-Pandas">Reading with Pandas<a class="anchor-link" href="#Reading-with-Pandas">&#182;</a></h2><p>As you can see below, simply reading this directly into a dataframe only parses the top level respondent data, but then keeps the responses data as a json array. Which isn't great for simple analysis. Could you load that "as is" into a jsonb field in PostgreSQL? Sure. If you like parsing json with SQL. Yuck!</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[81]:</div>
+<div class="prompt input_prompt">In&nbsp;[68]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">sample_data</span><span class="p">)</span>
@@ -398,17 +398,17 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
-      <td>[{'question_id': '7Hq2ZB052H0', 'question_text': 'Why does several bad job hotel measure machine draw already?', 'choices': [{'choice': 'Strongly Disagree', 'number': 4}]}, {'question_id': '7sF5Rc966u2', 'question_text': 'Why does prepare financial garden several power group?', 'choices': [{'choice': 'Disagree', 'number': 6}]}, {'question_id': '3eW3tB947k7', 'question_text': 'How does scene high early still read?', 'choices': [{'choice': 'Agree', 'number': 6}]}, {'question_id': '3xZ1up030p7', 'question_text': 'Does than not economy toward short than stand?', 'choices': [{'choice': 'Neutral', 'number': 1}]}, {'question_id': '4jt0Kn805O4', 'question_text': 'Which once yourself program?', 'choices': [{'choice': 'Neutral', 'number': 9}]}]</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>[{'question_id': '7YB4ZO864I7', 'question_text': 'How does speak beat ever tree?', 'choices': [{'choice': 'Strongly Agree', 'number': 4}]}, {'question_id': '8uD0WY155Q9', 'question_text': 'How does write popular Mr know develop?', 'choices': [{'choice': 'Agree', 'number': 9}]}, {'question_id': '8bN0OP829A8', 'question_text': 'Why does democratic represent far my pressure series third?', 'choices': [{'choice': 'Strongly Agree', 'number': 9}]}, {'question_id': '2Rt9mk140E8', 'question_text': 'How does understand network old?', 'choices': [{'choice': 'Agree', 'number': 2}]}, {'question_id': '8tf2SU934m8', 'question_text': 'Why does western next put?', 'choices': [{'choice': 'Neutral', 'number': 8}]}]</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
-      <td>[{'question_id': '8ZY2IL469Z3', 'question_text': 'Does care training manage idea green produce machine?', 'choices': [{'choice': 'Disagree', 'number': 6}]}, {'question_id': '3jX8ix783b5', 'question_text': 'Which idea very care entire support rich?', 'choices': [{'choice': 'Neutral', 'number': 2}]}, {'question_id': '5ip4Sm635P6', 'question_text': 'Why does by collection leader well?', 'choices': [{'choice': 'Disagree', 'number': 6}]}, {'question_id': '4Hb8hr280u5', 'question_text': 'Which hospital father education build star through hospital?', 'choices': [{'choice': 'Agree', 'number': 5}]}, {'question_id': '3jJ6oU916M5', 'question_text': 'How does fire break material skill?', 'choices': [{'choice': 'Agree', 'number': 8}]}]</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>[{'question_id': '2CP2AW568v2', 'question_text': 'Why does whatever play office move alone class part wish?', 'choices': [{'choice': 'Neutral', 'number': 0}]}, {'question_id': '2YV7SR528f0', 'question_text': 'Why does which phone return much door?', 'choices': [{'choice': 'Disagree', 'number': 7}]}, {'question_id': '3PJ8eR903v4', 'question_text': 'Why does despite be class various great stay Republican person?', 'choices': [{'choice': 'Neutral', 'number': 4}]}, {'question_id': '2GV2kH553o3', 'question_text': 'Does become create store store?', 'choices': [{'choice': 'Disagree', 'number': 8}]}, {'question_id': '9aX3NJ910f8', 'question_text': 'Which team life although rate science I pattern?', 'choices': [{'choice': 'Strongly Disagree', 'number': 7}]}]</td>
     </tr>
   </tbody>
 </table>
@@ -423,18 +423,203 @@
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="JSON-Normalize">JSON Normalize<a class="anchor-link" href="#JSON-Normalize">&#182;</a></h2><p>Thankfully there is the <code>json_normalize()</code> function, but it requires a little understanding to get it to satisfactorily parse flat. Simply passing it the sample data without any parameters results in a very familiar result that's get us no further than we started in the last attempt.</p>
+<h2 id="A-messy-custom-parser">A messy custom parser<a class="anchor-link" href="#A-messy-custom-parser">&#182;</a></h2><p>We could attempt to reshape this by writing some custom functions to handle extracting the responses and merging that data with the top-level meta data about the respondent with some dictionary unpacking, but this gets messy and would fall apart quickly as the structure changed. While this approach works, it's not ideal.</p>
+<p>Sure this code could be further refactored to simplify the logic, but it's not worth it since the <code>pandas.json_normalize()</code> can do this for us easily.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[82]:</div>
+<div class="prompt input_prompt">In&nbsp;[69]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span><span class="n">sample_data</span><span class="p">)</span>
-<span class="n">print_df</span><span class="p">(</span><span class="n">df3</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">record_format</span><span class="p">(</span><span class="n">responses</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">response</span> <span class="ow">in</span> <span class="n">responses</span><span class="p">:</span>
+        <span class="n">record</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;question_id&quot;</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;question_id&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;question_text&quot;</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;question_text&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;choice&quot;</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;choices&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;choice&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;number&quot;</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;choices&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;number&quot;</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+<span class="k">def</span> <span class="nf">parse_json</span><span class="p">(</span><span class="n">records</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">sample_data</span><span class="p">:</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;respondent_id&quot;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;respondent_id&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;survey_date&quot;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;survey_date&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;email&quot;</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="n">responses</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;responses&quot;</span><span class="p">)</span>
+        <span class="n">formatted_responses</span> <span class="o">=</span> <span class="n">record_format</span><span class="p">(</span><span class="n">responses</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">response</span> <span class="ow">in</span> <span class="n">formatted_responses</span><span class="p">:</span>
+            <span class="n">combined</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">meta</span><span class="p">,</span> <span class="o">**</span><span class="n">response</span><span class="p">}</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">combined</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+<span class="n">clean_data</span> <span class="o">=</span> <span class="n">parse_json</span><span class="p">(</span><span class="n">sample_data</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">clean_data</span><span class="p">)</span>
+<span class="n">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>respondent_id</th>
+      <th>survey_date</th>
+      <th>email</th>
+      <th>question_id</th>
+      <th>question_text</th>
+      <th>choice</th>
+      <th>number</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>7YB4ZO864I7</td>
+      <td>How does speak beat ever tree?</td>
+      <td>Strongly Agree</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>8uD0WY155Q9</td>
+      <td>How does write popular Mr know develop?</td>
+      <td>Agree</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>8bN0OP829A8</td>
+      <td>Why does democratic represent far my pressure series third?</td>
+      <td>Strongly Agree</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>2Rt9mk140E8</td>
+      <td>How does understand network old?</td>
+      <td>Agree</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>8tf2SU934m8</td>
+      <td>Why does western next put?</td>
+      <td>Neutral</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>2CP2AW568v2</td>
+      <td>Why does whatever play office move alone class part wish?</td>
+      <td>Neutral</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>2YV7SR528f0</td>
+      <td>Why does which phone return much door?</td>
+      <td>Disagree</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>3PJ8eR903v4</td>
+      <td>Why does despite be class various great stay Republican person?</td>
+      <td>Neutral</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>2GV2kH553o3</td>
+      <td>Does become create store store?</td>
+      <td>Disagree</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>9aX3NJ910f8</td>
+      <td>Which team life although rate science I pattern?</td>
+      <td>Strongly Disagree</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="JSON-Normalize">JSON Normalize<a class="anchor-link" href="#JSON-Normalize">&#182;</a></h2><p>Thankfully there is the <code>json_normalize()</code> function, but it requires a little understanding to get it to satisfactorily parse flat. Simply passing it the sample data without any parameters results in a very familiar result that gets us no further than we started in the first attempt.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[70]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span><span class="n">sample_data</span><span class="p">)</span>
+<span class="n">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -465,17 +650,17 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
-      <td>[{'question_id': '7Hq2ZB052H0', 'question_text': 'Why does several bad job hotel measure machine draw already?', 'choices': [{'choice': 'Strongly Disagree', 'number': 4}]}, {'question_id': '7sF5Rc966u2', 'question_text': 'Why does prepare financial garden several power group?', 'choices': [{'choice': 'Disagree', 'number': 6}]}, {'question_id': '3eW3tB947k7', 'question_text': 'How does scene high early still read?', 'choices': [{'choice': 'Agree', 'number': 6}]}, {'question_id': '3xZ1up030p7', 'question_text': 'Does than not economy toward short than stand?', 'choices': [{'choice': 'Neutral', 'number': 1}]}, {'question_id': '4jt0Kn805O4', 'question_text': 'Which once yourself program?', 'choices': [{'choice': 'Neutral', 'number': 9}]}]</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>[{'question_id': '7YB4ZO864I7', 'question_text': 'How does speak beat ever tree?', 'choices': [{'choice': 'Strongly Agree', 'number': 4}]}, {'question_id': '8uD0WY155Q9', 'question_text': 'How does write popular Mr know develop?', 'choices': [{'choice': 'Agree', 'number': 9}]}, {'question_id': '8bN0OP829A8', 'question_text': 'Why does democratic represent far my pressure series third?', 'choices': [{'choice': 'Strongly Agree', 'number': 9}]}, {'question_id': '2Rt9mk140E8', 'question_text': 'How does understand network old?', 'choices': [{'choice': 'Agree', 'number': 2}]}, {'question_id': '8tf2SU934m8', 'question_text': 'Why does western next put?', 'choices': [{'choice': 'Neutral', 'number': 8}]}]</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
-      <td>[{'question_id': '8ZY2IL469Z3', 'question_text': 'Does care training manage idea green produce machine?', 'choices': [{'choice': 'Disagree', 'number': 6}]}, {'question_id': '3jX8ix783b5', 'question_text': 'Which idea very care entire support rich?', 'choices': [{'choice': 'Neutral', 'number': 2}]}, {'question_id': '5ip4Sm635P6', 'question_text': 'Why does by collection leader well?', 'choices': [{'choice': 'Disagree', 'number': 6}]}, {'question_id': '4Hb8hr280u5', 'question_text': 'Which hospital father education build star through hospital?', 'choices': [{'choice': 'Agree', 'number': 5}]}, {'question_id': '3jJ6oU916M5', 'question_text': 'How does fire break material skill?', 'choices': [{'choice': 'Agree', 'number': 8}]}]</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>[{'question_id': '2CP2AW568v2', 'question_text': 'Why does whatever play office move alone class part wish?', 'choices': [{'choice': 'Neutral', 'number': 0}]}, {'question_id': '2YV7SR528f0', 'question_text': 'Why does which phone return much door?', 'choices': [{'choice': 'Disagree', 'number': 7}]}, {'question_id': '3PJ8eR903v4', 'question_text': 'Why does despite be class various great stay Republican person?', 'choices': [{'choice': 'Neutral', 'number': 4}]}, {'question_id': '2GV2kH553o3', 'question_text': 'Does become create store store?', 'choices': [{'choice': 'Disagree', 'number': 8}]}, {'question_id': '9aX3NJ910f8', 'question_text': 'Which team life although rate science I pattern?', 'choices': [{'choice': 'Strongly Disagree', 'number': 7}]}]</td>
     </tr>
   </tbody>
 </table>
@@ -491,21 +676,20 @@
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>A few optional parameters can be used here to parse the first nested array called <code>responses</code>. We can direct the pandas json parser to a specific key as the source of records. The <code>record_path</code> parameter takes either a string or list of strings to construct that path. The name of this parameter is a hint about how to think of this when passed as a list as we'll see later.</p>
-<p>We</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[85]:</div>
+<div class="prompt input_prompt">In&nbsp;[71]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
     <span class="n">sample_data</span><span class="p">,</span> 
     <span class="n">record_path</span><span class="o">=</span><span class="s2">&quot;responses&quot;</span><span class="p">,</span> 
 <span class="p">)</span>
-<span class="n">print_df</span><span class="p">(</span><span class="n">df4</span><span class="p">)</span>
+<span class="n">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -535,63 +719,63 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>7Hq2ZB052H0</td>
-      <td>Why does several bad job hotel measure machine draw already?</td>
-      <td>[{'choice': 'Strongly Disagree', 'number': 4}]</td>
+      <td>7YB4ZO864I7</td>
+      <td>How does speak beat ever tree?</td>
+      <td>[{'choice': 'Strongly Agree', 'number': 4}]</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>7sF5Rc966u2</td>
-      <td>Why does prepare financial garden several power group?</td>
-      <td>[{'choice': 'Disagree', 'number': 6}]</td>
+      <td>8uD0WY155Q9</td>
+      <td>How does write popular Mr know develop?</td>
+      <td>[{'choice': 'Agree', 'number': 9}]</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>3eW3tB947k7</td>
-      <td>How does scene high early still read?</td>
-      <td>[{'choice': 'Agree', 'number': 6}]</td>
+      <td>8bN0OP829A8</td>
+      <td>Why does democratic represent far my pressure series third?</td>
+      <td>[{'choice': 'Strongly Agree', 'number': 9}]</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>3xZ1up030p7</td>
-      <td>Does than not economy toward short than stand?</td>
-      <td>[{'choice': 'Neutral', 'number': 1}]</td>
+      <td>2Rt9mk140E8</td>
+      <td>How does understand network old?</td>
+      <td>[{'choice': 'Agree', 'number': 2}]</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>4jt0Kn805O4</td>
-      <td>Which once yourself program?</td>
-      <td>[{'choice': 'Neutral', 'number': 9}]</td>
+      <td>8tf2SU934m8</td>
+      <td>Why does western next put?</td>
+      <td>[{'choice': 'Neutral', 'number': 8}]</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>8ZY2IL469Z3</td>
-      <td>Does care training manage idea green produce machine?</td>
-      <td>[{'choice': 'Disagree', 'number': 6}]</td>
+      <td>2CP2AW568v2</td>
+      <td>Why does whatever play office move alone class part wish?</td>
+      <td>[{'choice': 'Neutral', 'number': 0}]</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>3jX8ix783b5</td>
-      <td>Which idea very care entire support rich?</td>
-      <td>[{'choice': 'Neutral', 'number': 2}]</td>
+      <td>2YV7SR528f0</td>
+      <td>Why does which phone return much door?</td>
+      <td>[{'choice': 'Disagree', 'number': 7}]</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>5ip4Sm635P6</td>
-      <td>Why does by collection leader well?</td>
-      <td>[{'choice': 'Disagree', 'number': 6}]</td>
+      <td>3PJ8eR903v4</td>
+      <td>Why does despite be class various great stay Republican person?</td>
+      <td>[{'choice': 'Neutral', 'number': 4}]</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>4Hb8hr280u5</td>
-      <td>Which hospital father education build star through hospital?</td>
-      <td>[{'choice': 'Agree', 'number': 5}]</td>
+      <td>2GV2kH553o3</td>
+      <td>Does become create store store?</td>
+      <td>[{'choice': 'Disagree', 'number': 8}]</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>3jJ6oU916M5</td>
-      <td>How does fire break material skill?</td>
-      <td>[{'choice': 'Agree', 'number': 8}]</td>
+      <td>9aX3NJ910f8</td>
+      <td>Which team life although rate science I pattern?</td>
+      <td>[{'choice': 'Strongly Disagree', 'number': 7}]</td>
     </tr>
   </tbody>
 </table>
@@ -613,10 +797,10 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[87]:</div>
+<div class="prompt input_prompt">In&nbsp;[72]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
     <span class="n">sample_data</span><span class="p">,</span> 
     <span class="n">record_path</span><span class="o">=</span><span class="s2">&quot;responses&quot;</span><span class="p">,</span> 
      <span class="n">meta</span><span class="o">=</span><span class="p">[</span>
@@ -625,7 +809,7 @@
         <span class="s2">&quot;email&quot;</span><span class="p">,</span> 
     <span class="p">],</span>
 <span class="p">)</span>
-<span class="n">print_df</span><span class="p">(</span><span class="n">df4</span><span class="p">)</span>
+<span class="n">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
    
 </pre></div>
 
@@ -659,93 +843,93 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>7Hq2ZB052H0</td>
-      <td>Why does several bad job hotel measure machine draw already?</td>
-      <td>[{'choice': 'Strongly Disagree', 'number': 4}]</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
+      <td>7YB4ZO864I7</td>
+      <td>How does speak beat ever tree?</td>
+      <td>[{'choice': 'Strongly Agree', 'number': 4}]</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>7sF5Rc966u2</td>
-      <td>Why does prepare financial garden several power group?</td>
-      <td>[{'choice': 'Disagree', 'number': 6}]</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
+      <td>8uD0WY155Q9</td>
+      <td>How does write popular Mr know develop?</td>
+      <td>[{'choice': 'Agree', 'number': 9}]</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>3eW3tB947k7</td>
-      <td>How does scene high early still read?</td>
-      <td>[{'choice': 'Agree', 'number': 6}]</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
+      <td>8bN0OP829A8</td>
+      <td>Why does democratic represent far my pressure series third?</td>
+      <td>[{'choice': 'Strongly Agree', 'number': 9}]</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>3xZ1up030p7</td>
-      <td>Does than not economy toward short than stand?</td>
-      <td>[{'choice': 'Neutral', 'number': 1}]</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
+      <td>2Rt9mk140E8</td>
+      <td>How does understand network old?</td>
+      <td>[{'choice': 'Agree', 'number': 2}]</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>4jt0Kn805O4</td>
-      <td>Which once yourself program?</td>
-      <td>[{'choice': 'Neutral', 'number': 9}]</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
+      <td>8tf2SU934m8</td>
+      <td>Why does western next put?</td>
+      <td>[{'choice': 'Neutral', 'number': 8}]</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>8ZY2IL469Z3</td>
-      <td>Does care training manage idea green produce machine?</td>
-      <td>[{'choice': 'Disagree', 'number': 6}]</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
+      <td>2CP2AW568v2</td>
+      <td>Why does whatever play office move alone class part wish?</td>
+      <td>[{'choice': 'Neutral', 'number': 0}]</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>3jX8ix783b5</td>
-      <td>Which idea very care entire support rich?</td>
-      <td>[{'choice': 'Neutral', 'number': 2}]</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
+      <td>2YV7SR528f0</td>
+      <td>Why does which phone return much door?</td>
+      <td>[{'choice': 'Disagree', 'number': 7}]</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>5ip4Sm635P6</td>
-      <td>Why does by collection leader well?</td>
-      <td>[{'choice': 'Disagree', 'number': 6}]</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
+      <td>3PJ8eR903v4</td>
+      <td>Why does despite be class various great stay Republican person?</td>
+      <td>[{'choice': 'Neutral', 'number': 4}]</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>4Hb8hr280u5</td>
-      <td>Which hospital father education build star through hospital?</td>
-      <td>[{'choice': 'Agree', 'number': 5}]</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
+      <td>2GV2kH553o3</td>
+      <td>Does become create store store?</td>
+      <td>[{'choice': 'Disagree', 'number': 8}]</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>3jJ6oU916M5</td>
-      <td>How does fire break material skill?</td>
-      <td>[{'choice': 'Agree', 'number': 8}]</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
+      <td>9aX3NJ910f8</td>
+      <td>Which team life although rate science I pattern?</td>
+      <td>[{'choice': 'Strongly Disagree', 'number': 7}]</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
     </tr>
   </tbody>
 </table>
@@ -778,10 +962,10 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[91]:</div>
+<div class="prompt input_prompt">In&nbsp;[73]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
     <span class="n">sample_data</span><span class="p">,</span> 
     <span class="n">record_path</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;responses&quot;</span><span class="p">,</span> <span class="s2">&quot;choices&quot;</span><span class="p">],</span> 
     <span class="n">meta</span><span class="o">=</span><span class="p">[</span>
@@ -790,7 +974,7 @@
         <span class="s2">&quot;email&quot;</span><span class="p">,</span> 
     <span class="p">],</span>
 <span class="p">)</span>
-<span class="n">print_df</span><span class="p">(</span><span class="n">df5</span><span class="p">)</span>
+<span class="n">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -822,83 +1006,83 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>Strongly Disagree</td>
+      <td>Strongly Agree</td>
       <td>4</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Disagree</td>
-      <td>6</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
+      <td>Agree</td>
+      <td>9</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Agree</td>
-      <td>6</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
+      <td>Strongly Agree</td>
+      <td>9</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Neutral</td>
-      <td>1</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
+      <td>Agree</td>
+      <td>2</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Neutral</td>
-      <td>9</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
+      <td>8</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>Disagree</td>
-      <td>6</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
+      <td>Neutral</td>
+      <td>0</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>Neutral</td>
-      <td>2</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
+      <td>Disagree</td>
+      <td>7</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>Disagree</td>
-      <td>6</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
+      <td>Neutral</td>
+      <td>4</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>Agree</td>
-      <td>5</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
+      <td>Disagree</td>
+      <td>8</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>Agree</td>
-      <td>8</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
+      <td>Strongly Disagree</td>
+      <td>7</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
     </tr>
   </tbody>
 </table>
@@ -920,10 +1104,10 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[92]:</div>
+<div class="prompt input_prompt">In&nbsp;[74]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
     <span class="n">sample_data</span><span class="p">,</span> 
     <span class="n">record_path</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;responses&quot;</span><span class="p">,</span> <span class="s2">&quot;choices&quot;</span><span class="p">],</span> 
     <span class="n">meta</span><span class="o">=</span><span class="p">[</span>
@@ -934,7 +1118,7 @@
         <span class="p">[</span><span class="s2">&quot;responses&quot;</span><span class="p">,</span> <span class="s2">&quot;question_text&quot;</span><span class="p">],</span>
     <span class="p">],</span>
 <span class="p">)</span>
-<span class="n">print_df</span><span class="p">(</span><span class="n">df5</span><span class="p">)</span>
+<span class="n">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -968,103 +1152,103 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>Strongly Disagree</td>
+      <td>Strongly Agree</td>
       <td>4</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
-      <td>7Hq2ZB052H0</td>
-      <td>Why does several bad job hotel measure machine draw already?</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>7YB4ZO864I7</td>
+      <td>How does speak beat ever tree?</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Disagree</td>
-      <td>6</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
-      <td>7sF5Rc966u2</td>
-      <td>Why does prepare financial garden several power group?</td>
+      <td>Agree</td>
+      <td>9</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>8uD0WY155Q9</td>
+      <td>How does write popular Mr know develop?</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Agree</td>
-      <td>6</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
-      <td>3eW3tB947k7</td>
-      <td>How does scene high early still read?</td>
+      <td>Strongly Agree</td>
+      <td>9</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>8bN0OP829A8</td>
+      <td>Why does democratic represent far my pressure series third?</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Neutral</td>
-      <td>1</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
-      <td>3xZ1up030p7</td>
-      <td>Does than not economy toward short than stand?</td>
+      <td>Agree</td>
+      <td>2</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>2Rt9mk140E8</td>
+      <td>How does understand network old?</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Neutral</td>
-      <td>9</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
-      <td>4jt0Kn805O4</td>
-      <td>Which once yourself program?</td>
+      <td>8</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>8tf2SU934m8</td>
+      <td>Why does western next put?</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>Disagree</td>
-      <td>6</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
-      <td>8ZY2IL469Z3</td>
-      <td>Does care training manage idea green produce machine?</td>
+      <td>Neutral</td>
+      <td>0</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>2CP2AW568v2</td>
+      <td>Why does whatever play office move alone class part wish?</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>Neutral</td>
-      <td>2</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
-      <td>3jX8ix783b5</td>
-      <td>Which idea very care entire support rich?</td>
+      <td>Disagree</td>
+      <td>7</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>2YV7SR528f0</td>
+      <td>Why does which phone return much door?</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>Disagree</td>
-      <td>6</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
-      <td>5ip4Sm635P6</td>
-      <td>Why does by collection leader well?</td>
+      <td>Neutral</td>
+      <td>4</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>3PJ8eR903v4</td>
+      <td>Why does despite be class various great stay Republican person?</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>Agree</td>
-      <td>5</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
-      <td>4Hb8hr280u5</td>
-      <td>Which hospital father education build star through hospital?</td>
+      <td>Disagree</td>
+      <td>8</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>2GV2kH553o3</td>
+      <td>Does become create store store?</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>Agree</td>
-      <td>8</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
-      <td>3jJ6oU916M5</td>
-      <td>How does fire break material skill?</td>
+      <td>Strongly Disagree</td>
+      <td>7</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>9aX3NJ910f8</td>
+      <td>Which team life although rate science I pattern?</td>
     </tr>
   </tbody>
 </table>
@@ -1086,10 +1270,10 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[95]:</div>
+<div class="prompt input_prompt">In&nbsp;[75]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
     <span class="n">sample_data</span><span class="p">,</span> 
     <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;_&quot;</span><span class="p">,</span>
     <span class="n">record_path</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;responses&quot;</span><span class="p">,</span> <span class="s2">&quot;choices&quot;</span><span class="p">],</span> 
@@ -1101,7 +1285,7 @@
         <span class="p">[</span><span class="s2">&quot;responses&quot;</span><span class="p">,</span> <span class="s2">&quot;question_text&quot;</span><span class="p">]</span>
     <span class="p">],</span>
 <span class="p">)</span>
-<span class="n">print_df</span><span class="p">(</span><span class="n">df5</span><span class="p">)</span>
+<span class="n">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1135,103 +1319,103 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>Strongly Disagree</td>
+      <td>Strongly Agree</td>
       <td>4</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
-      <td>7Hq2ZB052H0</td>
-      <td>Why does several bad job hotel measure machine draw already?</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>7YB4ZO864I7</td>
+      <td>How does speak beat ever tree?</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Disagree</td>
-      <td>6</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
-      <td>7sF5Rc966u2</td>
-      <td>Why does prepare financial garden several power group?</td>
+      <td>Agree</td>
+      <td>9</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>8uD0WY155Q9</td>
+      <td>How does write popular Mr know develop?</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Agree</td>
-      <td>6</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
-      <td>3eW3tB947k7</td>
-      <td>How does scene high early still read?</td>
+      <td>Strongly Agree</td>
+      <td>9</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>8bN0OP829A8</td>
+      <td>Why does democratic represent far my pressure series third?</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Neutral</td>
-      <td>1</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
-      <td>3xZ1up030p7</td>
-      <td>Does than not economy toward short than stand?</td>
+      <td>Agree</td>
+      <td>2</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>2Rt9mk140E8</td>
+      <td>How does understand network old?</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Neutral</td>
-      <td>9</td>
-      <td>6q96SI993a7</td>
-      <td>2013-08-12</td>
-      <td>Tracy Foster@example.com</td>
-      <td>4jt0Kn805O4</td>
-      <td>Which once yourself program?</td>
+      <td>8</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>8tf2SU934m8</td>
+      <td>Why does western next put?</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>Disagree</td>
-      <td>6</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
-      <td>8ZY2IL469Z3</td>
-      <td>Does care training manage idea green produce machine?</td>
+      <td>Neutral</td>
+      <td>0</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>2CP2AW568v2</td>
+      <td>Why does whatever play office move alone class part wish?</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>Neutral</td>
-      <td>2</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
-      <td>3jX8ix783b5</td>
-      <td>Which idea very care entire support rich?</td>
+      <td>Disagree</td>
+      <td>7</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>2YV7SR528f0</td>
+      <td>Why does which phone return much door?</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>Disagree</td>
-      <td>6</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
-      <td>5ip4Sm635P6</td>
-      <td>Why does by collection leader well?</td>
+      <td>Neutral</td>
+      <td>4</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>3PJ8eR903v4</td>
+      <td>Why does despite be class various great stay Republican person?</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>Agree</td>
-      <td>5</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
-      <td>4Hb8hr280u5</td>
-      <td>Which hospital father education build star through hospital?</td>
+      <td>Disagree</td>
+      <td>8</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>2GV2kH553o3</td>
+      <td>Does become create store store?</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>Agree</td>
-      <td>8</td>
-      <td>3s64my293n2</td>
-      <td>2019-09-05</td>
-      <td>Mary Chen@example.com</td>
-      <td>3jJ6oU916M5</td>
-      <td>How does fire break material skill?</td>
+      <td>Strongly Disagree</td>
+      <td>7</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>9aX3NJ910f8</td>
+      <td>Which team life although rate science I pattern?</td>
     </tr>
   </tbody>
 </table>
@@ -1246,7 +1430,7 @@
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Lastly, we'll record the columns to start from the least nested level on the left all the way to the most nested on the right for easier interpretation.</p>
+<p>Finally, we'll order the columns from the least nested level on the left all the way to the most nested on the right for easier readability.</p>
 
 </div>
 </div>
@@ -1257,8 +1441,8 @@
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">column_order</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;respondent_id&quot;</span><span class="p">,</span> <span class="s2">&quot;survey_date&quot;</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="s2">&quot;responses_question_id&quot;</span><span class="p">,</span> <span class="s2">&quot;responses_question_text&quot;</span><span class="p">,</span> <span class="s2">&quot;choice&quot;</span><span class="p">,</span> <span class="s2">&quot;number&quot;</span><span class="p">]</span>
-<span class="n">df6</span> <span class="o">=</span> <span class="n">df5</span><span class="p">[</span><span class="n">column_order</span><span class="p">]</span>
-<span class="n">print_df</span><span class="p">(</span><span class="n">df6</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">column_order</span><span class="p">]</span>
+<span class="n">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1292,103 +1476,103 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>8l80gS238W2</td>
-      <td>1982-10-31</td>
-      <td>Dan Thomas@example.com</td>
-      <td>9ZR5ZR439f4</td>
-      <td>How does in something of different?</td>
-      <td>Disagree</td>
-      <td>0</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>7YB4ZO864I7</td>
+      <td>How does speak beat ever tree?</td>
+      <td>Strongly Agree</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>8l80gS238W2</td>
-      <td>1982-10-31</td>
-      <td>Dan Thomas@example.com</td>
-      <td>9DK0Am643P0</td>
-      <td>How does impact same move value water?</td>
-      <td>Strongly Disagree</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>8l80gS238W2</td>
-      <td>1982-10-31</td>
-      <td>Dan Thomas@example.com</td>
-      <td>0NE2jJ853s2</td>
-      <td>Why does including exactly thus player?</td>
-      <td>Strongly Agree</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>8l80gS238W2</td>
-      <td>1982-10-31</td>
-      <td>Dan Thomas@example.com</td>
-      <td>1mK5tX361J2</td>
-      <td>Why does training deep day group let president?</td>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>8uD0WY155Q9</td>
+      <td>How does write popular Mr know develop?</td>
       <td>Agree</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>8l80gS238W2</td>
-      <td>1982-10-31</td>
-      <td>Dan Thomas@example.com</td>
-      <td>3PM4xL997q4</td>
-      <td>Does her ok lot hour?</td>
-      <td>Agree</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>8o18qO450A6</td>
-      <td>2015-07-19</td>
-      <td>Katrina Gross@example.com</td>
-      <td>9Of3Hc997V6</td>
-      <td>Why does student mouth any they hair positive?</td>
-      <td>Neutral</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>8o18qO450A6</td>
-      <td>2015-07-19</td>
-      <td>Katrina Gross@example.com</td>
-      <td>7Ql0Qg952F3</td>
-      <td>Does finally majority miss?</td>
-      <td>Disagree</td>
       <td>9</td>
     </tr>
     <tr>
+      <th>2</th>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>8bN0OP829A8</td>
+      <td>Why does democratic represent far my pressure series third?</td>
+      <td>Strongly Agree</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>2Rt9mk140E8</td>
+      <td>How does understand network old?</td>
+      <td>Agree</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>9U69hZ538l1</td>
+      <td>1994-03-20</td>
+      <td>lindsey24@example.com</td>
+      <td>8tf2SU934m8</td>
+      <td>Why does western next put?</td>
+      <td>Neutral</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>2CP2AW568v2</td>
+      <td>Why does whatever play office move alone class part wish?</td>
+      <td>Neutral</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>2YV7SR528f0</td>
+      <td>Why does which phone return much door?</td>
+      <td>Disagree</td>
+      <td>7</td>
+    </tr>
+    <tr>
       <th>7</th>
-      <td>8o18qO450A6</td>
-      <td>2015-07-19</td>
-      <td>Katrina Gross@example.com</td>
-      <td>5GL0iD950d2</td>
-      <td>Does machine whatever floor mission budget court production?</td>
-      <td>Strongly Disagree</td>
-      <td>5</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>3PJ8eR903v4</td>
+      <td>Why does despite be class various great stay Republican person?</td>
+      <td>Neutral</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>8o18qO450A6</td>
-      <td>2015-07-19</td>
-      <td>Katrina Gross@example.com</td>
-      <td>5Ie6OO091n8</td>
-      <td>Why does nearly nothing owner per?</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>2GV2kH553o3</td>
+      <td>Does become create store store?</td>
       <td>Disagree</td>
-      <td>3</td>
+      <td>8</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>8o18qO450A6</td>
-      <td>2015-07-19</td>
-      <td>Katrina Gross@example.com</td>
-      <td>9Ca8PI956p7</td>
-      <td>Does ready whatever quite plant forward yes summer?</td>
-      <td>Neutral</td>
-      <td>8</td>
+      <td>3A45gW246W1</td>
+      <td>1991-07-13</td>
+      <td>robert21@example.com</td>
+      <td>9aX3NJ910f8</td>
+      <td>Which team life although rate science I pattern?</td>
+      <td>Strongly Disagree</td>
+      <td>7</td>
     </tr>
   </tbody>
 </table>
@@ -1403,7 +1587,7 @@
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Parsed-and-read-to-import">Parsed and read to import<a class="anchor-link" href="#Parsed-and-read-to-import">&#182;</a></h2><p>At this point our data is in a tabular format and ready to import into a database table with something like pandas <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_sql.html?highlight=to_sql">to_sql()</a> function, but we'll save that for another post.</p>
+<h2 id="Parsed-and-ready-to-import">Parsed and ready to import<a class="anchor-link" href="#Parsed-and-ready-to-import">&#182;</a></h2><p>At this point our data is in a simple tabular format and ready to import into a database table with something like <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_sql.html?highlight=to_sql">pandas.to_sql()</a> function, but we'll save that for another post.</p>
 
 </div>
 </div>
