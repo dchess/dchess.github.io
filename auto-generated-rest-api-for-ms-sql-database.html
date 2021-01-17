@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="./theme/stylesheet/style.min.css">
+
+
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+          href="./theme/pygments/monokai.min.css">
+
+
+  <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/solid.css">
+
+    <link href="./static/custom.css" rel="stylesheet">
+
+    <link href="http://dchess.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="dchess Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+
+
+
+<meta name="author" content="dc.hess@gmail.com" />
+<meta name="description" content="Creating an automatic REST API with Flask and SQLSorcery for an MS SQL database." />
+<meta name="keywords" content="">
+
+
+<meta property="og:site_name" content="dchess"/>
+<meta property="og:title" content="Auto-generated REST API for MS SQL database"/>
+<meta property="og:description" content="Creating an automatic REST API with Flask and SQLSorcery for an MS SQL database."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="./auto-generated-rest-api-for-ms-sql-database.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2021-01-16 17:00:00-08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="./author/dchessgmailcom.html">
+<meta property="article:section" content="Blog"/>
+<meta property="og:image" content="/images/profile.jpg">
+
+  <title>dchess &ndash; Auto-generated REST API for MS SQL database</title>
+
+</head>
+<body class="light-theme">
+  <aside>
+    <div>
+      <a href=".">
+        <img src="/images/profile.jpg" alt="D.C. Hess" title="D.C. Hess">
+      </a>
+
+      <h1>
+        <a href=".">D.C. Hess</a>
+      </h1>
+
+<p>Software Engineer</p>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="./pages/about-me.html#about-me">
+                  About Me
+                </a>
+              </li>
+
+            <li>
+              <a target="_self" href="https://drive.google.com/file/d/1O0-Le26SdL-DhDo2LsOQVWR5BAV4I17F/view" >resume</a>
+            </li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-github" href="https://www.github.com/dchess" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/dc_hess" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-linkedin" href="https://www.linkedin.com/in/dchess" target="_blank">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-envelope-o" href="mailto:dc.hess@gmail.com" target="_blank">
+              <i class="fab fa-envelope-o"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href=".">Home</a>
+
+      <a href="/category/projects.html">Projects</a>
+
+      <a href="http://dchess.github.io/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="auto-generated-rest-api-for-ms-sql-database">Auto-generated REST API for MS SQL database</h1>
+    <p>
+      Posted on Sat 16 January 2021 in <a href="./category/blog.html">Blog</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <h2>The Concept</h2>
+<p>Suppose you have a database with tables and views that you want to expose as JSON through
+a REST API but you don't want to couple the database tables with object models in your
+API but rather have it simply expose the data for querying (read-only). </p>
+<p>How could this be done easily and with minimal code?</p>
+<h2>The Approach</h2>
+<p><a href="https://flask.palletsprojects.com/en/1.1.x/">Flask</a> has to be the simplest web app microframework
+I've ever dealt with (though Node's <a href="https://expressjs.com/">Express</a> and Ruby's 
+<a href="http://sinatrarb.com/">Sinatra</a> certainly come close). It has a great function <code>jsonify</code> that
+makes it dead simple to serve a JSON response to a client request.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># app.py</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">jsonify</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/api/&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;dchess&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello, World&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Spin it up on <code>localhost:5000/api/</code> and voila, data!</p>
+<h2>Here comes the Sorcery</h2>
+<p>That's simple enough but how do we substitute the hard coded dictionary for a database query? This is
+where <a href="https://www.sqlalchemy.org/">SQLAlchemy</a> and <a href="https://pandas.pydata.org/">Pandas</a> come in handy.</p>
+<p>I almost always want to use these two packages together and so a while back I created a pypi package to
+provide a simple facade with some syntactic sugar to make that even simpler called <a href="https://sqlsorcery.readthedocs.io/en/latest/">SQLSorcery</a>. It's built on top of both of them and has a simple way <a href="https://sqlsorcery.readthedocs.io/en/latest/cookbook/installation.html">to optionally install
+database adapter packages</a> like <a href="https://pypi.org/project/pyodbc/">pyodbc</a>. </p>
+<p>That allows me to easily pass in my database connection credentials with environment
+variables and make sql queries using the Pandas <code>.read_sql_query()</code> method. </p>
+<h2>Environment</h2>
+<p>I'm a fan of <a href="https://pipenv.pypa.io/en/latest/">Pipenv</a>. It's so simple to install python package dependencies
+into a local virtual environment and also handle environment variables from a <code>.env</code> file. Effectively combining
+all the functionality of <a href="https://pypi.org/project/pip/">pip</a>, <a href="https://docs.python.org/3/tutorial/venv.html">venv</a>, and <a href="https://saurabh-kumar.com/python-dotenv/">python-dotenv</a>. </p>
+<div class="highlight"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="n">pipenv</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="n">Flask</span><span class="p">,</span><span class="w"> </span><span class="n">sqlsorcery</span><span class="o">[</span><span class="n">mssql</span><span class="o">]</span><span class="w"></span>
+</code></pre></div>
+
+<p>And just like that we're ready to develop.</p>
+<p>Let's add some environment variables to a <code>.env</code> file to start:</p>
+<div class="highlight"><pre><span></span><code><span class="n">DB_SERVER</span><span class="o">=</span>
+<span class="n">DB</span><span class="o">=</span>
+<span class="n">DB_SCHEMA</span><span class="o">=</span>
+<span class="n">DB_USER</span><span class="o">=</span>
+<span class="n">DB_PWD</span><span class="o">=</span>
+
+<span class="n">FLASK_APP</span><span class="o">=</span><span class="n">app</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+
+<h2>Querying our Data</h2>
+<p>Then we can return data from a table as simple as:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sqlsorcery</span> <span class="kn">import</span> <span class="n">MSSQL</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">db</span> <span class="o">=</span> <span class="n">MSSQL</span><span class="p">()</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql_table</span><span class="p">(</span><span class="s2">&quot;your_table_name&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">engine</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">schema</span><span class="p">)</span>
+</code></pre></div>
+
+<p>It's that simple!</p>
+<p>To quickly convert that dataframe into a list of dictionaries (to return as JSON), we
+can use the Pandas <code>to_dict()</code> method.</p>
+<div class="highlight"><pre><span></span><code><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>What if we want to list all the tables in our database schema? Simple!</p>
+<div class="highlight"><pre><span></span><code><span class="n">tables</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">table_names</span><span class="p">(</span><span class="n">schema</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">schema</span><span class="p">)</span>
+</code></pre></div>
+
+<p>With those two approaches and Flask's <code>jsonify</code> we have everything we need to make a quick,
+easy, and minimal API on top of any tables in our database schema.</p>
+<h2>A User Interface</h2>
+<p>While we can create an API for machines to read from, it'd be nice to have at least an index of
+tables that a human can read, navigate, and learn what data exists before pointing tools like <a href="https://curl.se/">curl</a>, 
+<a href="https://www.postman.com/">postman</a>, or <a href="https://requests.readthedocs.io/en/master/">Requests</a> at it. </p>
+<p>No worries! A tiny <a href="https://jinja.palletsprojects.com/en/2.11.x/">jinja</a> HTML template should suffice for a quick list of table names linked to their api endpoint will be just minimal enough to work!</p>
+<div class="highlight"><pre><span></span><code># templates/index.html
+<span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+    {% for table in tables %}
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/api/{{ table}}&quot;</span><span class="p">&gt;</span>{{ table }}<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    {% endfor %}
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<h2>Putting it all together</h2>
+<p>At this point we should have a file directory that looks like this:</p>
+<div class="highlight"><pre><span></span><code>.
+├── Pipfile
+├── .env
+├── app.py
+└── templates
+    └── index.html
+</code></pre></div>
+
+<p>Let's finish off our <code>app.py</code> and give it a test run:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># app.py</span>
+
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">jsonify</span><span class="p">,</span> <span class="n">render_template</span>
+<span class="kn">from</span> <span class="nn">sqlsorcery</span> <span class="kn">import</span> <span class="n">MSSQL</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">MSSQL</span><span class="p">()</span>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/api&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="n">tables</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">table_names</span><span class="p">(</span><span class="n">schema</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">schema</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">&quot;index.html&quot;</span><span class="p">,</span> <span class="n">tables</span><span class="o">=</span><span class="n">tables</span><span class="p">)</span>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/api/&lt;table&gt;&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">endpoint</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql_table</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">engine</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">schema</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Spin it up on <a href="localhost:5000/api/">localhost:5000/api/</a> and explore your data!</p>
+<div class="highlight"><pre><span></span><code>$ pipenv run flask run
+</code></pre></div>
+
+<h2>Conclusion</h2>
+<p>I wouldn't take this and deploy it to production anywhere without some serious security
+decisions, but it makes for a nice proof-of-concept. And certainly could be expanded to
+include user authentication, a proper production server like <a href="https://gunicorn.org/">gunicorn</a> and a nicer
+user interface. But at point you might be better off with <a href="https://www.flaskapi.org/">Flask-API</a> or 
+<a href="https://www.django-rest-framework.org/">Django REST Framework</a>, both of which I've used with success. </p>
+<p>But still, not bad for less than 20 lines of code. </p>
+<p>All the code for this blog can be found on my <a href="https://github.com/dchess/simple_api">github</a>. 
+Feel free to fork and use it however you like. </p>
+<p>SQLSorcery is also MIT licensed and free to use. It's in active development and contributors are welcome. </p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+    </p>
+  </div>
+
+
+
+
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'dchess-org';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " dchess ",
+  "url" : ".",
+  "image": "/images/profile.jpg",
+  "description": "Code, code, and more code"
+}
+</script>
+
+
+</body>
+</html>

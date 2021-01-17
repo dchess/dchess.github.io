@@ -1,5 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>dchess - Blog</title><link href="http://dchess.github.io/" rel="alternate"></link><link href="http://dchess.github.io/feeds/blog.atom.xml" rel="self"></link><id>http://dchess.github.io/</id><updated>2021-01-13T21:00:00-08:00</updated><subtitle>Software Engineer</subtitle><entry><title>How I Teach Git</title><link href="http://dchess.github.io/how-i-teach-git.html" rel="alternate"></link><published>2021-01-13T21:00:00-08:00</published><updated>2021-01-13T21:00:00-08:00</updated><author><name>dc.hess@gmail.com</name></author><id>tag:dchess.github.io,2021-01-13:/how-i-teach-git.html</id><summary type="html">&lt;p&gt;An overview of how I explain Git to others new to using it for version control&lt;/p&gt;</summary><content type="html">&lt;h2&gt;Teaching Commands Just Encourages Cargo Culting&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>dchess - Blog</title><link href="http://dchess.github.io/" rel="alternate"></link><link href="http://dchess.github.io/feeds/blog.atom.xml" rel="self"></link><id>http://dchess.github.io/</id><updated>2021-01-16T17:00:00-08:00</updated><subtitle>Software Engineer</subtitle><entry><title>Auto-generated REST API for MS SQL database</title><link href="http://dchess.github.io/auto-generated-rest-api-for-ms-sql-database.html" rel="alternate"></link><published>2021-01-16T17:00:00-08:00</published><updated>2021-01-16T17:00:00-08:00</updated><author><name>dc.hess@gmail.com</name></author><id>tag:dchess.github.io,2021-01-16:/auto-generated-rest-api-for-ms-sql-database.html</id><summary type="html">&lt;p&gt;Creating an automatic REST API with Flask and SQLSorcery for an MS SQL database.&lt;/p&gt;</summary><content type="html">&lt;h2&gt;The Concept&lt;/h2&gt;
+&lt;p&gt;Suppose you have a database with tables and views that you want to expose as JSON through
+a REST API but you don't want to couple the database tables with object models in your
+API but rather have it simply expose the data for querying (read-only). &lt;/p&gt;
+&lt;p&gt;How could this be done easily and with minimal code?&lt;/p&gt;
+&lt;h2&gt;The Approach&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://flask.palletsprojects.com/en/1.1.x/"&gt;Flask&lt;/a&gt; has to be the simplest web app microframework
+I've ever dealt with (though Node's &lt;a href="https://expressjs.com/"&gt;Express&lt;/a&gt; and Ruby's 
+&lt;a href="http://sinatrarb.com/"&gt;Sinatra&lt;/a&gt; certainly come close). It has a great function &lt;code&gt;jsonify&lt;/code&gt; that
+makes it dead simple to serve a JSON response to a client request.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# app.py&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;jsonify&lt;/span&gt;
+
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="vm"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="nd"&gt;@app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/api/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;index&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="s2"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;dchess&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s2"&gt;&amp;quot;text&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Hello, World&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;jsonify&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Spin it up on &lt;code&gt;localhost:5000/api/&lt;/code&gt; and voila, data!&lt;/p&gt;
+&lt;h2&gt;Here comes the Sorcery&lt;/h2&gt;
+&lt;p&gt;That's simple enough but how do we substitute the hard coded dictionary for a database query? This is
+where &lt;a href="https://www.sqlalchemy.org/"&gt;SQLAlchemy&lt;/a&gt; and &lt;a href="https://pandas.pydata.org/"&gt;Pandas&lt;/a&gt; come in handy.&lt;/p&gt;
+&lt;p&gt;I almost always want to use these two packages together and so a while back I created a pypi package to
+provide a simple facade with some syntactic sugar to make that even simpler called &lt;a href="https://sqlsorcery.readthedocs.io/en/latest/"&gt;SQLSorcery&lt;/a&gt;. It's built on top of both of them and has a simple way &lt;a href="https://sqlsorcery.readthedocs.io/en/latest/cookbook/installation.html"&gt;to optionally install
+database adapter packages&lt;/a&gt; like &lt;a href="https://pypi.org/project/pyodbc/"&gt;pyodbc&lt;/a&gt;. &lt;/p&gt;
+&lt;p&gt;That allows me to easily pass in my database connection credentials with environment
+variables and make sql queries using the Pandas &lt;code&gt;.read_sql_query()&lt;/code&gt; method. &lt;/p&gt;
+&lt;h2&gt;Environment&lt;/h2&gt;
+&lt;p&gt;I'm a fan of &lt;a href="https://pipenv.pypa.io/en/latest/"&gt;Pipenv&lt;/a&gt;. It's so simple to install python package dependencies
+into a local virtual environment and also handle environment variables from a &lt;code&gt;.env&lt;/code&gt; file. Effectively combining
+all the functionality of &lt;a href="https://pypi.org/project/pip/"&gt;pip&lt;/a&gt;, &lt;a href="https://docs.python.org/3/tutorial/venv.html"&gt;venv&lt;/a&gt;, and &lt;a href="https://saurabh-kumar.com/python-dotenv/"&gt;python-dotenv&lt;/a&gt;. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pipenv&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;install&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sqlsorcery&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;mssql&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And just like that we're ready to develop.&lt;/p&gt;
+&lt;p&gt;Let's add some environment variables to a &lt;code&gt;.env&lt;/code&gt; file to start:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;DB_SERVER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="n"&gt;DB&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="n"&gt;DB_SCHEMA&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="n"&gt;DB_USER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="n"&gt;DB_PWD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+
+&lt;span class="n"&gt;FLASK_APP&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Querying our Data&lt;/h2&gt;
+&lt;p&gt;Then we can return data from a table as simple as:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sqlsorcery&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;MSSQL&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pandas&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pd&lt;/span&gt;
+
+&lt;span class="n"&gt;db&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MSSQL&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_sql_table&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;your_table_name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;con&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;db&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;engine&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;schema&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;db&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;schema&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;It's that simple!&lt;/p&gt;
+&lt;p&gt;To quickly convert that dataframe into a list of dictionaries (to return as JSON), we
+can use the Pandas &lt;code&gt;to_dict()&lt;/code&gt; method.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_dict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;orient&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;records&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;What if we want to list all the tables in our database schema? Simple!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;tables&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;db&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;engine&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;table_names&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;schema&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;db&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;schema&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;With those two approaches and Flask's &lt;code&gt;jsonify&lt;/code&gt; we have everything we need to make a quick,
+easy, and minimal API on top of any tables in our database schema.&lt;/p&gt;
+&lt;h2&gt;A User Interface&lt;/h2&gt;
+&lt;p&gt;While we can create an API for machines to read from, it'd be nice to have at least an index of
+tables that a human can read, navigate, and learn what data exists before pointing tools like &lt;a href="https://curl.se/"&gt;curl&lt;/a&gt;, 
+&lt;a href="https://www.postman.com/"&gt;postman&lt;/a&gt;, or &lt;a href="https://requests.readthedocs.io/en/master/"&gt;Requests&lt;/a&gt; at it. &lt;/p&gt;
+&lt;p&gt;No worries! A tiny &lt;a href="https://jinja.palletsprojects.com/en/2.11.x/"&gt;jinja&lt;/a&gt; HTML template should suffice for a quick list of table names linked to their api endpoint will be just minimal enough to work!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;# templates/index.html
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;ul&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    {% for table in tables %}
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;li&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/api/{{ table}}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;{{ table }}&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;li&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    {% endfor %}
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;ul&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Putting it all together&lt;/h2&gt;
+&lt;p&gt;At this point we should have a file directory that looks like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;.
+├── Pipfile
+├── .env
+├── app.py
+└── templates
+    └── index.html
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Let's finish off our &lt;code&gt;app.py&lt;/code&gt; and give it a test run:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# app.py&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;jsonify&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;render_template&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sqlsorcery&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;MSSQL&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pandas&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pd&lt;/span&gt;
+
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="vm"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;db&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MSSQL&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+
+&lt;span class="nd"&gt;@app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/api&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;index&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;tables&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;db&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;engine&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;table_names&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;schema&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;db&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;schema&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;render_template&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;index.html&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tables&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;tables&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="nd"&gt;@app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/api/&amp;lt;table&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;methods&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;GET&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;endpoint&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;table&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_sql_table&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;table&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;con&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;db&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;engine&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;schema&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;db&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;schema&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_dict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;orient&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;records&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;jsonify&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Spin it up on &lt;a href="localhost:5000/api/"&gt;localhost:5000/api/&lt;/a&gt; and explore your data!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ pipenv run flask run
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;I wouldn't take this and deploy it to production anywhere without some serious security
+decisions, but it makes for a nice proof-of-concept. And certainly could be expanded to
+include user authentication, a proper production server like &lt;a href="https://gunicorn.org/"&gt;gunicorn&lt;/a&gt; and a nicer
+user interface. But at point you might be better off with &lt;a href="https://www.flaskapi.org/"&gt;Flask-API&lt;/a&gt; or 
+&lt;a href="https://www.django-rest-framework.org/"&gt;Django REST Framework&lt;/a&gt;, both of which I've used with success. &lt;/p&gt;
+&lt;p&gt;But still, not bad for less than 20 lines of code. &lt;/p&gt;
+&lt;p&gt;All the code for this blog can be found on my &lt;a href="https://github.com/dchess/simple_api"&gt;github&lt;/a&gt;. 
+Feel free to fork and use it however you like. &lt;/p&gt;
+&lt;p&gt;SQLSorcery is also MIT licensed and free to use. It's in active development and contributors are welcome. &lt;/p&gt;</content><category term="Blog"></category></entry><entry><title>How I Teach Git</title><link href="http://dchess.github.io/how-i-teach-git.html" rel="alternate"></link><published>2021-01-13T21:00:00-08:00</published><updated>2021-01-13T21:00:00-08:00</updated><author><name>dc.hess@gmail.com</name></author><id>tag:dchess.github.io,2021-01-13:/how-i-teach-git.html</id><summary type="html">&lt;p&gt;An overview of how I explain Git to others new to using it for version control&lt;/p&gt;</summary><content type="html">&lt;h2&gt;Teaching Commands Just Encourages Cargo Culting&lt;/h2&gt;
 &lt;p&gt;When I first learned to use Git, it supercharged my development and I was quickly sold on its
 value, but I had no real understanding of how it worked. I just memorized and/or frequently
 Googled the right commands and hoped I never encountered any issue I couldn't solve on my 
