@@ -420,7 +420,7 @@
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Data-Source">Data Source<a class="anchor-link" href="#Data-Source">&#182;</a></h2><p>At this point we could load this dataframe into a database (perhaps using <a href="https://sqlsorcery.readthedocs.io/en/latest/">SQLSorcery</a> or similar tool) and move on to creating a word cloud in a data viz tool like <a href="https://kb.tableau.com/articles/howto/creating-a-word-cloud">Tableau</a>.</p>
 <p>But it would be neat to also do this in python while we're at it!</p>
-<h2 id="Word-cloud">Word cloud<a class="anchor-link" href="#Word-cloud">&#182;</a></h2><p>After installing the <a href="https://pypi.org/project/wordcloud/">wordcloud</a>, we can load our dataframe in and begin visualizing. We'll want to remove some common words that won't give us much insight (such as pronouns, conjunctions, and similar filler). For a full list of what we'll filter out, see below.</p>
+<h2 id="Word-cloud">Word cloud<a class="anchor-link" href="#Word-cloud">&#182;</a></h2><p>After installing the <a href="https://pypi.org/project/wordcloud/">wordcloud</a> package, we can load our dataframe in and begin visualizing. We'll want to remove some common words that won't give us much insight (such as pronouns, conjunctions, and similar filler). For a full list of what we'll filter out, see below.</p>
 
 </div>
 </div>
@@ -484,26 +484,8 @@
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>At this point we could spit this out to an image for presentation.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">wordcloud</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s2">&quot;wordcloud.jpg&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="n">wordcloud</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s2">&quot;wordcloud.jpg&quot;</span><span class="p">)</span>
 </pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>But we could also use a plotting library like <a href="https://matplotlib.org/">matplotlib</a> to build a visualization with our wordcloud.</p>
 
 </div>
@@ -591,6 +573,41 @@ iVBORw0KGgoAAAANSUhEUgAAAkAAAAGACAYAAABFmt0fAAEAAElEQVR4nOy9d5xl2VXf+90nn5sr5865
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h2><p>And there we have it. <strong>A simple, repeatable method for extracting word frequency from paragraph text for use in generating word clouds.</strong></p>
+<p>It really only required about 5 lines of code to extract the data:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">word_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+    <span class="n">word_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;word&quot;</span><span class="p">:</span> <span class="n">word_list</span><span class="p">})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And only another 10 or so to actually create a word cloud visualization as well!</p>
+
+</div>
+</div>
 </div>
  
 
