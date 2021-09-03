@@ -21,7 +21,7 @@
   <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/brands.css">
   <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/solid.css">
 
-    <link href="./static/custom.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./static/custom.css">
 
     <link href="http://dchess.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="dchess Atom">
 
@@ -29,24 +29,27 @@
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
 
+  
 
+
+ 
 
 <meta name="author" content="dc.hess@gmail.com" />
 <meta name="description" content="Creating an automatic REST API with Flask and SQLSorcery for an MS SQL database." />
 <meta name="keywords" content="">
 
 
-<meta property="og:site_name" content="dchess"/>
-<meta property="og:title" content="Auto-generated REST API for MS SQL database"/>
-<meta property="og:description" content="Creating an automatic REST API with Flask and SQLSorcery for an MS SQL database."/>
-<meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="./auto-generated-rest-api-for-ms-sql-database.html"/>
-<meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2021-01-16 17:00:00-08:00"/>
-<meta property="article:modified_time" content=""/>
-<meta property="article:author" content="./author/dchessgmailcom.html">
-<meta property="article:section" content="Blog"/>
-<meta property="og:image" content="/images/profile.jpg">
+  <meta property="og:site_name" content="dchess"/>
+  <meta property="og:title" content="Auto-generated REST API for MS SQL database"/>
+  <meta property="og:description" content="Creating an automatic REST API with Flask and SQLSorcery for an MS SQL database."/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="./auto-generated-rest-api-for-ms-sql-database.html"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2021-01-16 17:00:00-08:00"/>
+  <meta property="article:modified_time" content=""/>
+  <meta property="article:author" content="./author/dchessgmailcom.html">
+  <meta property="article:section" content="Blog"/>
+  <meta property="og:image" content="/images/profile.jpg">
 
   <title>dchess &ndash; Auto-generated REST API for MS SQL database</title>
 
@@ -54,12 +57,12 @@
 <body class="light-theme">
   <aside>
     <div>
-      <a href=".">
+      <a href="./">
         <img src="/images/profile.jpg" alt="D.C. Hess" title="D.C. Hess">
       </a>
 
       <h1>
-        <a href=".">D.C. Hess</a>
+        <a href="./">D.C. Hess</a>
       </h1>
 
 <p>Software Engineer</p>
@@ -107,7 +110,7 @@
   <main>
 
     <nav>
-      <a href=".">Home</a>
+      <a href="./">Home</a>
 
       <a href="/category/projects.html">Projects</a>
       <a href="/category/tutorial.html">Tutorial</a>
@@ -170,13 +173,13 @@ all the functionality of <a href="https://pypi.org/project/pip/">pip</a>, <a hre
 
 <p>And just like that we're ready to develop.</p>
 <p>Let's add some environment variables to a <code>.env</code> file to start:</p>
-<div class="highlight"><pre><span></span><code><span class="n">DB_SERVER</span><span class="o">=</span>
-<span class="n">DB</span><span class="o">=</span>
-<span class="n">DB_SCHEMA</span><span class="o">=</span>
-<span class="n">DB_USER</span><span class="o">=</span>
-<span class="n">DB_PWD</span><span class="o">=</span>
+<div class="highlight"><pre><span></span><code>DB_SERVER=
+DB=
+DB_SCHEMA=
+DB_USER=
+DB_PWD=
 
-<span class="n">FLASK_APP</span><span class="o">=</span><span class="n">app</span><span class="p">.</span><span class="n">py</span>
+FLASK_APP=app.py
 </code></pre></div>
 
 <h2>Querying our Data</h2>
@@ -294,7 +297,6 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
   "description": "Code, code, and more code"
 }
 </script>
-
 
 </body>
 </html>
