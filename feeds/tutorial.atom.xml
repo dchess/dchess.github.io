@@ -1,5 +1,2145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>dchess - Tutorial</title><link href="http://dchess.github.io/" rel="alternate"></link><link href="http://dchess.github.io/feeds/tutorial.atom.xml" rel="self"></link><id>http://dchess.github.io/</id><updated>2021-02-04T21:00:00-07:00</updated><subtitle>Software Engineer</subtitle><subtitle>Software Engineer</subtitle><entry><title>Creating WordClouds</title><link href="http://dchess.github.io/creating-wordclouds.html" rel="alternate"></link><published>2021-02-04T21:00:00-07:00</published><updated>2021-02-04T21:00:00-07:00</updated><author><name>dc.hess@gmail.com</name></author><id>tag:dchess.github.io,2021-02-04:/creating-wordclouds.html</id><summary type="html">&lt;p&gt;Using python to turn paragraph text into word clouds&lt;/p&gt;</summary><content type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>dchess - Tutorial</title><link href="http://dchess.github.io/" rel="alternate"></link><link href="http://dchess.github.io/feeds/tutorial.atom.xml" rel="self"></link><id>http://dchess.github.io/</id><updated>2022-01-29T21:00:00-07:00</updated><subtitle>Software Engineer</subtitle><entry><title>Parsing Texas Assessment Data</title><link href="http://dchess.github.io/parsing-texas-assessment-data.html" rel="alternate"></link><published>2022-01-29T21:00:00-07:00</published><updated>2022-01-29T21:00:00-07:00</updated><author><name>dc.hess@gmail.com</name></author><id>tag:dchess.github.io,2022-01-29:/parsing-texas-assessment-data.html</id><summary type="html">&lt;p&gt;Demo of using pandas to pivot jagged ultra-wide dataset into a consistent and long format.&lt;/p&gt;</summary><content type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h1 id="Data-Transformation-of-the-Texas-STAAR-Aggregate-Data-for-2020-2021"&gt;Data Transformation of the Texas STAAR Aggregate Data for 2020-2021&lt;a class="anchor-link" href="#Data-Transformation-of-the-Texas-STAAR-Aggregate-Data-for-2020-2021"&gt;&amp;#182;&lt;/a&gt;&lt;/h1&gt;&lt;p&gt;Data files available &lt;a href="https://tea.texas.gov/student-assessment/testing/staar/staar-aggregate-data-for-2020-2021"&gt;here on the TEA website&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The STAAR data files contain results for 60+ student demographic groups and each variable is repeated in a separate column for both demographic and test subject. As you will see below, this results in data files that are several thousand columns wide and are a different schema for every grade.&lt;/p&gt;
+&lt;p&gt;These files are designed for use in SAS and SPSS, and the website itself indicates that the number of variables in these files is too great to import into Microsoft Access or some versions of Microsoft Excel without significant truncation.&lt;/p&gt;
+&lt;p&gt;However, my goal was to pivot this data into a standardized format and load into BigQuery for cross analysis with other state assessment data. What follows is my approach in Python, but I am sure there are other potentially simpler methods than mine, I hope this demonstration helps other approach this dataset for analysis and possibly encourages others to improve upon this method.&lt;/p&gt;
+&lt;p&gt;The original files are linked below for easy access.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Campus level data for Grades 3-8&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Grade 3:&lt;/strong&gt;  &lt;a href="https://tea.texas.gov/sites/default/files/cfy21e3.dat"&gt;test data&lt;/a&gt; | &lt;a href="https://tea.texas.gov/sites/default/files/fy21_varlist_g03.xls"&gt;variable list&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Grade 4:&lt;/strong&gt; &lt;a href="https://tea.texas.gov/sites/default/files/cfy21e4.dat"&gt;test data&lt;/a&gt; | &lt;a href="https://tea.texas.gov/sites/default/files/fy21_varlist_g04.xls"&gt;variable list&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Grade 5:&lt;/strong&gt; &lt;a href="https://tea.texas.gov/sites/default/files/cfy21e5.dat"&gt;test data&lt;/a&gt; | &lt;a href="https://tea.texas.gov/sites/default/files/fy21_varlist_g05.xls"&gt;variable list&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Grade 6:&lt;/strong&gt; &lt;a href="https://tea.texas.gov/sites/default/files/cfy21e6.dat"&gt;test data&lt;/a&gt; | &lt;a href="https://tea.texas.gov/sites/default/files/fy21_varlist_g06.xls"&gt;variable list&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Grade 7:&lt;/strong&gt; &lt;a href="https://tea.texas.gov/sites/default/files/cfy21e7.dat"&gt;test data&lt;/a&gt; | &lt;a href="https://tea.texas.gov/sites/default/files/fy21_varlist_g07.xls"&gt;variable list&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Grade 8:&lt;/strong&gt; &lt;a href="https://tea.texas.gov/sites/default/files/cfy21e8.dat"&gt;test data&lt;/a&gt; | &lt;a href="https://tea.texas.gov/sites/default/files/fy21_varlist_g08.xls"&gt;variable list&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h2 id="Getting-the-Lay-of-the-Land"&gt;Getting the Lay of the Land&lt;a class="anchor-link" href="#Getting-the-Lay-of-the-Land"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Before determining a solution and final schema, I wanted to understand the structure of these files. This can be accomplished by looping over the linked dat files and getting their shapes.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[46]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pandas&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pd&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pathlib&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Path&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[47]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;base_url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;https://tea.texas.gov/sites/default/files/&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;dat_files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;cfy21e3.dat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cfy21e4.dat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cfy21e5.dat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cfy21e6.dat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cfy21e7.dat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cfy21e8.dat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;dat_file&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;dat_files&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;base_url&lt;/span&gt;&lt;span class="si"&gt;}{&lt;/span&gt;&lt;span class="n"&gt;dat_file&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+    &lt;span class="n"&gt;content&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stem&lt;/span&gt;
+    &lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_csv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;content&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shape&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;cfy21e3 (4643, 2093)
+cfy21e4 (4622, 3075)
+cfy21e5 (4415, 3197)
+cfy21e6 (2700, 2093)
+cfy21e7 (2337, 3075)
+cfy21e8 (2370, 4301)
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;Each file is named with this convention (as far as I can discern):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;c&lt;/strong&gt;: Campus level data&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;fy21&lt;/strong&gt;: Fiscal year 2021&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;e#&lt;/strong&gt;: English grade # (English, because grades 3-5 also include Spanish results)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The numbers in the accompanying parenthesis represent the count of rows and columns, respectively.&lt;/p&gt;
+&lt;h2 id="Inconsistent-Data-Shape"&gt;Inconsistent Data Shape&lt;a class="anchor-link" href="#Inconsistent-Data-Shape"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;We can see from this quick file inspection that combining these datasets into a single unified structure will require more than just concatenation. The number of columns is jagged/inconsistent. Reviewing the variable files shows that each grade has differences in the variables reported. Some grades have Reading and Mathematics, while other include a Writing test as well. There are additional differences, but that is one of the most common.&lt;/p&gt;
+&lt;p&gt;They are so wide, because each variable such as &lt;code&gt;# Tested&lt;/code&gt; is repeated for each subject and each student group (60+ in total). We can also see that the naming of these columns is encoded/abbreviated, such as &lt;code&gt;r_all_d&lt;/code&gt; for &lt;code&gt;# Tested -- Reading -- All Students&lt;/code&gt; or &lt;code&gt;r_eth2_d&lt;/code&gt; for &lt;code&gt;# Tested -- Reading -- Two or More Races Students&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="Finding-a-Pattern"&gt;Finding a Pattern&lt;a class="anchor-link" href="#Finding-a-Pattern"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;There is something of a pattern to this naming convention you may have noticed:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;r&lt;/strong&gt;: reading&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;all&lt;/strong&gt;: all students&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;d&lt;/strong&gt;: # tested&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This becomes more obvious with subsequent examples such as &lt;code&gt;r_all_unsatgl_nm&lt;/code&gt; for &lt;code&gt;# Did Not Meet Grade Level Performance -- Reading -- All Students&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="A-First-Attempt"&gt;A First Attempt&lt;a class="anchor-link" href="#A-First-Attempt"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;My initial thought was to split these variable names using the the &lt;code&gt;_&lt;/code&gt; as a delimiter, but this was met with limited success, again due to inconsistent usage.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[49]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;grade3_vars&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;https://tea.texas.gov/sites/default/files/fy21_varlist_g03.xls&amp;#39;&lt;/span&gt;
+
+&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_excel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;grade3_vars&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;WARNING *** OLE2 inconsistency: SSCS size is 0 but SSAT size is non-zero
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt output_prompt"&gt;Out[49]:&lt;/div&gt;
+
+
+
+&lt;div class="output_html rendered_html output_subarea output_execute_result"&gt;
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Variable&lt;/th&gt;
+      &lt;th&gt;Format_Type&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;campus&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;Campus Number&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;year&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;Test Administration Year&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;region&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;Education Service Center (Region) Number&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;district&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;District Number&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;dname&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;District Name&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;5&lt;/th&gt;
+      &lt;td&gt;cname&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;Campus Name&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;6&lt;/th&gt;
+      &lt;td&gt;grade&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;Tested Grade (Usually the Enrolled Grade Unles...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;7&lt;/th&gt;
+      &lt;td&gt;r_all_docs_n&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Answer Documents Submitted -- Reading -- All...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;8&lt;/th&gt;
+      &lt;td&gt;r_all_abs_n&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Absent - Not Tested -- Reading -- All Students&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;9&lt;/th&gt;
+      &lt;td&gt;r_all_oth_n&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Other - Not Tested -- Reading -- All Students&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;10&lt;/th&gt;
+      &lt;td&gt;m_all_docs_n&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Answer Documents Submitted -- Mathematics --...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;11&lt;/th&gt;
+      &lt;td&gt;m_all_abs_n&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Absent - Not Tested -- Mathematics -- All St...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;12&lt;/th&gt;
+      &lt;td&gt;m_all_oth_n&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Other - Not Tested -- Mathematics -- All Stu...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;13&lt;/th&gt;
+      &lt;td&gt;r_all_d&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Tested -- Reading -- All Students&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;14&lt;/th&gt;
+      &lt;td&gt;r_sexm_d&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Tested -- Reading -- Male Students&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;15&lt;/th&gt;
+      &lt;td&gt;r_sexf_d&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Tested -- Reading -- Female Students&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;16&lt;/th&gt;
+      &lt;td&gt;r_sexv_d&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Tested -- Reading -- No Sex Info Students&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;17&lt;/th&gt;
+      &lt;td&gt;r_ethh_d&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Tested -- Reading -- Hispanic/Latino Students&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;18&lt;/th&gt;
+      &lt;td&gt;r_ethi_d&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Tested -- Reading -- American Indian or Alas...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;19&lt;/th&gt;
+      &lt;td&gt;r_etha_d&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Tested -- Reading -- Asian Students&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;It appears at first glance, that the pattern is subject, student demographic group, variable type. However, we can see this doesn't remain consistent.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[12]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tail&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt output_prompt"&gt;Out[12]:&lt;/div&gt;
+
+
+
+&lt;div class="output_html rendered_html output_subarea output_execute_result"&gt;
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Variable&lt;/th&gt;
+      &lt;th&gt;Format_Type&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2078&lt;/th&gt;
+      &lt;td&gt;m_spen_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2079&lt;/th&gt;
+      &lt;td&gt;m_spev_avg_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2080&lt;/th&gt;
+      &lt;td&gt;m_spev_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2081&lt;/th&gt;
+      &lt;td&gt;m_gify_avg_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2082&lt;/th&gt;
+      &lt;td&gt;m_gify_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2083&lt;/th&gt;
+      &lt;td&gt;m_gifn_avg_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2084&lt;/th&gt;
+      &lt;td&gt;m_gifn_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2085&lt;/th&gt;
+      &lt;td&gt;m_gifv_avg_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2086&lt;/th&gt;
+      &lt;td&gt;m_gifv_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2087&lt;/th&gt;
+      &lt;td&gt;m_atry_avg_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2088&lt;/th&gt;
+      &lt;td&gt;m_atry_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2089&lt;/th&gt;
+      &lt;td&gt;m_atrn_avg_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2090&lt;/th&gt;
+      &lt;td&gt;m_atrn_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2091&lt;/th&gt;
+      &lt;td&gt;m_atrv_avg_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2092&lt;/th&gt;
+      &lt;td&gt;m_atrv_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;In these latter cases, there is a 4th variable reporting category that comes before the subject and student group.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[15]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;195&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;215&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt output_prompt"&gt;Out[15]:&lt;/div&gt;
+
+
+
+&lt;div class="output_html rendered_html output_subarea output_execute_result"&gt;
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Variable&lt;/th&gt;
+      &lt;th&gt;Format_Type&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;195&lt;/th&gt;
+      &lt;td&gt;r_atrv_unsatgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Did Not Meet Grade Level Performance -- Read...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;196&lt;/th&gt;
+      &lt;td&gt;r_all_approgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Approaches Grade Level Performance -- Readin...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;197&lt;/th&gt;
+      &lt;td&gt;r_sexm_approgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Approaches Grade Level Performance -- Readin...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;198&lt;/th&gt;
+      &lt;td&gt;r_sexf_approgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Approaches Grade Level Performance -- Readin...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;199&lt;/th&gt;
+      &lt;td&gt;r_sexv_approgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Approaches Grade Level Performance -- Readin...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;200&lt;/th&gt;
+      &lt;td&gt;r_ethh_approgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Approaches Grade Level Performance -- Readin...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;201&lt;/th&gt;
+      &lt;td&gt;r_ethi_approgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Approaches Grade Level Performance -- Readin...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;202&lt;/th&gt;
+      &lt;td&gt;r_etha_approgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Approaches Grade Level Performance -- Readin...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;203&lt;/th&gt;
+      &lt;td&gt;r_ethb_approgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Approaches Grade Level Performance -- Readin...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;204&lt;/th&gt;
+      &lt;td&gt;r_ethp_approgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Approaches Grade Level Performance -- Readin...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;205&lt;/th&gt;
+      &lt;td&gt;r_ethw_approgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Approaches Grade Level Performance -- Readin...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;206&lt;/th&gt;
+      &lt;td&gt;r_eth2_approgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Approaches Grade Level Performance -- Readin...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;207&lt;/th&gt;
+      &lt;td&gt;r_ethv_approgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Approaches Grade Level Performance -- Readin...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;208&lt;/th&gt;
+      &lt;td&gt;r_ecoy_approgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Approaches Grade Level Performance -- Readin...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;209&lt;/th&gt;
+      &lt;td&gt;r_econ_approgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Approaches Grade Level Performance -- Readin...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;210&lt;/th&gt;
+      &lt;td&gt;r_eco1_approgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Approaches Grade Level Performance -- Readin...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;211&lt;/th&gt;
+      &lt;td&gt;r_eco2_approgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Approaches Grade Level Performance -- Readin...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;212&lt;/th&gt;
+      &lt;td&gt;r_eco9_approgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Approaches Grade Level Performance -- Readin...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;213&lt;/th&gt;
+      &lt;td&gt;r_ecov_approgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Approaches Grade Level Performance -- Readin...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;214&lt;/th&gt;
+      &lt;td&gt;r_ti1y_approgl_nm&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Approaches Grade Level Performance -- Readin...&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;There is another pattern with 4 parts for the proficiency levels that is subject, student group, and then a two part string for the variable type.&lt;/p&gt;
+&lt;p&gt;These differences would make it challenging to simply split on the &lt;code&gt;_&lt;/code&gt; character. Even distinguishing between the three part and four part variables isn't sufficient, because there are two types of the four part variables.&lt;/p&gt;
+&lt;h2 id="A-Different-Solution"&gt;A Different Solution&lt;a class="anchor-link" href="#A-Different-Solution"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;However, we can simply ignore the variables. We have a description column that also has it's own delimiter: &lt;code&gt;--&lt;/code&gt;.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[52]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;descriptions&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;values&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tolist&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;description&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;descriptions&lt;/span&gt;&lt;span class="p"&gt;[:&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+    &lt;span class="n"&gt;parts&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;description&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;--&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;parts&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s1"&gt;...&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;description&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;descriptions&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;:]:&lt;/span&gt;
+    &lt;span class="n"&gt;parts&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;description&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;--&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;parts&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;[&amp;#39;Campus Number&amp;#39;]
+[&amp;#39;Test Administration Year&amp;#39;]
+[&amp;#39;Education Service Center (Region) Number&amp;#39;]
+[&amp;#39;District Number&amp;#39;]
+[&amp;#39;District Name&amp;#39;]
+[&amp;#39;Campus Name&amp;#39;]
+[&amp;#39;Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)&amp;#39;]
+[&amp;#39;# Answer Documents Submitted &amp;#39;, &amp;#39; Reading &amp;#39;, &amp;#39; All Students&amp;#39;]
+[&amp;#39;# Absent - Not Tested &amp;#39;, &amp;#39; Reading &amp;#39;, &amp;#39; All Students&amp;#39;]
+[&amp;#39;# Other - Not Tested &amp;#39;, &amp;#39; Reading &amp;#39;, &amp;#39; All Students&amp;#39;]
+[&amp;#39;# Answer Documents Submitted &amp;#39;, &amp;#39; Mathematics &amp;#39;, &amp;#39; All Students&amp;#39;]
+[&amp;#39;# Absent - Not Tested &amp;#39;, &amp;#39; Mathematics &amp;#39;, &amp;#39; All Students&amp;#39;]
+[&amp;#39;# Other - Not Tested &amp;#39;, &amp;#39; Mathematics &amp;#39;, &amp;#39; All Students&amp;#39;]
+[&amp;#39;# Tested &amp;#39;, &amp;#39; Reading &amp;#39;, &amp;#39; All Students&amp;#39;]
+[&amp;#39;# Tested &amp;#39;, &amp;#39; Reading &amp;#39;, &amp;#39; Male Students&amp;#39;]
+[&amp;#39;# Tested &amp;#39;, &amp;#39; Reading &amp;#39;, &amp;#39; Female Students&amp;#39;]
+[&amp;#39;# Tested &amp;#39;, &amp;#39; Reading &amp;#39;, &amp;#39; No Sex Info Students&amp;#39;]
+[&amp;#39;# Tested &amp;#39;, &amp;#39; Reading &amp;#39;, &amp;#39; Hispanic/Latino Students&amp;#39;]
+[&amp;#39;# Tested &amp;#39;, &amp;#39; Reading &amp;#39;, &amp;#39; American Indian or Alaska Native Students&amp;#39;]
+[&amp;#39;# Tested &amp;#39;, &amp;#39; Reading &amp;#39;, &amp;#39; Asian Students&amp;#39;]
+
+...
+
+[&amp;#39;% Avg Items Correct&amp;#39;, &amp;#39;Reporting Category 4 &amp;#39;, &amp;#39; Mathematics &amp;#39;, &amp;#39; At-Risk Students&amp;#39;]
+[&amp;#39;# Avg Items Correct&amp;#39;, &amp;#39;Reporting Category 4 &amp;#39;, &amp;#39; Mathematics &amp;#39;, &amp;#39; Not At-Risk Students&amp;#39;]
+[&amp;#39;% Avg Items Correct&amp;#39;, &amp;#39;Reporting Category 4 &amp;#39;, &amp;#39; Mathematics &amp;#39;, &amp;#39; Not At-Risk Students&amp;#39;]
+[&amp;#39;# Avg Items Correct&amp;#39;, &amp;#39;Reporting Category 4 &amp;#39;, &amp;#39; Mathematics &amp;#39;, &amp;#39; No Info At-Risk Students&amp;#39;]
+[&amp;#39;% Avg Items Correct&amp;#39;, &amp;#39;Reporting Category 4 &amp;#39;, &amp;#39; Mathematics &amp;#39;, &amp;#39; No Info At-Risk Students&amp;#39;]
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;This mostly works. We have three different types of descriptions/variables:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1 part variables like &lt;code&gt;['Campus Number']&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;3 part variables like &lt;code&gt;['# Tested ', ' Reading ', ' All Students']&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;4 part variables like &lt;code&gt;['% Avg Items Correct', 'Reporting Category 4 ', ' Mathematics ', ' At-Risk Students']&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That means we can use the list length to determine the order of the variable values: variable name, test subject, and student group. The fourth part reporting category is basically a modifier for the variable name so we can combine those.&lt;/p&gt;
+&lt;p&gt;By examining a single variable name, we can see that &lt;code&gt;# Tested&lt;/code&gt;, for example, isn't actually 122 different variables but rather a single variable with 122 permutations of test subject and student group: &lt;strong&gt;61 student groups * 2 test subjects&lt;/strong&gt;&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[19]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;contains&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;# Tested&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt output_prompt"&gt;Out[19]:&lt;/div&gt;
+
+
+
+&lt;div class="output_html rendered_html output_subarea output_execute_result"&gt;
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Variable&lt;/th&gt;
+      &lt;th&gt;Format_Type&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;13&lt;/th&gt;
+      &lt;td&gt;r_all_d&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Tested -- Reading -- All Students&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;14&lt;/th&gt;
+      &lt;td&gt;r_sexm_d&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Tested -- Reading -- Male Students&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;15&lt;/th&gt;
+      &lt;td&gt;r_sexf_d&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Tested -- Reading -- Female Students&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;16&lt;/th&gt;
+      &lt;td&gt;r_sexv_d&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Tested -- Reading -- No Sex Info Students&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;17&lt;/th&gt;
+      &lt;td&gt;r_ethh_d&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Tested -- Reading -- Hispanic/Latino Students&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;130&lt;/th&gt;
+      &lt;td&gt;m_gifn_d&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Tested -- Mathematics -- Not Gifted/Talented...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;131&lt;/th&gt;
+      &lt;td&gt;m_gifv_d&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Tested -- Mathematics -- No Info Gifted/Tale...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;132&lt;/th&gt;
+      &lt;td&gt;m_atry_d&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Tested -- Mathematics -- At-Risk Students&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;133&lt;/th&gt;
+      &lt;td&gt;m_atrn_d&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Tested -- Mathematics -- Not At-Risk Students&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;134&lt;/th&gt;
+      &lt;td&gt;m_atrv_d&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Tested -- Mathematics -- No Info At-Risk Stu...&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;122 rows × 3 columns&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h2 id="Extracting-the-Variable-Descriptors"&gt;Extracting the Variable Descriptors&lt;a class="anchor-link" href="#Extracting-the-Variable-Descriptors"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;In addition to pulling out the test subject and student group from the variable description, it will be useful to rename the columns into a common naming convention that is more human readable than the current encodings.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;If we take the initial variable example &lt;code&gt;r_all_d&lt;/code&gt; for &lt;code&gt;# Tested -- Reading -- All Students&lt;/code&gt; and remove the subject and student group we would be left with simply &lt;code&gt;d&lt;/code&gt; as the variable/column name. But a better description would be &lt;code&gt;# Tested&lt;/code&gt; or even better (to eliminate special characters that would be problematic in the database) &lt;code&gt;n_tested&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id="Splitting-the-Description"&gt;Splitting the Description&lt;a class="anchor-link" href="#Splitting-the-Description"&gt;&amp;#182;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;To start let's add a new column to the dataframe that has the array of descriptors. We can also remove any leading or trailing whitespace from both the variable and description to prevent mismatch issues later.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[25]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Variable&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Variable&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Description&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Description&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;desc_list&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Description&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;--&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;df&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt output_prompt"&gt;Out[25]:&lt;/div&gt;
+
+
+
+&lt;div class="output_html rendered_html output_subarea output_execute_result"&gt;
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Variable&lt;/th&gt;
+      &lt;th&gt;Format_Type&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;desc_list&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;campus&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;Campus Number&lt;/td&gt;
+      &lt;td&gt;[Campus Number]&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;year&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;Test Administration Year&lt;/td&gt;
+      &lt;td&gt;[Test Administration Year]&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;region&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;Education Service Center (Region) Number&lt;/td&gt;
+      &lt;td&gt;[Education Service Center (Region) Number]&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;district&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;District Number&lt;/td&gt;
+      &lt;td&gt;[District Number]&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;dname&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;District Name&lt;/td&gt;
+      &lt;td&gt;[District Name]&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2088&lt;/th&gt;
+      &lt;td&gt;m_atry_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[% Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2089&lt;/th&gt;
+      &lt;td&gt;m_atrn_avg_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[# Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2090&lt;/th&gt;
+      &lt;td&gt;m_atrn_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[% Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2091&lt;/th&gt;
+      &lt;td&gt;m_atrv_avg_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[# Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2092&lt;/th&gt;
+      &lt;td&gt;m_atrv_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[% Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;2093 rows × 4 columns&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h3 id="Extracting-Test-Subject"&gt;Extracting Test Subject&lt;a class="anchor-link" href="#Extracting-Test-Subject"&gt;&amp;#182;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;In most cases the test subject is the 2nd part of the variable description with two exceptions: if the variable is one of the campus/grade variables that only has a single part or for the four part variables that include reporting category.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[28]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get_subject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;desc_list&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="sd"&gt;    Return the 2nd part of 3 part descriptors, the 3rd part of 4 part descriptors, or None.&lt;/span&gt;
+
+&lt;span class="sd"&gt;    Note: Else None is not necessary here, since functions return None by default in Python&lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="n"&gt;length&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;desc_list&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;length&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;desc_list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="n"&gt;length&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;desc_list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[27]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;subject&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;desc_list&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;get_subject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;df&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt output_prompt"&gt;Out[27]:&lt;/div&gt;
+
+
+
+&lt;div class="output_html rendered_html output_subarea output_execute_result"&gt;
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Variable&lt;/th&gt;
+      &lt;th&gt;Format_Type&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;desc_list&lt;/th&gt;
+      &lt;th&gt;subject&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;campus&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;Campus Number&lt;/td&gt;
+      &lt;td&gt;[Campus Number]&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;year&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;Test Administration Year&lt;/td&gt;
+      &lt;td&gt;[Test Administration Year]&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;region&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;Education Service Center (Region) Number&lt;/td&gt;
+      &lt;td&gt;[Education Service Center (Region) Number]&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;district&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;District Number&lt;/td&gt;
+      &lt;td&gt;[District Number]&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;dname&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;District Name&lt;/td&gt;
+      &lt;td&gt;[District Name]&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2088&lt;/th&gt;
+      &lt;td&gt;m_atry_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[% Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+      &lt;td&gt;Mathematics&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2089&lt;/th&gt;
+      &lt;td&gt;m_atrn_avg_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[# Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+      &lt;td&gt;Mathematics&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2090&lt;/th&gt;
+      &lt;td&gt;m_atrn_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[% Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+      &lt;td&gt;Mathematics&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2091&lt;/th&gt;
+      &lt;td&gt;m_atrv_avg_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[# Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+      &lt;td&gt;Mathematics&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2092&lt;/th&gt;
+      &lt;td&gt;m_atrv_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[% Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+      &lt;td&gt;Mathematics&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;2093 rows × 5 columns&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h2 id="Extracting-Student-Group"&gt;Extracting Student Group&lt;a class="anchor-link" href="#Extracting-Student-Group"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;In all cases (except the single descriptor variables) the student group is included at the end of the description.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[29]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get_student_group&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;desc_list&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="sd"&gt;    Unless the description has only one part, return the final part.&lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;desc_list&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;desc_list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[30]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;student_group&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;desc_list&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;get_student_group&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;df&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt output_prompt"&gt;Out[30]:&lt;/div&gt;
+
+
+
+&lt;div class="output_html rendered_html output_subarea output_execute_result"&gt;
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Variable&lt;/th&gt;
+      &lt;th&gt;Format_Type&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;desc_list&lt;/th&gt;
+      &lt;th&gt;subject&lt;/th&gt;
+      &lt;th&gt;student_group&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;campus&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;Campus Number&lt;/td&gt;
+      &lt;td&gt;[Campus Number]&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;year&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;Test Administration Year&lt;/td&gt;
+      &lt;td&gt;[Test Administration Year]&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;region&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;Education Service Center (Region) Number&lt;/td&gt;
+      &lt;td&gt;[Education Service Center (Region) Number]&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;district&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;District Number&lt;/td&gt;
+      &lt;td&gt;[District Number]&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;dname&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;District Name&lt;/td&gt;
+      &lt;td&gt;[District Name]&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2088&lt;/th&gt;
+      &lt;td&gt;m_atry_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[% Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+      &lt;td&gt;Mathematics&lt;/td&gt;
+      &lt;td&gt;At-Risk Students&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2089&lt;/th&gt;
+      &lt;td&gt;m_atrn_avg_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[# Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+      &lt;td&gt;Mathematics&lt;/td&gt;
+      &lt;td&gt;Not At-Risk Students&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2090&lt;/th&gt;
+      &lt;td&gt;m_atrn_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[% Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+      &lt;td&gt;Mathematics&lt;/td&gt;
+      &lt;td&gt;Not At-Risk Students&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2091&lt;/th&gt;
+      &lt;td&gt;m_atrv_avg_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[# Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+      &lt;td&gt;Mathematics&lt;/td&gt;
+      &lt;td&gt;No Info At-Risk Students&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2092&lt;/th&gt;
+      &lt;td&gt;m_atrv_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[% Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+      &lt;td&gt;Mathematics&lt;/td&gt;
+      &lt;td&gt;No Info At-Risk Students&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;2093 rows × 6 columns&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h2 id="Creating-a-New-Variable-Name"&gt;Creating a New Variable Name&lt;a class="anchor-link" href="#Creating-a-New-Variable-Name"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;There are a few problematic characters like &lt;code&gt;#&lt;/code&gt; and &lt;code&gt;%&lt;/code&gt; in the names of the variables that should be replaced as well as replacing spaces and abbreviating some longer words in the names.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[33]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;rename_variable&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;desc_list&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="sd"&gt;    Replace special characters and append reporting category when present.&lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="n"&gt;variable_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;desc_list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lower&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;desc_list&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;variable_name&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="n"&gt;desc_list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lower&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;replacements&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39;-&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39;#&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;n&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39;%&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;pct&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39;(&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39;)&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39;average&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;avg&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39;reporting category&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;rpt cat&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39; &amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;_&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39;__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;_&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;old&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;replacements&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+        &lt;span class="n"&gt;variable_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;variable_name&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;old&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;variable_name&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[34]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;desc_list&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;rename_variable&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;df&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt output_prompt"&gt;Out[34]:&lt;/div&gt;
+
+
+
+&lt;div class="output_html rendered_html output_subarea output_execute_result"&gt;
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Variable&lt;/th&gt;
+      &lt;th&gt;Format_Type&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;desc_list&lt;/th&gt;
+      &lt;th&gt;subject&lt;/th&gt;
+      &lt;th&gt;student_group&lt;/th&gt;
+      &lt;th&gt;name&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;campus&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;Campus Number&lt;/td&gt;
+      &lt;td&gt;[Campus Number]&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;campus_number&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;year&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;Test Administration Year&lt;/td&gt;
+      &lt;td&gt;[Test Administration Year]&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;test_administration_year&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;region&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;Education Service Center (Region) Number&lt;/td&gt;
+      &lt;td&gt;[Education Service Center (Region) Number]&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;education_service_center_region_number&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;district&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;District Number&lt;/td&gt;
+      &lt;td&gt;[District Number]&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;district_number&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;dname&lt;/td&gt;
+      &lt;td&gt;Character&lt;/td&gt;
+      &lt;td&gt;District Name&lt;/td&gt;
+      &lt;td&gt;[District Name]&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;district_name&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2088&lt;/th&gt;
+      &lt;td&gt;m_atry_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[% Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+      &lt;td&gt;Mathematics&lt;/td&gt;
+      &lt;td&gt;At-Risk Students&lt;/td&gt;
+      &lt;td&gt;pct_avg_items_correctrpt_cat_4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2089&lt;/th&gt;
+      &lt;td&gt;m_atrn_avg_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[# Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+      &lt;td&gt;Mathematics&lt;/td&gt;
+      &lt;td&gt;Not At-Risk Students&lt;/td&gt;
+      &lt;td&gt;n_avg_items_correctrpt_cat_4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2090&lt;/th&gt;
+      &lt;td&gt;m_atrn_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[% Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+      &lt;td&gt;Mathematics&lt;/td&gt;
+      &lt;td&gt;Not At-Risk Students&lt;/td&gt;
+      &lt;td&gt;pct_avg_items_correctrpt_cat_4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2091&lt;/th&gt;
+      &lt;td&gt;m_atrv_avg_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;# Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[# Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+      &lt;td&gt;Mathematics&lt;/td&gt;
+      &lt;td&gt;No Info At-Risk Students&lt;/td&gt;
+      &lt;td&gt;n_avg_items_correctrpt_cat_4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2092&lt;/th&gt;
+      &lt;td&gt;m_atrv_pct_cat4&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;% Avg Items Correct--Reporting Category 4 -- M...&lt;/td&gt;
+      &lt;td&gt;[% Avg Items Correct, Reporting Category 4 ,  ...&lt;/td&gt;
+      &lt;td&gt;Mathematics&lt;/td&gt;
+      &lt;td&gt;No Info At-Risk Students&lt;/td&gt;
+      &lt;td&gt;pct_avg_items_correctrpt_cat_4&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;2093 rows × 7 columns&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h2 id="Bringing-it-All-Together"&gt;Bringing it All Together&lt;a class="anchor-link" href="#Bringing-it-All-Together"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Because we're going to iterate over each variable list (there are six files: one for each grade between 3 and 8), we can simplify this by running all these change operations at once. We also want to remove unneeded columns and rename the original columns to standardize the naming conventions and make for an easy join condition later.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[35]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;add_descriptors&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Variable&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Variable&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Description&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Description&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;desc_list&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Description&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;--&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;desc_list&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;rename_variable&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;subject&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;desc_list&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;get_subject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;student_group&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;desc_list&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;get_student_group&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;drop&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Description&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;desc_list&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;inplace&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rename&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Variable&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;variable&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Format_Type&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;format_type&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="n"&gt;inplace&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h2 id="A-Path-Forward"&gt;A Path Forward&lt;a class="anchor-link" href="#A-Path-Forward"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;That means it would be possible to pivot this data long for each distinct variable after extracting the subject and student group from the variable description. This information, though, is split across two different files: the test data in the &lt;code&gt;.dat&lt;/code&gt; files and the variable descriptions in the &lt;code&gt;.xls&lt;/code&gt; files.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;My plan then is to:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Match the corresponding dat file to its variable list&lt;/li&gt;
+&lt;li&gt;Pivot the test data long so that each variable and value is a single row&lt;/li&gt;
+&lt;li&gt;Extract the test subject and student group data points from the variable description&lt;/li&gt;
+&lt;li&gt;Join the two datasets together using the variable name as a unique identifier&lt;/li&gt;
+&lt;li&gt;Once more pivot the combined data such that each distinct variable becomes its own column&lt;/li&gt;
+&lt;li&gt;Combine those standardized data structures for each grade into a single dataset&lt;/li&gt;
+&lt;li&gt;Write that new dataset out to a compressed csv file for importing into BigQuery&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[40]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;base_url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;https://tea.texas.gov/sites/default/files/&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;dat_files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;cfy21e3.dat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cfy21e4.dat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cfy21e5.dat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cfy21e6.dat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cfy21e7.dat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cfy21e8.dat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;var_files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;fy21_varlist_g03.xls&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;fy21_varlist_g04.xls&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;fy21_varlist_g05.xls&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;fy21_varlist_g06.xls&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;fy21_varlist_g07.xls&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;fy21_varlist_g08.xls&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="c1"&gt;# 1. Match the dat file with its corresponding var file&lt;/span&gt;
+&lt;span class="n"&gt;all_files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;zip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dat_files&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;var_files&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Create a list to concatenate the resulting grade level data frames later&lt;/span&gt;
+&lt;span class="n"&gt;all_grades&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;dat_file&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;var_file&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;all_files&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;test_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_csv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;base_url&lt;/span&gt;&lt;span class="si"&gt;}{&lt;/span&gt;&lt;span class="n"&gt;dat_file&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dtype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;string&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;variables&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_excel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;base_url&lt;/span&gt;&lt;span class="si"&gt;}{&lt;/span&gt;&lt;span class="n"&gt;var_file&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dtype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;string&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Parsing:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dat_file&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;rows/cols:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;test_data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shape&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+    &lt;span class="c1"&gt;# 2. melt the dataframe (pivot wide to long) but keep all the site and grade identifiers out of the pivot&lt;/span&gt;
+    &lt;span class="n"&gt;identifiers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;variables&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;variables&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Format_Type&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Character&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Variable&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tolist&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;id_vars&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;identifier&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;upper&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;identifier&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;identifiers&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;test_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;melt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;test_data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;id_vars&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;id_vars&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Pivoted:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dat_file&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;rows/cols:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;test_data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shape&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="c1"&gt;# 3. extract the subject and student groups&lt;/span&gt;
+    &lt;span class="n"&gt;variables&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;add_descriptors&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;variables&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="c1"&gt;# 4. join the two dataset together using the variable name as the unique identifier&lt;/span&gt;
+    &lt;span class="n"&gt;combined&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;test_data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;merge&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;variables&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;how&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;left&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;variable&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Joined:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dat_file&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;+&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;var_file&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;rows/cols:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;combined&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shape&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="c1"&gt;# 5. pivot back wide but with only the distinct variables&lt;/span&gt;
+    &lt;span class="n"&gt;cols&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;combined&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tolist&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;combined&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;cols&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;combined&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;cols&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+    &lt;span class="n"&gt;combined&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;combined&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lower&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;columns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;campus&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;year&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;region&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;district&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;dname&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;cname&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;grade&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;format_type&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;subject&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;student_group&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;combined&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;combined&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_index&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;value&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;unstack&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;reset_index&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Combined:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dat_file&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;+&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;var_file&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;rows/cols:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;combined&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shape&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="c1"&gt;# 6. append data for each grade into a single data structure and concatenate&lt;/span&gt;
+    &lt;span class="n"&gt;all_grades&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;combined&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;concat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;all_grades&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Final rows/cols:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shape&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# 7. write to compressed csv&lt;/span&gt;
+&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_csv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;TX_STAAR_3_8_2021.csv.gz&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;compression&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;gzip&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;WARNING *** OLE2 inconsistency: SSCS size is 0 but SSAT size is non-zero
+Parsing: cfy21e3.dat rows/cols: (4643, 2093)
+Pivoted: cfy21e3.dat rows/cols: (9685298, 9)
+Joined: cfy21e3.dat + fy21_varlist_g03.xls rows/cols: (9685298, 13)
+Combined: cfy21e3.dat + fy21_varlist_g03.xls rows/cols: (571089, 35)
+WARNING *** OLE2 inconsistency: SSCS size is 0 but SSAT size is non-zero
+Parsing: cfy21e4.dat rows/cols: (4622, 3075)
+Pivoted: cfy21e4.dat rows/cols: (14180296, 9)
+Joined: cfy21e4.dat + fy21_varlist_g04.xls rows/cols: (14180296, 13)
+Combined: cfy21e4.dat + fy21_varlist_g04.xls rows/cols: (850448, 35)
+WARNING *** OLE2 inconsistency: SSCS size is 0 but SSAT size is non-zero
+Parsing: cfy21e5.dat rows/cols: (4415, 3197)
+Pivoted: cfy21e5.dat rows/cols: (14083850, 9)
+Joined: cfy21e5.dat + fy21_varlist_g05.xls rows/cols: (14083850, 13)
+Combined: cfy21e5.dat + fy21_varlist_g05.xls rows/cols: (812360, 35)
+WARNING *** OLE2 inconsistency: SSCS size is 0 but SSAT size is non-zero
+Parsing: cfy21e6.dat rows/cols: (2700, 2093)
+Pivoted: cfy21e6.dat rows/cols: (5632200, 9)
+Joined: cfy21e6.dat + fy21_varlist_g06.xls rows/cols: (5632200, 13)
+Combined: cfy21e6.dat + fy21_varlist_g06.xls rows/cols: (332100, 35)
+WARNING *** OLE2 inconsistency: SSCS size is 0 but SSAT size is non-zero
+Parsing: cfy21e7.dat rows/cols: (2337, 3075)
+Pivoted: cfy21e7.dat rows/cols: (7169916, 9)
+Joined: cfy21e7.dat + fy21_varlist_g07.xls rows/cols: (7169916, 13)
+Combined: cfy21e7.dat + fy21_varlist_g07.xls rows/cols: (430008, 35)
+WARNING *** OLE2 inconsistency: SSCS size is 0 but SSAT size is non-zero
+Parsing: cfy21e8.dat rows/cols: (2370, 4301)
+Pivoted: cfy21e8.dat rows/cols: (10176780, 9)
+Joined: cfy21e8.dat + fy21_varlist_g08.xls rows/cols: (10176780, 13)
+Combined: cfy21e8.dat + fy21_varlist_g08.xls rows/cols: (580650, 35)
+Final rows/cols: (3576655, 35)
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[44]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt output_prompt"&gt;Out[44]:&lt;/div&gt;
+
+
+
+&lt;div class="output_html rendered_html output_subarea output_execute_result"&gt;
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;name&lt;/th&gt;
+      &lt;th&gt;campus&lt;/th&gt;
+      &lt;th&gt;year&lt;/th&gt;
+      &lt;th&gt;region&lt;/th&gt;
+      &lt;th&gt;district&lt;/th&gt;
+      &lt;th&gt;dname&lt;/th&gt;
+      &lt;th&gt;cname&lt;/th&gt;
+      &lt;th&gt;grade&lt;/th&gt;
+      &lt;th&gt;format_type&lt;/th&gt;
+      &lt;th&gt;subject&lt;/th&gt;
+      &lt;th&gt;student_group&lt;/th&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;th&gt;pct_answer_documents_submitted&lt;/th&gt;
+      &lt;th&gt;pct_approaches_grade_level_performance&lt;/th&gt;
+      &lt;th&gt;pct_avg_items_correctrpt_cat_1&lt;/th&gt;
+      &lt;th&gt;pct_avg_items_correctrpt_cat_2&lt;/th&gt;
+      &lt;th&gt;pct_avg_items_correctrpt_cat_3&lt;/th&gt;
+      &lt;th&gt;pct_avg_items_correctrpt_cat_4&lt;/th&gt;
+      &lt;th&gt;pct_did_not_meet_grade_level_performance&lt;/th&gt;
+      &lt;th&gt;pct_masters_grade_level_performance&lt;/th&gt;
+      &lt;th&gt;pct_meets_grade_level_performance&lt;/th&gt;
+      &lt;th&gt;pct_other_not_tested&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;001902103&lt;/td&gt;
+      &lt;td&gt;21&lt;/td&gt;
+      &lt;td&gt;07&lt;/td&gt;
+      &lt;td&gt;001902&lt;/td&gt;
+      &lt;td&gt;CAYUGA ISD&lt;/td&gt;
+      &lt;td&gt;CAYUGA ELEM.&lt;/td&gt;
+      &lt;td&gt;03&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;001902103&lt;/td&gt;
+      &lt;td&gt;21&lt;/td&gt;
+      &lt;td&gt;07&lt;/td&gt;
+      &lt;td&gt;001902&lt;/td&gt;
+      &lt;td&gt;CAYUGA ISD&lt;/td&gt;
+      &lt;td&gt;CAYUGA ELEM.&lt;/td&gt;
+      &lt;td&gt;03&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;Mathematics&lt;/td&gt;
+      &lt;td&gt;All Students&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;100&lt;/td&gt;
+      &lt;td&gt;85&lt;/td&gt;
+      &lt;td&gt;79&lt;/td&gt;
+      &lt;td&gt;83&lt;/td&gt;
+      &lt;td&gt;71&lt;/td&gt;
+      &lt;td&gt;84&lt;/td&gt;
+      &lt;td&gt;15&lt;/td&gt;
+      &lt;td&gt;62&lt;/td&gt;
+      &lt;td&gt;73&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;001902103&lt;/td&gt;
+      &lt;td&gt;21&lt;/td&gt;
+      &lt;td&gt;07&lt;/td&gt;
+      &lt;td&gt;001902&lt;/td&gt;
+      &lt;td&gt;CAYUGA ISD&lt;/td&gt;
+      &lt;td&gt;CAYUGA ELEM.&lt;/td&gt;
+      &lt;td&gt;03&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;Mathematics&lt;/td&gt;
+      &lt;td&gt;American Indian or Alaska Native Students&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;001902103&lt;/td&gt;
+      &lt;td&gt;21&lt;/td&gt;
+      &lt;td&gt;07&lt;/td&gt;
+      &lt;td&gt;001902&lt;/td&gt;
+      &lt;td&gt;CAYUGA ISD&lt;/td&gt;
+      &lt;td&gt;CAYUGA ELEM.&lt;/td&gt;
+      &lt;td&gt;03&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;Mathematics&lt;/td&gt;
+      &lt;td&gt;Asian Students&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;001902103&lt;/td&gt;
+      &lt;td&gt;21&lt;/td&gt;
+      &lt;td&gt;07&lt;/td&gt;
+      &lt;td&gt;001902&lt;/td&gt;
+      &lt;td&gt;CAYUGA ISD&lt;/td&gt;
+      &lt;td&gt;CAYUGA ELEM.&lt;/td&gt;
+      &lt;td&gt;03&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;Mathematics&lt;/td&gt;
+      &lt;td&gt;At-Risk Students&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;71&lt;/td&gt;
+      &lt;td&gt;64&lt;/td&gt;
+      &lt;td&gt;71&lt;/td&gt;
+      &lt;td&gt;47&lt;/td&gt;
+      &lt;td&gt;68&lt;/td&gt;
+      &lt;td&gt;29&lt;/td&gt;
+      &lt;td&gt;29&lt;/td&gt;
+      &lt;td&gt;43&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;580645&lt;/th&gt;
+      &lt;td&gt;254902001&lt;/td&gt;
+      &lt;td&gt;21&lt;/td&gt;
+      &lt;td&gt;20&lt;/td&gt;
+      &lt;td&gt;254902&lt;/td&gt;
+      &lt;td&gt;LA PRYOR ISD&lt;/td&gt;
+      &lt;td&gt;LA PRYOR H.S.&lt;/td&gt;
+      &lt;td&gt;08&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;Social Studies&lt;/td&gt;
+      &lt;td&gt;Title-I Participant Students Codes: 6 7 9&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;34&lt;/td&gt;
+      &lt;td&gt;41&lt;/td&gt;
+      &lt;td&gt;54&lt;/td&gt;
+      &lt;td&gt;42&lt;/td&gt;
+      &lt;td&gt;46&lt;/td&gt;
+      &lt;td&gt;66&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;11&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;580646&lt;/th&gt;
+      &lt;td&gt;254902001&lt;/td&gt;
+      &lt;td&gt;21&lt;/td&gt;
+      &lt;td&gt;20&lt;/td&gt;
+      &lt;td&gt;254902&lt;/td&gt;
+      &lt;td&gt;LA PRYOR ISD&lt;/td&gt;
+      &lt;td&gt;LA PRYOR H.S.&lt;/td&gt;
+      &lt;td&gt;08&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;Social Studies&lt;/td&gt;
+      &lt;td&gt;Transitional Bilingual/Early Exit Students&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;580647&lt;/th&gt;
+      &lt;td&gt;254902001&lt;/td&gt;
+      &lt;td&gt;21&lt;/td&gt;
+      &lt;td&gt;20&lt;/td&gt;
+      &lt;td&gt;254902&lt;/td&gt;
+      &lt;td&gt;LA PRYOR ISD&lt;/td&gt;
+      &lt;td&gt;LA PRYOR H.S.&lt;/td&gt;
+      &lt;td&gt;08&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;Social Studies&lt;/td&gt;
+      &lt;td&gt;Transitional Bilingual/Late Exit Students&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;580648&lt;/th&gt;
+      &lt;td&gt;254902001&lt;/td&gt;
+      &lt;td&gt;21&lt;/td&gt;
+      &lt;td&gt;20&lt;/td&gt;
+      &lt;td&gt;254902&lt;/td&gt;
+      &lt;td&gt;LA PRYOR ISD&lt;/td&gt;
+      &lt;td&gt;LA PRYOR H.S.&lt;/td&gt;
+      &lt;td&gt;08&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;Social Studies&lt;/td&gt;
+      &lt;td&gt;Two or More Races Students&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;580649&lt;/th&gt;
+      &lt;td&gt;254902001&lt;/td&gt;
+      &lt;td&gt;21&lt;/td&gt;
+      &lt;td&gt;20&lt;/td&gt;
+      &lt;td&gt;254902&lt;/td&gt;
+      &lt;td&gt;LA PRYOR ISD&lt;/td&gt;
+      &lt;td&gt;LA PRYOR H.S.&lt;/td&gt;
+      &lt;td&gt;08&lt;/td&gt;
+      &lt;td&gt;Numeric&lt;/td&gt;
+      &lt;td&gt;Social Studies&lt;/td&gt;
+      &lt;td&gt;White Students&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;NA&amp;gt;&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;3576655 rows × 35 columns&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h2 id="Conclusion"&gt;Conclusion&lt;a class="anchor-link" href="#Conclusion"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The resulting dataset/file ends up being ~3.5 million rows in length and a consistent 35 columns wide. You can download the reshaped dataset here: &lt;a href="/extra/TX_STAAR_3_8_2021.csv.gz"&gt;TX STAAR 2021 - Grades 3-8&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;We can now run simpler queries on the reshaped data such as:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;TX_STAAR_2021&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;WHERE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;subject&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Reading&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;AND&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;student_group&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;All Students&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;AND&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;grade&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;IN&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;6&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;7&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;8&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;A similar query using the original datasets would've required unioning three different datasets and a much more complicated set of column matching to filter down to the right subject and student group.&lt;/p&gt;
+&lt;p&gt;In our production environment, the approach is similar but we initially load the raw dat and var files into Google Cloud Storage and as well as the resulting csv. That is then converted to avro for better query performance and an &lt;a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro"&gt;external table&lt;/a&gt; is generated in BigQuery using their API.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+ 
+
+
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        " linebreaks: { automatic: true, width: '95% container' }, " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;
+</content><category term="Tutorial"></category></entry><entry><title>Creating WordClouds</title><link href="http://dchess.github.io/creating-wordclouds.html" rel="alternate"></link><published>2021-02-04T21:00:00-07:00</published><updated>2021-02-04T21:00:00-07:00</updated><author><name>dc.hess@gmail.com</name></author><id>tag:dchess.github.io,2021-02-04:/creating-wordclouds.html</id><summary type="html">&lt;p&gt;Using python to turn paragraph text into word clouds&lt;/p&gt;</summary><content type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Text analysis is hard, but one simple visual tool for extracting insights from dense text are word clouds. Word clouds help identify patterns in the preponderance of certain words in a body of text or within many bodies of text. The more frequently a word appears, the larger the word appears in the word cloud.&lt;/p&gt;
