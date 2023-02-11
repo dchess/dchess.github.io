@@ -168,7 +168,7 @@ variables and make sql queries using the Pandas <code>.read_sql_query()</code> m
 <p>I'm a fan of <a href="https://pipenv.pypa.io/en/latest/">Pipenv</a>. It's so simple to install python package dependencies
 into a local virtual environment and also handle environment variables from a <code>.env</code> file. Effectively combining
 all the functionality of <a href="https://pypi.org/project/pip/">pip</a>, <a href="https://docs.python.org/3/tutorial/venv.html">venv</a>, and <a href="https://saurabh-kumar.com/python-dotenv/">python-dotenv</a>. </p>
-<div class="highlight"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="n">pipenv</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="n">Flask</span><span class="p">,</span><span class="w"> </span><span class="n">sqlsorcery</span><span class="o">[</span><span class="n">mssql</span><span class="o">]</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="n">pipenv</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="n">Flask</span><span class="p">,</span><span class="w"> </span><span class="n">sqlsorcery</span><span class="o">[</span><span class="n">mssql</span><span class="o">]</span>
 </code></pre></div>
 
 <p>And just like that we're ready to develop.</p>
@@ -220,11 +220,11 @@ tables that a human can read, navigate, and learn what data exists before pointi
 <h2>Putting it all together</h2>
 <p>At this point we should have a file directory that looks like this:</p>
 <div class="highlight"><pre><span></span><code>.
-├── Pipfile
-├── .env
-├── app.py
-└── templates
-    └── index.html
+├──<span class="w"> </span>Pipfile
+├──<span class="w"> </span>.env
+├──<span class="w"> </span>app.py
+└──<span class="w"> </span>templates
+<span class="w">    </span>└──<span class="w"> </span>index.html
 </code></pre></div>
 
 <p>Let's finish off our <code>app.py</code> and give it a test run:</p>
@@ -252,7 +252,7 @@ tables that a human can read, navigate, and learn what data exists before pointi
 </code></pre></div>
 
 <p>Spin it up on <a href="localhost:5000/api/">localhost:5000/api/</a> and explore your data!</p>
-<div class="highlight"><pre><span></span><code>$ pipenv run flask run
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pipenv<span class="w"> </span>run<span class="w"> </span>flask<span class="w"> </span>run
 </code></pre></div>
 
 <h2>Conclusion</h2>

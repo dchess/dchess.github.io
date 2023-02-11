@@ -163,31 +163,31 @@ and <em>limited in scope</em> feature branch, code reviews happen in pull reques
 <h3>Git Workflow in 10 Steps</h3>
 <p>Ok, so I know I said don't <em>just</em> memorize commands, but these are the 10 commands to <strong>commit</strong> (see what I did there?) to memory.</p>
 <h4>1. Clone new repo or pull changes to main branch for existing</h4>
-<div class="highlight"><pre><span></span><code>$ git clone https://github.com/the-repos-url.git
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/the-repos-url.git
 </code></pre></div>
 
 <p><strong>OR</strong></p>
-<div class="highlight"><pre><span></span><code>$ git pull origin main
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>main
 </code></pre></div>
 
 <h4>2. Checkout a local feature branch to make changes</h4>
-<div class="highlight"><pre><span></span><code>$ git checkout -b my_new_branch
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>my_new_branch
 </code></pre></div>
 
 <h4>3. Commit after making your code changes (<a href="https://chris.beams.io/posts/git-commit/">writing good commits</a>)</h4>
-<div class="highlight"><pre><span></span><code>$ git add -A
-$ git commit -m <span class="s2">&quot;Add some new functionality&quot;</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>-A
+$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Add some new functionality&quot;</span>
 </code></pre></div>
 
 <h4>4. Push changes to a remote feature branch</h4>
-<div class="highlight"><pre><span></span><code>$ git push origin my_new_branch
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>my_new_branch
 </code></pre></div>
 
 <h4>5. Open a Pull Request (and request reviewers)</h4>
 <p><img alt="Image Github PR button" src="/images/pr_button.png"></p>
 <h4>6. Code Review: Responding to change requests</h4>
-<div class="highlight"><pre><span></span><code>$ git add -A
-$ git commit -m <span class="s2">&quot;Fix issue raised in code review&quot;</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>-A
+$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Fix issue raised in code review&quot;</span>
 </code></pre></div>
 
 <h4>7. Code Review: Approved</h4>
@@ -195,33 +195,33 @@ $ git commit -m <span class="s2">&quot;Fix issue raised in code review&quot;</sp
 <h4>8. Merge (or squash merge) into main branch</h4>
 <p><img alt="Image Github merge approved changes dialog" src="/images/merge_changes.png"></p>
 <h4>9. Checkout main (locally)</h4>
-<div class="highlight"><pre><span></span><code>$ git checkout main
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>main
 </code></pre></div>
 
 <h4>10. Pull changes (back to step 1)</h4>
-<div class="highlight"><pre><span></span><code>$ git pull origin main
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>main
 </code></pre></div>
 
 <p><em>Rinse and repeat for the next feature!</em></p>
 <h2>Common Git Commands and What They Do</h2>
-<div class="highlight"><pre><span></span><code>$ git clone <span class="c1"># copy remote repos to local</span>
-$ git checkout -b branch_name <span class="c1"># create and checkout a new branch</span>
-$ git add -A <span class="c1"># add all changed files to staging</span>
-$ git status <span class="c1"># view status of the working directory and staging area</span>
-$ git diff <span class="c1"># view changes made on file(s)</span>
-$ git commit -m “Your message goes here” <span class="c1">#  save changes to local repo</span>
-$ git pull origin main <span class="c1">#  get changes to main branch from remote repo</span>
-$ git fetch <span class="c1">#  get references to all remote branches, so they can be checked out</span>
-$ git push origin branch_name <span class="c1">#  push local changes to remote repo</span>
-$ git merge main <span class="c1">#  merge changes to main branch into another branch</span>
-$ git log --oneline <span class="c1">#  view list of commit messages</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span><span class="c1"># copy remote repos to local</span>
+$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>branch_name<span class="w"> </span><span class="c1"># create and checkout a new branch</span>
+$<span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>-A<span class="w"> </span><span class="c1"># add all changed files to staging</span>
+$<span class="w"> </span>git<span class="w"> </span>status<span class="w"> </span><span class="c1"># view status of the working directory and staging area</span>
+$<span class="w"> </span>git<span class="w"> </span>diff<span class="w"> </span><span class="c1"># view changes made on file(s)</span>
+$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span>“Your<span class="w"> </span>message<span class="w"> </span>goes<span class="w"> </span>here”<span class="w"> </span><span class="c1">#  save changes to local repo</span>
+$<span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>main<span class="w"> </span><span class="c1">#  get changes to main branch from remote repo</span>
+$<span class="w"> </span>git<span class="w"> </span>fetch<span class="w"> </span><span class="c1">#  get references to all remote branches, so they can be checked out</span>
+$<span class="w"> </span>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>branch_name<span class="w"> </span><span class="c1">#  push local changes to remote repo</span>
+$<span class="w"> </span>git<span class="w"> </span>merge<span class="w"> </span>main<span class="w"> </span><span class="c1">#  merge changes to main branch into another branch</span>
+$<span class="w"> </span>git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span><span class="c1">#  view list of commit messages</span>
 </code></pre></div>
 
 <h3>A Few More and When to Use Them</h3>
-<div class="highlight"><pre><span></span><code>$ git stash <span class="c1">#  temporarily store changes in order to switch contexts</span>
-$ git stash pop <span class="c1">#  restore temporarily stored changes</span>
-$ git reset <span class="c1">#  reset tracked file(s) to untracked (can also be used for dangerous reverts)</span>
-$ git revert <span class="c1">#  safer way to undo changes (fail forward)</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>stash<span class="w"> </span><span class="c1">#  temporarily store changes in order to switch contexts</span>
+$<span class="w"> </span>git<span class="w"> </span>stash<span class="w"> </span>pop<span class="w"> </span><span class="c1">#  restore temporarily stored changes</span>
+$<span class="w"> </span>git<span class="w"> </span>reset<span class="w"> </span><span class="c1">#  reset tracked file(s) to untracked (can also be used for dangerous reverts)</span>
+$<span class="w"> </span>git<span class="w"> </span>revert<span class="w"> </span><span class="c1">#  safer way to undo changes (fail forward)</span>
 </code></pre></div>
 
 <h2>Creating Branches (when, why, how)</h2>
@@ -231,12 +231,12 @@ $ git revert <span class="c1">#  safer way to undo changes (fail forward)</span>
 <h3>Why</h3>
 <p>Isolating your changes to a branch prevents conflicts with other collaborators and helps you experiment without fear of making “breaking” changes to the main codebase. Great for experimenting!</p>
 <h3>How</h3>
-<div class="highlight"><pre><span></span><code>$ git branch <span class="c1">#  list all local branches</span>
-$ git branch new_branch_name <span class="c1">#  create a new branch</span>
-$ git checkout new_branch_name <span class="c1">#  switch to that new branch</span>
-$ git checkout -b new_branch_name <span class="c1">#  create and checkout in one step</span>
-$ git branch -d new_branch_name <span class="c1">#  delete a branch safely (error if unmerged)</span>
-$ git branch -D new_branch_name <span class="c1">#  force delete (can delete unmerged)</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>branch<span class="w"> </span><span class="c1">#  list all local branches</span>
+$<span class="w"> </span>git<span class="w"> </span>branch<span class="w"> </span>new_branch_name<span class="w"> </span><span class="c1">#  create a new branch</span>
+$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>new_branch_name<span class="w"> </span><span class="c1">#  switch to that new branch</span>
+$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>new_branch_name<span class="w"> </span><span class="c1">#  create and checkout in one step</span>
+$<span class="w"> </span>git<span class="w"> </span>branch<span class="w"> </span>-d<span class="w"> </span>new_branch_name<span class="w"> </span><span class="c1">#  delete a branch safely (error if unmerged)</span>
+$<span class="w"> </span>git<span class="w"> </span>branch<span class="w"> </span>-D<span class="w"> </span>new_branch_name<span class="w"> </span><span class="c1">#  force delete (can delete unmerged)</span>
 </code></pre></div>
 
 <h2>Pull Requests</h2>

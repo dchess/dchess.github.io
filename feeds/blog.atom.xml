@@ -36,7 +36,7 @@ variables and make sql queries using the Pandas &lt;code&gt;.read_sql_query()&lt
 &lt;p&gt;I'm a fan of &lt;a href="https://pipenv.pypa.io/en/latest/"&gt;Pipenv&lt;/a&gt;. It's so simple to install python package dependencies
 into a local virtual environment and also handle environment variables from a &lt;code&gt;.env&lt;/code&gt; file. Effectively combining
 all the functionality of &lt;a href="https://pypi.org/project/pip/"&gt;pip&lt;/a&gt;, &lt;a href="https://docs.python.org/3/tutorial/venv.html"&gt;venv&lt;/a&gt;, and &lt;a href="https://saurabh-kumar.com/python-dotenv/"&gt;python-dotenv&lt;/a&gt;. &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pipenv&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;install&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sqlsorcery&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;mssql&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pipenv&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;install&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sqlsorcery&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;mssql&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;And just like that we're ready to develop.&lt;/p&gt;
@@ -88,11 +88,11 @@ tables that a human can read, navigate, and learn what data exists before pointi
 &lt;h2&gt;Putting it all together&lt;/h2&gt;
 &lt;p&gt;At this point we should have a file directory that looks like this:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;.
-├── Pipfile
-├── .env
-├── app.py
-└── templates
-    └── index.html
+├──&lt;span class="w"&gt; &lt;/span&gt;Pipfile
+├──&lt;span class="w"&gt; &lt;/span&gt;.env
+├──&lt;span class="w"&gt; &lt;/span&gt;app.py
+└──&lt;span class="w"&gt; &lt;/span&gt;templates
+&lt;span class="w"&gt;    &lt;/span&gt;└──&lt;span class="w"&gt; &lt;/span&gt;index.html
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Let's finish off our &lt;code&gt;app.py&lt;/code&gt; and give it a test run:&lt;/p&gt;
@@ -120,7 +120,7 @@ tables that a human can read, navigate, and learn what data exists before pointi
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Spin it up on &lt;a href="localhost:5000/api/"&gt;localhost:5000/api/&lt;/a&gt; and explore your data!&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ pipenv run flask run
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;pipenv&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;flask&lt;span class="w"&gt; &lt;/span&gt;run
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2&gt;Conclusion&lt;/h2&gt;
@@ -164,31 +164,31 @@ and &lt;em&gt;limited in scope&lt;/em&gt; feature branch, code reviews happen in
 &lt;h3&gt;Git Workflow in 10 Steps&lt;/h3&gt;
 &lt;p&gt;Ok, so I know I said don't &lt;em&gt;just&lt;/em&gt; memorize commands, but these are the 10 commands to &lt;strong&gt;commit&lt;/strong&gt; (see what I did there?) to memory.&lt;/p&gt;
 &lt;h4&gt;1. Clone new repo or pull changes to main branch for existing&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ git clone https://github.com/the-repos-url.git
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;clone&lt;span class="w"&gt; &lt;/span&gt;https://github.com/the-repos-url.git
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;OR&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ git pull origin main
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;pull&lt;span class="w"&gt; &lt;/span&gt;origin&lt;span class="w"&gt; &lt;/span&gt;main
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h4&gt;2. Checkout a local feature branch to make changes&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ git checkout -b my_new_branch
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;checkout&lt;span class="w"&gt; &lt;/span&gt;-b&lt;span class="w"&gt; &lt;/span&gt;my_new_branch
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h4&gt;3. Commit after making your code changes (&lt;a href="https://chris.beams.io/posts/git-commit/"&gt;writing good commits&lt;/a&gt;)&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ git add -A
-$ git commit -m &lt;span class="s2"&gt;&amp;quot;Add some new functionality&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;add&lt;span class="w"&gt; &lt;/span&gt;-A
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;commit&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Add some new functionality&amp;quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h4&gt;4. Push changes to a remote feature branch&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ git push origin my_new_branch
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;push&lt;span class="w"&gt; &lt;/span&gt;origin&lt;span class="w"&gt; &lt;/span&gt;my_new_branch
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h4&gt;5. Open a Pull Request (and request reviewers)&lt;/h4&gt;
 &lt;p&gt;&lt;img alt="Image Github PR button" src="/images/pr_button.png"&gt;&lt;/p&gt;
 &lt;h4&gt;6. Code Review: Responding to change requests&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ git add -A
-$ git commit -m &lt;span class="s2"&gt;&amp;quot;Fix issue raised in code review&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;add&lt;span class="w"&gt; &lt;/span&gt;-A
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;commit&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Fix issue raised in code review&amp;quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h4&gt;7. Code Review: Approved&lt;/h4&gt;
@@ -196,33 +196,33 @@ $ git commit -m &lt;span class="s2"&gt;&amp;quot;Fix issue raised in code review
 &lt;h4&gt;8. Merge (or squash merge) into main branch&lt;/h4&gt;
 &lt;p&gt;&lt;img alt="Image Github merge approved changes dialog" src="/images/merge_changes.png"&gt;&lt;/p&gt;
 &lt;h4&gt;9. Checkout main (locally)&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ git checkout main
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;checkout&lt;span class="w"&gt; &lt;/span&gt;main
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h4&gt;10. Pull changes (back to step 1)&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ git pull origin main
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;pull&lt;span class="w"&gt; &lt;/span&gt;origin&lt;span class="w"&gt; &lt;/span&gt;main
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;em&gt;Rinse and repeat for the next feature!&lt;/em&gt;&lt;/p&gt;
 &lt;h2&gt;Common Git Commands and What They Do&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ git clone &lt;span class="c1"&gt;# copy remote repos to local&lt;/span&gt;
-$ git checkout -b branch_name &lt;span class="c1"&gt;# create and checkout a new branch&lt;/span&gt;
-$ git add -A &lt;span class="c1"&gt;# add all changed files to staging&lt;/span&gt;
-$ git status &lt;span class="c1"&gt;# view status of the working directory and staging area&lt;/span&gt;
-$ git diff &lt;span class="c1"&gt;# view changes made on file(s)&lt;/span&gt;
-$ git commit -m “Your message goes here” &lt;span class="c1"&gt;#  save changes to local repo&lt;/span&gt;
-$ git pull origin main &lt;span class="c1"&gt;#  get changes to main branch from remote repo&lt;/span&gt;
-$ git fetch &lt;span class="c1"&gt;#  get references to all remote branches, so they can be checked out&lt;/span&gt;
-$ git push origin branch_name &lt;span class="c1"&gt;#  push local changes to remote repo&lt;/span&gt;
-$ git merge main &lt;span class="c1"&gt;#  merge changes to main branch into another branch&lt;/span&gt;
-$ git log --oneline &lt;span class="c1"&gt;#  view list of commit messages&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;clone&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# copy remote repos to local&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;checkout&lt;span class="w"&gt; &lt;/span&gt;-b&lt;span class="w"&gt; &lt;/span&gt;branch_name&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# create and checkout a new branch&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;add&lt;span class="w"&gt; &lt;/span&gt;-A&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# add all changed files to staging&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;status&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# view status of the working directory and staging area&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;diff&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# view changes made on file(s)&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;commit&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;“Your&lt;span class="w"&gt; &lt;/span&gt;message&lt;span class="w"&gt; &lt;/span&gt;goes&lt;span class="w"&gt; &lt;/span&gt;here”&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;#  save changes to local repo&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;pull&lt;span class="w"&gt; &lt;/span&gt;origin&lt;span class="w"&gt; &lt;/span&gt;main&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;#  get changes to main branch from remote repo&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;fetch&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;#  get references to all remote branches, so they can be checked out&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;push&lt;span class="w"&gt; &lt;/span&gt;origin&lt;span class="w"&gt; &lt;/span&gt;branch_name&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;#  push local changes to remote repo&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;merge&lt;span class="w"&gt; &lt;/span&gt;main&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;#  merge changes to main branch into another branch&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;log&lt;span class="w"&gt; &lt;/span&gt;--oneline&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;#  view list of commit messages&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3&gt;A Few More and When to Use Them&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ git stash &lt;span class="c1"&gt;#  temporarily store changes in order to switch contexts&lt;/span&gt;
-$ git stash pop &lt;span class="c1"&gt;#  restore temporarily stored changes&lt;/span&gt;
-$ git reset &lt;span class="c1"&gt;#  reset tracked file(s) to untracked (can also be used for dangerous reverts)&lt;/span&gt;
-$ git revert &lt;span class="c1"&gt;#  safer way to undo changes (fail forward)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;stash&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;#  temporarily store changes in order to switch contexts&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;stash&lt;span class="w"&gt; &lt;/span&gt;pop&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;#  restore temporarily stored changes&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;reset&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;#  reset tracked file(s) to untracked (can also be used for dangerous reverts)&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;revert&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;#  safer way to undo changes (fail forward)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2&gt;Creating Branches (when, why, how)&lt;/h2&gt;
@@ -232,12 +232,12 @@ $ git revert &lt;span class="c1"&gt;#  safer way to undo changes (fail forward)&
 &lt;h3&gt;Why&lt;/h3&gt;
 &lt;p&gt;Isolating your changes to a branch prevents conflicts with other collaborators and helps you experiment without fear of making “breaking” changes to the main codebase. Great for experimenting!&lt;/p&gt;
 &lt;h3&gt;How&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ git branch &lt;span class="c1"&gt;#  list all local branches&lt;/span&gt;
-$ git branch new_branch_name &lt;span class="c1"&gt;#  create a new branch&lt;/span&gt;
-$ git checkout new_branch_name &lt;span class="c1"&gt;#  switch to that new branch&lt;/span&gt;
-$ git checkout -b new_branch_name &lt;span class="c1"&gt;#  create and checkout in one step&lt;/span&gt;
-$ git branch -d new_branch_name &lt;span class="c1"&gt;#  delete a branch safely (error if unmerged)&lt;/span&gt;
-$ git branch -D new_branch_name &lt;span class="c1"&gt;#  force delete (can delete unmerged)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;branch&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;#  list all local branches&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;branch&lt;span class="w"&gt; &lt;/span&gt;new_branch_name&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;#  create a new branch&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;checkout&lt;span class="w"&gt; &lt;/span&gt;new_branch_name&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;#  switch to that new branch&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;checkout&lt;span class="w"&gt; &lt;/span&gt;-b&lt;span class="w"&gt; &lt;/span&gt;new_branch_name&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;#  create and checkout in one step&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;branch&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="w"&gt; &lt;/span&gt;new_branch_name&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;#  delete a branch safely (error if unmerged)&lt;/span&gt;
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;branch&lt;span class="w"&gt; &lt;/span&gt;-D&lt;span class="w"&gt; &lt;/span&gt;new_branch_name&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;#  force delete (can delete unmerged)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2&gt;Pull Requests&lt;/h2&gt;
@@ -456,13 +456,13 @@ that I maintain), I am absolutely indebted to the advice about databse setup.&lt
 
 &lt;span class="nv"&gt;user&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;whoami&lt;span class="k"&gt;)&lt;/span&gt;
 
-sudo sh -c &lt;span class="s2"&gt;&amp;quot;echo &amp;#39;deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main&amp;#39; &amp;gt; /etc/apt/sources.list.d/pgdg.list&amp;quot;&lt;/span&gt;
-wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc &lt;span class="p"&gt;|&lt;/span&gt; sudo apt-key add -
-sudo apt-get update
-sudo apt-get install -y postgresql-common
-sudo apt-get install -y postgresql libpq-dev
+sudo&lt;span class="w"&gt; &lt;/span&gt;sh&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;echo &amp;#39;deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main&amp;#39; &amp;gt; /etc/apt/sources.list.d/pgdg.list&amp;quot;&lt;/span&gt;
+wget&lt;span class="w"&gt; &lt;/span&gt;--quiet&lt;span class="w"&gt; &lt;/span&gt;-O&lt;span class="w"&gt; &lt;/span&gt;-&lt;span class="w"&gt; &lt;/span&gt;http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;apt-key&lt;span class="w"&gt; &lt;/span&gt;add&lt;span class="w"&gt; &lt;/span&gt;-
+sudo&lt;span class="w"&gt; &lt;/span&gt;apt-get&lt;span class="w"&gt; &lt;/span&gt;update
+sudo&lt;span class="w"&gt; &lt;/span&gt;apt-get&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;postgresql-common
+sudo&lt;span class="w"&gt; &lt;/span&gt;apt-get&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;postgresql&lt;span class="w"&gt; &lt;/span&gt;libpq-dev
 
-sudo -u postgres createuser &lt;span class="nv"&gt;$user&lt;/span&gt; -s
+sudo&lt;span class="w"&gt; &lt;/span&gt;-u&lt;span class="w"&gt; &lt;/span&gt;postgres&lt;span class="w"&gt; &lt;/span&gt;createuser&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$user&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-s
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;It does all the heavy lifting. Figures out what account I am installing with,
@@ -473,22 +473,22 @@ little more complicated. &lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
 
 &lt;span class="c1"&gt;# Exit if command fails&lt;/span&gt;
-&lt;span class="nb"&gt;set&lt;/span&gt; -e
+&lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-e
 &lt;span class="c1"&gt;# Treat unset variables as errors&lt;/span&gt;
-&lt;span class="nb"&gt;set&lt;/span&gt; -u
+&lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-u
 
 &lt;span class="c1"&gt;# Set user as current account&lt;/span&gt;
 &lt;span class="nv"&gt;user&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;whoami&lt;span class="k"&gt;)&lt;/span&gt;
 
 &lt;span class="c1"&gt;# Install Postgres 10&lt;/span&gt;
-sudo sh -c &lt;span class="s2"&gt;&amp;quot;echo &amp;#39;deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main&amp;#39; &amp;gt;&amp;gt; /etc/apt/sources.list.d/pgdg.list&amp;quot;&lt;/span&gt;
-wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc &lt;span class="p"&gt;|&lt;/span&gt; sudo apt-key add -
-sudo apt-get update
-sudo apt-get install -y postgresql-common
-sudo apt-get install -y postgresql-10 postgresql-contrib libpq-dev
+sudo&lt;span class="w"&gt; &lt;/span&gt;sh&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;echo &amp;#39;deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main&amp;#39; &amp;gt;&amp;gt; /etc/apt/sources.list.d/pgdg.list&amp;quot;&lt;/span&gt;
+wget&lt;span class="w"&gt; &lt;/span&gt;--quiet&lt;span class="w"&gt; &lt;/span&gt;-O&lt;span class="w"&gt; &lt;/span&gt;-&lt;span class="w"&gt; &lt;/span&gt;https://www.postgresql.org/media/keys/ACCC4CF8.asc&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;apt-key&lt;span class="w"&gt; &lt;/span&gt;add&lt;span class="w"&gt; &lt;/span&gt;-
+sudo&lt;span class="w"&gt; &lt;/span&gt;apt-get&lt;span class="w"&gt; &lt;/span&gt;update
+sudo&lt;span class="w"&gt; &lt;/span&gt;apt-get&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;postgresql-common
+sudo&lt;span class="w"&gt; &lt;/span&gt;apt-get&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-y&lt;span class="w"&gt; &lt;/span&gt;postgresql-10&lt;span class="w"&gt; &lt;/span&gt;postgresql-contrib&lt;span class="w"&gt; &lt;/span&gt;libpq-dev
 
 &lt;span class="c1"&gt;# Create superuser account as self for local management&lt;/span&gt;
-sudo -u postgres createuser &lt;span class="nv"&gt;$user&lt;/span&gt; -s
+sudo&lt;span class="w"&gt; &lt;/span&gt;-u&lt;span class="w"&gt; &lt;/span&gt;postgres&lt;span class="w"&gt; &lt;/span&gt;createuser&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$user&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-s
 
 &lt;span class="c1"&gt;# Set env vars for colors&lt;/span&gt;
 &lt;span class="nv"&gt;YELLOW&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;\033[1;33m&amp;#39;&lt;/span&gt;
@@ -496,16 +496,16 @@ sudo -u postgres createuser &lt;span class="nv"&gt;$user&lt;/span&gt; -s
 
 &lt;span class="c1"&gt;# Collect arguments from user&lt;/span&gt;
 &lt;span class="c1"&gt;# Project specific values&lt;/span&gt;
-&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;YELLOW&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;Database name:\n&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;NC&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="nb"&gt;read&lt;/span&gt; database
-&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;YELLOW&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;Username:\n&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;NC&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="nb"&gt;read&lt;/span&gt; username
-&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;YELLOW&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;Password:\n&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;NC&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="nb"&gt;read&lt;/span&gt; password
+&lt;span class="nb"&gt;printf&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;YELLOW&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;Database name:\n&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;NC&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;read&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;database
+&lt;span class="nb"&gt;printf&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;YELLOW&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;Username:\n&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;NC&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;read&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;username
+&lt;span class="nb"&gt;printf&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;YELLOW&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;Password:\n&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;NC&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;read&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;password
 
 &lt;span class="c1"&gt;# Create database and user&lt;/span&gt;
 &lt;span class="nv"&gt;RUN_ON_PSQL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;psql -X -U &lt;/span&gt;&lt;span class="nv"&gt;$user&lt;/span&gt;&lt;span class="s2"&gt; --set ON_ERROR_STOP=on --set AUTOCOMMIT=off postgres&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;$RUN_ON_PSQL&lt;/span&gt; &lt;span class="s"&gt;&amp;lt;&amp;lt;SQL&lt;/span&gt;
+&lt;span class="nv"&gt;$RUN_ON_PSQL&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;lt;&amp;lt;SQL&lt;/span&gt;
 &lt;span class="s"&gt;CREATE DATABASE $database;&lt;/span&gt;
 &lt;span class="s"&gt;CREATE USER $username WITH PASSWORD &amp;#39;$password&amp;#39;;&lt;/span&gt;
 &lt;span class="s"&gt;ALTER ROLE $username SET client_encoding TO &amp;#39;utf8&amp;#39;;&lt;/span&gt;
@@ -516,7 +516,7 @@ sudo -u postgres createuser &lt;span class="nv"&gt;$user&lt;/span&gt; -s
 &lt;span class="s"&gt;commit;&lt;/span&gt;
 &lt;span class="s"&gt;SQL&lt;/span&gt;
 
-&lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;
+&lt;span class="nb"&gt;exit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Now my team can clone my repo, run this app and be good to go in seconds. It

@@ -131,76 +131,25 @@
 
 
   <div>
-    <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>When processing nested <code>JSON</code> data into a flat structure for importing into a relational database, it can be tricky to structure the data into the right shape. <a href="https://pandas.pydata.org/">Pandas</a> has a great tool for doing this called <code>pandas.json_normalize()</code> but the <a href="https://pandas.pydata.org/docs/reference/api/pandas.json_normalize.html?highlight=json_normalize">documentation</a> doesn't make it obvious how to leverage its capabilities for handling nested data structures.</p>
+    <p>When processing nested <code>JSON</code> data into a flat structure for importing into a relational database, it can be tricky to structure the data into the right shape. <a href="https://pandas.pydata.org/">Pandas</a> has a great tool for doing this called <code>pandas.json_normalize()</code> but the <a href="https://pandas.pydata.org/docs/reference/api/pandas.json_normalize.html?highlight=json_normalize">documentation</a> doesn't make it obvious how to leverage its capabilities for handling nested data structures. </p>
 <p>I thought I could provide a brief example using some randomly generated survey response data (using the <a href="https://faker.readthedocs.io/en/master/">Faker</a> library) to illustrate it's advantages.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Setup">Setup<a class="anchor-link" href="#Setup">&#182;</a></h2><p>To start, I'm going to be using pandas and Faker so we'll import those. I'm also going to need to easily display the parsed json as well as the returned dataframes, so I'm importing the json module from the standard lib as well as some IPython notebook helpers for displaying dataframes as HTML tables.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[63]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<h2>Setup</h2>
+<p>To start, I'm going to be using pandas and Faker so we'll import those. I'm also going to need to easily display the parsed json as well as the returned dataframes, so I'm importing the json module from the standard lib as well as some IPython notebook helpers for displaying dataframes as HTML tables. </p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
 <span class="kn">from</span> <span class="nn">faker</span> <span class="kn">import</span> <span class="n">Faker</span>
 <span class="kn">from</span> <span class="nn">faker.providers</span> <span class="kn">import</span> <span class="n">BaseProvider</span><span class="p">,</span> <span class="n">date_time</span><span class="p">,</span> <span class="n">internet</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-</pre></div>
+</code></pre></div>
 
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>To make it easier to call the IPython display helper, we'll include this simple function as <strong>syntactic sugar</strong>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[64]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+<p>To make it easier to call the IPython display helper, we'll include this simple function as <strong>syntactic sugar</strong>. </p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
     <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">to_html</span><span class="p">()))</span>
-</pre></div>
+</code></pre></div>
 
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Fake-Data">Fake Data<a class="anchor-link" href="#Fake-Data">&#182;</a></h2><p>Faker doesn't have a built in provider for survey questions, so let's go ahead and add a simple one that creates non-sensical questions with a simple hack to the sentence provider.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[65]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">MyProvider</span><span class="p">(</span><span class="n">BaseProvider</span><span class="p">):</span>
+<h2>Fake Data</h2>
+<p>Faker doesn't have a built in provider for survey questions, so let's go ahead and add a simple one that creates non-sensical questions with a simple hack to the sentence provider.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MyProvider</span><span class="p">(</span><span class="n">BaseProvider</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">question</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">stems</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Does&#39;</span><span class="p">,</span> <span class="s1">&#39;How does&#39;</span><span class="p">,</span> <span class="s1">&#39;Which&#39;</span><span class="p">,</span> <span class="s1">&#39;Why does&#39;</span><span class="p">)</span>
         <span class="n">stem</span> <span class="o">=</span> <span class="n">Faker</span><span class="p">()</span><span class="o">.</span><span class="n">random_choices</span><span class="p">(</span><span class="n">elements</span><span class="o">=</span><span class="n">stems</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -209,27 +158,10 @@
         <span class="n">question</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;?&quot;</span><span class="p">)</span>
         <span class="n">question</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stem</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">question</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">return</span> <span class="n">question</span>
-</pre></div>
+</code></pre></div>
 
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>Using this new question provider, we'll construct a few records of fake survey response data with some respondent level data like a respondent_id, survey_date, and respondent email. Within that we'll nest a list of responses which will in turn have it's own dictionary of data at the question level: id, question text, and choices. The choices list will be singular here, but assume it has that structure because the API this comes from has to also account for multi-select options and we'll need to parse it as a list regardless. <em>Depending on our analysis needs, this might also be a place where we'd want to keep these in a comma separated string, but for our purposes here we'll ignore that use case.</em></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[66]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fake</span> <span class="o">=</span> <span class="n">Faker</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="n">fake</span> <span class="o">=</span> <span class="n">Faker</span><span class="p">()</span>
 <span class="n">fake</span><span class="o">.</span><span class="n">add_provider</span><span class="p">(</span><span class="n">MyProvider</span><span class="p">)</span>
 <span class="n">choices</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Strongly Agree&#39;</span><span class="p">,</span> <span class="s1">&#39;Agree&#39;</span><span class="p">,</span> <span class="s1">&#39;Neutral&#39;</span><span class="p">,</span> <span class="s1">&#39;Disagree&#39;</span><span class="p">,</span> <span class="s1">&#39;Strongly Disagree&#39;</span><span class="p">)</span>
 
@@ -253,140 +185,77 @@
         <span class="p">]</span>
     <span class="p">}</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> 
 <span class="p">]</span>
-</pre></div>
+</code></pre></div>
 
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's print out a single record to see the resulting data structure that has been generated randomly.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sample_data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</code></pre></div>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[67]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sample_data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">{</span>
+<span class="w">  </span><span class="ss">&quot;respondent_id&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;9U69hZ538l1&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="ss">&quot;survey_date&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;1994-03-20&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="ss">&quot;email&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;lindsey24@example.com&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="ss">&quot;responses&quot;</span><span class="err">:</span><span class="w"> </span><span class="o">[</span>
+<span class="n">    {</span>
+<span class="n">      &quot;question_id&quot;: &quot;7YB4ZO864I7&quot;,</span>
+<span class="n">      &quot;question_text&quot;: &quot;How does speak beat ever tree?&quot;,</span>
+<span class="n">      &quot;choices&quot;: [</span>
+<span class="n">        {</span>
+<span class="n">          &quot;choice&quot;: &quot;Strongly Agree&quot;,</span>
+<span class="n">          &quot;number&quot;: 4</span>
+<span class="n">        }</span>
+<span class="n">      </span><span class="o">]</span>
+<span class="w">    </span><span class="err">}</span><span class="p">,</span>
+<span class="w">    </span><span class="err">{</span>
+<span class="w">      </span><span class="ss">&quot;question_id&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;8uD0WY155Q9&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="ss">&quot;question_text&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;How does write popular Mr know develop?&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="ss">&quot;choices&quot;</span><span class="err">:</span><span class="w"> </span><span class="o">[</span>
+<span class="n">        {</span>
+<span class="n">          &quot;choice&quot;: &quot;Agree&quot;,</span>
+<span class="n">          &quot;number&quot;: 9</span>
+<span class="n">        }</span>
+<span class="n">      </span><span class="o">]</span>
+<span class="w">    </span><span class="err">}</span><span class="p">,</span>
+<span class="w">    </span><span class="err">{</span>
+<span class="w">      </span><span class="ss">&quot;question_id&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;8bN0OP829A8&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="ss">&quot;question_text&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;Why does democratic represent far my pressure series third?&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="ss">&quot;choices&quot;</span><span class="err">:</span><span class="w"> </span><span class="o">[</span>
+<span class="n">        {</span>
+<span class="n">          &quot;choice&quot;: &quot;Strongly Agree&quot;,</span>
+<span class="n">          &quot;number&quot;: 9</span>
+<span class="n">        }</span>
+<span class="n">      </span><span class="o">]</span>
+<span class="w">    </span><span class="err">}</span><span class="p">,</span>
+<span class="w">    </span><span class="err">{</span>
+<span class="w">      </span><span class="ss">&quot;question_id&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;2Rt9mk140E8&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="ss">&quot;question_text&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;How does understand network old?&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="ss">&quot;choices&quot;</span><span class="err">:</span><span class="w"> </span><span class="o">[</span>
+<span class="n">        {</span>
+<span class="n">          &quot;choice&quot;: &quot;Agree&quot;,</span>
+<span class="n">          &quot;number&quot;: 2</span>
+<span class="n">        }</span>
+<span class="n">      </span><span class="o">]</span>
+<span class="w">    </span><span class="err">}</span><span class="p">,</span>
+<span class="w">    </span><span class="err">{</span>
+<span class="w">      </span><span class="ss">&quot;question_id&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;8tf2SU934m8&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="ss">&quot;question_text&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;Why does western next put?&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="ss">&quot;choices&quot;</span><span class="err">:</span><span class="w"> </span><span class="o">[</span>
+<span class="n">        {</span>
+<span class="n">          &quot;choice&quot;: &quot;Neutral&quot;,</span>
+<span class="n">          &quot;number&quot;: 8</span>
+<span class="n">        }</span>
+<span class="n">      </span><span class="o">]</span>
+<span class="w">    </span><span class="err">}</span>
+<span class="w">  </span><span class="err">]</span>
+<span class="err">}</span>
+</code></pre></div>
 
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>{
-  &#34;respondent_id&#34;: &#34;9U69hZ538l1&#34;,
-  &#34;survey_date&#34;: &#34;1994-03-20&#34;,
-  &#34;email&#34;: &#34;lindsey24@example.com&#34;,
-  &#34;responses&#34;: [
-    {
-      &#34;question_id&#34;: &#34;7YB4ZO864I7&#34;,
-      &#34;question_text&#34;: &#34;How does speak beat ever tree?&#34;,
-      &#34;choices&#34;: [
-        {
-          &#34;choice&#34;: &#34;Strongly Agree&#34;,
-          &#34;number&#34;: 4
-        }
-      ]
-    },
-    {
-      &#34;question_id&#34;: &#34;8uD0WY155Q9&#34;,
-      &#34;question_text&#34;: &#34;How does write popular Mr know develop?&#34;,
-      &#34;choices&#34;: [
-        {
-          &#34;choice&#34;: &#34;Agree&#34;,
-          &#34;number&#34;: 9
-        }
-      ]
-    },
-    {
-      &#34;question_id&#34;: &#34;8bN0OP829A8&#34;,
-      &#34;question_text&#34;: &#34;Why does democratic represent far my pressure series third?&#34;,
-      &#34;choices&#34;: [
-        {
-          &#34;choice&#34;: &#34;Strongly Agree&#34;,
-          &#34;number&#34;: 9
-        }
-      ]
-    },
-    {
-      &#34;question_id&#34;: &#34;2Rt9mk140E8&#34;,
-      &#34;question_text&#34;: &#34;How does understand network old?&#34;,
-      &#34;choices&#34;: [
-        {
-          &#34;choice&#34;: &#34;Agree&#34;,
-          &#34;number&#34;: 2
-        }
-      ]
-    },
-    {
-      &#34;question_id&#34;: &#34;8tf2SU934m8&#34;,
-      &#34;question_text&#34;: &#34;Why does western next put?&#34;,
-      &#34;choices&#34;: [
-        {
-          &#34;choice&#34;: &#34;Neutral&#34;,
-          &#34;number&#34;: 8
-        }
-      ]
-    }
-  ]
-}
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Reading-with-Pandas">Reading with Pandas<a class="anchor-link" href="#Reading-with-Pandas">&#182;</a></h2><p>As you can see below, simply reading this directly into a dataframe only parses the top level respondent data, but then keeps the responses data as a json array. Which isn't great for simple analysis. Could you load that "as is" into a jsonb field in PostgreSQL? Sure. If you like parsing json with SQL. Yuck!</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[68]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">sample_data</span><span class="p">)</span>
+<h2>Reading with Pandas</h2>
+<p>As you can see below, simply reading this directly into a dataframe only parses the top level respondent data, but then keeps the responses data as a json array. Which isn't great for simple analysis. Could you load that "as is" into a jsonb field in PostgreSQL? Sure. If you like parsing json with SQL. Yuck!</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">sample_data</span><span class="p">)</span>
 <span class="n">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -414,29 +283,11 @@
     </tr>
   </tbody>
 </table>
-</div>
 
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="A-messy-custom-parser">A messy custom parser<a class="anchor-link" href="#A-messy-custom-parser">&#182;</a></h2><p>We could attempt to reshape this by writing some custom functions to handle extracting the responses and merging that data with the top-level meta data about the respondent with some dictionary unpacking, but this gets messy and would fall apart quickly as the structure changed. While this approach works, it's not ideal.</p>
+<h2>A messy custom parser</h2>
+<p>We could attempt to reshape this by writing some custom functions to handle extracting the responses and merging that data with the top-level meta data about the respondent with some dictionary unpacking, but this gets messy and would fall apart quickly as the structure changed. While this approach works, it's not ideal. </p>
 <p>Sure this code could be further refactored to simplify the logic, but it's not worth it since the <code>pandas.json_normalize()</code> can do this for us easily.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[69]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">record_format</span><span class="p">(</span><span class="n">responses</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">record_format</span><span class="p">(</span><span class="n">responses</span><span class="p">):</span>
     <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">response</span> <span class="ow">in</span> <span class="n">responses</span><span class="p">:</span>
         <span class="n">record</span> <span class="o">=</span> <span class="p">{</span>
@@ -466,23 +317,8 @@
 <span class="n">clean_data</span> <span class="o">=</span> <span class="n">parse_json</span><span class="p">(</span><span class="n">sample_data</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">clean_data</span><span class="p">)</span>
 <span class="n">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -599,46 +435,13 @@
     </tr>
   </tbody>
 </table>
-</div>
 
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="JSON-Normalize">JSON Normalize<a class="anchor-link" href="#JSON-Normalize">&#182;</a></h2><p>Thankfully there is the <code>json_normalize()</code> function, but it requires a little understanding to get it to satisfactorily parse flat. Simply passing it the sample data without any parameters results in a very familiar result that gets us no further than we started in the first attempt.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[70]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span><span class="n">sample_data</span><span class="p">)</span>
+<h2>JSON Normalize</h2>
+<p>Thankfully there is the <code>json_normalize()</code> function, but it requires a little understanding to get it to satisfactorily parse flat. Simply passing it the sample data without any parameters results in a very familiar result that gets us no further than we started in the first attempt.</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span><span class="n">sample_data</span><span class="p">)</span>
 <span class="n">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -666,49 +469,15 @@
     </tr>
   </tbody>
 </table>
-</div>
 
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>A few optional parameters can be used here to parse the first nested array called <code>responses</code>. We can direct the pandas json parser to a specific key as the source of records. The <code>record_path</code> parameter takes either a string or list of strings to construct that path. The name of this parameter is a hint about how to think of this when passed as a list as we'll see later.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[71]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
+<p>A few optional parameters can be used here to parse the first nested array called <code>responses</code>. We can direct the pandas json parser to a specific key as the source of records. The <code>record_path</code> parameter takes either a string or list of strings to construct that path. The name of this parameter is a hint about how to think of this when passed as a list as we'll see later. </p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
     <span class="n">sample_data</span><span class="p">,</span> 
     <span class="n">record_path</span><span class="o">=</span><span class="s2">&quot;responses&quot;</span><span class="p">,</span> 
 <span class="p">)</span>
 <span class="n">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -781,28 +550,9 @@
     </tr>
   </tbody>
 </table>
-</div>
 
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>But when we direct the parser to just unpack the <code>reponses</code> array, we lose our data from the level above. Pandas can be instructed to keep this by giving it a list of metadata to repeat for each record it unpacks from the level above. We use the <code>meta</code> parameter and pass it a list of the fields to include.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[72]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
+<div class="highlight"><pre><span></span><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
     <span class="n">sample_data</span><span class="p">,</span> 
     <span class="n">record_path</span><span class="o">=</span><span class="s2">&quot;responses&quot;</span><span class="p">,</span> 
      <span class="n">meta</span><span class="o">=</span><span class="p">[</span>
@@ -812,24 +562,8 @@
     <span class="p">],</span>
 <span class="p">)</span>
 <span class="n">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-   
-</pre></div>
+</code></pre></div>
 
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -935,19 +669,10 @@
     </tr>
   </tbody>
 </table>
-</div>
 
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="We-must-go-deeper!">We must go deeper!<a class="anchor-link" href="#We-must-go-deeper!">&#182;</a></h2><p>That works for the most part, but we still have that annoying <strong>choices</strong> json array that would be nice to split out into columns.</p>
-<div class="highlight"><pre><span></span><span class="n">df5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
+<h2>We must go deeper!</h2>
+<p>That works for the most part, but we still have that annoying <strong>choices</strong> json array that would be nice to split out into columns. </p>
+<div class="highlight"><pre><span></span><code><span class="n">df5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
     <span class="n">sample_data</span><span class="p">,</span> 
     <span class="n">record_path</span><span class="o">=</span><span class="s2">&quot;choices&quot;</span><span class="p">,</span> 
     <span class="n">meta</span><span class="o">=</span><span class="p">[</span>
@@ -956,18 +681,10 @@
         <span class="s2">&quot;email&quot;</span><span class="p">,</span> 
     <span class="p">],</span>
 <span class="p">)</span>
-</pre></div>
-<p>Simply passing the choices field to the <code>record_path</code> param results in a <code>KeyError</code> though. This is because the <strong>choices</strong> field is actually nested in the <strong>responses</strong> field. So pandas need us to construct a path to reach it. We can get to it by passing each key as a record in the list to construct a path. Here that looks like <code>["responses", "choices"]</code>.</p>
+</code></pre></div>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[73]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
+<p>Simply passing the choices field to the <code>record_path</code> param results in a <code>KeyError</code> though. This is because the <strong>choices</strong> field is actually nested in the <strong>responses</strong> field. So pandas need us to construct a path to reach it. We can get to it by passing each key as a record in the list to construct a path. Here that looks like <code>["responses", "choices"]</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
     <span class="n">sample_data</span><span class="p">,</span> 
     <span class="n">record_path</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;responses&quot;</span><span class="p">,</span> <span class="s2">&quot;choices&quot;</span><span class="p">],</span> 
     <span class="n">meta</span><span class="o">=</span><span class="p">[</span>
@@ -977,23 +694,8 @@
     <span class="p">],</span>
 <span class="p">)</span>
 <span class="n">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1088,28 +790,9 @@
     </tr>
   </tbody>
 </table>
-</div>
 
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>But when we do that, we lose our <strong>question_id</strong> and <strong>question_text</strong> fields. That's because we need to add them in the meta list and pass their paths like the record path param. See below.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[74]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
+<div class="highlight"><pre><span></span><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
     <span class="n">sample_data</span><span class="p">,</span> 
     <span class="n">record_path</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;responses&quot;</span><span class="p">,</span> <span class="s2">&quot;choices&quot;</span><span class="p">],</span> 
     <span class="n">meta</span><span class="o">=</span><span class="p">[</span>
@@ -1121,23 +804,8 @@
     <span class="p">],</span>
 <span class="p">)</span>
 <span class="n">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1254,28 +922,9 @@
     </tr>
   </tbody>
 </table>
-</div>
 
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>One last tweak: some databases (like MS SQL) don't like naming columns with that period in the name. As a work around you can give the <code>json_normalize</code> function a custom separator such as an underscore instead.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[75]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
+<p>One last tweak: some databases (like MS SQL) don't like naming columns with that period in the name. As a work around you can give the <code>json_normalize</code> function a custom separator such as an underscore instead. </p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
     <span class="n">sample_data</span><span class="p">,</span> 
     <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;_&quot;</span><span class="p">,</span>
     <span class="n">record_path</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;responses&quot;</span><span class="p">,</span> <span class="s2">&quot;choices&quot;</span><span class="p">],</span> 
@@ -1288,23 +937,8 @@
     <span class="p">],</span>
 <span class="p">)</span>
 <span class="n">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1421,47 +1055,13 @@
     </tr>
   </tbody>
 </table>
-</div>
 
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Finally, we'll order the columns from the least nested level on the left all the way to the most nested on the right for easier readability.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[76]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">column_order</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;respondent_id&quot;</span><span class="p">,</span> <span class="s2">&quot;survey_date&quot;</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="s2">&quot;responses_question_id&quot;</span><span class="p">,</span> <span class="s2">&quot;responses_question_text&quot;</span><span class="p">,</span> <span class="s2">&quot;choice&quot;</span><span class="p">,</span> <span class="s2">&quot;number&quot;</span><span class="p">]</span>
+<p>Finally, we'll order the columns from the least nested level on the left all the way to the most nested on the right for easier readability. </p>
+<div class="highlight"><pre><span></span><code><span class="n">column_order</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;respondent_id&quot;</span><span class="p">,</span> <span class="s2">&quot;survey_date&quot;</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="s2">&quot;responses_question_id&quot;</span><span class="p">,</span> <span class="s2">&quot;responses_question_text&quot;</span><span class="p">,</span> <span class="s2">&quot;choice&quot;</span><span class="p">,</span> <span class="s2">&quot;number&quot;</span><span class="p">]</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">column_order</span><span class="p">]</span>
 <span class="n">print_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1578,54 +1178,9 @@
     </tr>
   </tbody>
 </table>
-</div>
 
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Parsed-and-ready-to-import">Parsed and ready to import<a class="anchor-link" href="#Parsed-and-ready-to-import">&#182;</a></h2><p>At this point our data is in a simple tabular format and ready to import into a database table with something like <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_sql.html?highlight=to_sql">pandas.to_sql()</a> function, but we'll save that for another post.</p>
-
-</div>
-</div>
-</div>
- 
-
-
-<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var mathjaxscript = document.createElement('script');
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
-    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
-        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-        "    displayAlign: 'center'," +
-        "    displayIndent: '0em'," +
-        "    showMathMenu: true," +
-        "    tex2jax: { " +
-        "        inlineMath: [ ['$','$'] ], " +
-        "        displayMath: [ ['$$','$$'] ]," +
-        "        processEscapes: true," +
-        "        preview: 'TeX'," +
-        "    }, " +
-        "    'HTML-CSS': { " +
-        " linebreaks: { automatic: true, width: '95% container' }, " +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
-        "    } " +
-        "}); ";
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-}
-</script>
-
+<h2>Parsed and ready to import</h2>
+<p>At this point our data is in a simple tabular format and ready to import into a database table with something like <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_sql.html?highlight=to_sql">pandas.to_sql()</a> function, but we'll save that for another post. </p>
   </div>
   <div class="tag-cloud">
     <p>
