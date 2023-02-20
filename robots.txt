@@ -1,0 +1,1 @@
+Sitemap: https://dchess.org/sitemap.xml

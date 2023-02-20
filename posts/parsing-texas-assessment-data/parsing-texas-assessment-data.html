@@ -1,0 +1,2329 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2022-01-29">
+
+<title>dchess.org - Parsing Texas Assessment Data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">dchess.org</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://drive.google.com/file/d/1O0-Le26SdL-DhDo2LsOQVWR5BAV4I17F/view">
+ <span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/dchess"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/dchess"><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Parsing Texas Assessment Data</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">tutorial</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 29, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="data-transformation-of-the-texas-staar-aggregate-data-for-2020-2021" class="level1">
+<h1>Data Transformation of the Texas STAAR Aggregate Data for 2020-2021</h1>
+<p>Data files available <a href="https://tea.texas.gov/student-assessment/testing/staar/staar-aggregate-data-for-2020-2021">here on the TEA website</a>.</p>
+<p>The STAAR data files contain results for 60+ student demographic groups and each variable is repeated in a separate column for both demographic and test subject. As you will see below, this results in data files that are several thousand columns wide and are a different schema for every grade.</p>
+<p>These files are designed for use in SAS and SPSS, and the website itself indicates that the number of variables in these files is too great to import into Microsoft Access or some versions of Microsoft Excel without significant truncation.</p>
+<p>However, my goal was to pivot this data into a standardized format and load into BigQuery for cross analysis with other state assessment data. What follows is my approach in Python, but I am sure there are other potentially simpler methods than mine, I hope this demonstration helps other approach this dataset for analysis and possibly encourages others to improve upon this method.</p>
+<p>The original files are linked below for easy access.</p>
+<p><strong>Campus level data for Grades 3-8</strong></p>
+<ul>
+<li><strong>Grade 3:</strong> <a href="https://tea.texas.gov/sites/default/files/cfy21e3.dat">test data</a> | <a href="https://tea.texas.gov/sites/default/files/fy21_varlist_g03.xls">variable list</a></li>
+<li><strong>Grade 4:</strong> <a href="https://tea.texas.gov/sites/default/files/cfy21e4.dat">test data</a> | <a href="https://tea.texas.gov/sites/default/files/fy21_varlist_g04.xls">variable list</a></li>
+<li><strong>Grade 5:</strong> <a href="https://tea.texas.gov/sites/default/files/cfy21e5.dat">test data</a> | <a href="https://tea.texas.gov/sites/default/files/fy21_varlist_g05.xls">variable list</a></li>
+<li><strong>Grade 6:</strong> <a href="https://tea.texas.gov/sites/default/files/cfy21e6.dat">test data</a> | <a href="https://tea.texas.gov/sites/default/files/fy21_varlist_g06.xls">variable list</a></li>
+<li><strong>Grade 7:</strong> <a href="https://tea.texas.gov/sites/default/files/cfy21e7.dat">test data</a> | <a href="https://tea.texas.gov/sites/default/files/fy21_varlist_g07.xls">variable list</a></li>
+<li><strong>Grade 8:</strong> <a href="https://tea.texas.gov/sites/default/files/cfy21e8.dat">test data</a> | <a href="https://tea.texas.gov/sites/default/files/fy21_varlist_g08.xls">variable list</a></li>
+</ul>
+<section id="getting-the-lay-of-the-land" class="level2">
+<h2 class="anchored" data-anchor-id="getting-the-lay-of-the-land">Getting the Lay of the Land</h2>
+<p>Before determining a solution and final schema, I wanted to understand the structure of these files. This can be accomplished by looping over the linked dat files and getting their shapes.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xlrd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Display options for pandas data frames</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_columns'</span>, <span class="va">None</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'max_colwidth'</span>, <span class="va">None</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'max_seq_item'</span>, <span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>base_url <span class="op">=</span> <span class="st">"https://tea.texas.gov/sites/default/files/"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dat_files <span class="op">=</span> [<span class="st">"cfy21e3.dat"</span>, <span class="st">"cfy21e4.dat"</span>, <span class="st">"cfy21e5.dat"</span>, <span class="st">"cfy21e6.dat"</span>, <span class="st">"cfy21e7.dat"</span>, <span class="st">"cfy21e8.dat"</span>]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dat_file <span class="kw">in</span> dat_files:</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>base_url<span class="sc">}{</span>dat_file<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> Path(url).stem</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(url)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(content, df.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>cfy21e3 (4643, 2093)
+cfy21e4 (4622, 3075)
+cfy21e5 (4415, 3197)
+cfy21e6 (2700, 2093)
+cfy21e7 (2337, 3075)
+cfy21e8 (2370, 4301)</code></pre>
+</div>
+</div>
+<p>Each file is named with this convention (as far as I can discern): - <strong>c</strong>: Campus level data - <strong>fy21</strong>: Fiscal year 2021 - <strong>e#</strong>: English grade # (English, because grades 3-5 also include Spanish results)</p>
+<p>The numbers in the accompanying parenthesis represent the count of rows and columns, respectively.</p>
+</section>
+<section id="inconsistent-data-shape" class="level2">
+<h2 class="anchored" data-anchor-id="inconsistent-data-shape">Inconsistent Data Shape</h2>
+<p>We can see from this quick file inspection that combining these datasets into a single unified structure will require more than just concatenation. The number of columns is jagged/inconsistent. Reviewing the variable files shows that each grade has differences in the variables reported. Some grades have Reading and Mathematics, while other include a Writing test as well. There are additional differences, but that is one of the most common.</p>
+<p>They are so wide, because each variable such as <code># Tested</code> is repeated for each subject and each student group (60+ in total). We can also see that the naming of these columns is encoded/abbreviated, such as <code>r_all_d</code> for <code># Tested -- Reading -- All Students</code> or <code>r_eth2_d</code> for <code># Tested -- Reading -- Two or More Races Students</code>.</p>
+</section>
+<section id="finding-a-pattern" class="level2">
+<h2 class="anchored" data-anchor-id="finding-a-pattern">Finding a Pattern</h2>
+<p>There is something of a pattern to this naming convention you may have noticed: - <strong>r</strong>: reading - <strong>all</strong>: all students - <strong>d</strong>: # tested</p>
+<p>This becomes more obvious with subsequent examples such as <code>r_all_unsatgl_nm</code> for <code># Did Not Meet Grade Level Performance -- Reading -- All Students</code>.</p>
+</section>
+<section id="a-first-attempt" class="level2">
+<h2 class="anchored" data-anchor-id="a-first-attempt">A First Attempt</h2>
+<p>My initial thought was to split these variable names using the the <code>_</code> as a delimiter, but this was met with limited success, again due to inconsistent usage.</p>
+<p><strong>Note:</strong> You will see the following warning in places <code>WARNING *** OLE2 inconsistency: SSCS size is 0 but SSAT size is non-zero</code>. This is due to an encoding issue with the TEA provided files and can be ignored as it does not impact our ability to parse the files.</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>grade3_vars <span class="op">=</span> <span class="st">'https://tea.texas.gov/sites/default/files/fy21_varlist_g03.xls'</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_excel(grade3_vars)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>WARNING *** OLE2 inconsistency: SSCS size is 0 but SSAT size is non-zero</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Variable</th>
+      <th>Format_Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>campus</td>
+      <td>Character</td>
+      <td>Campus Number</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>year</td>
+      <td>Character</td>
+      <td>Test Administration Year</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>region</td>
+      <td>Character</td>
+      <td>Education Service Center (Region) Number</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>district</td>
+      <td>Character</td>
+      <td>District Number</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>dname</td>
+      <td>Character</td>
+      <td>District Name</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>cname</td>
+      <td>Character</td>
+      <td>Campus Name</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>grade</td>
+      <td>Character</td>
+      <td>Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>r_all_docs_n</td>
+      <td>Numeric</td>
+      <td># Answer Documents Submitted -- Reading -- All Students</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>r_all_abs_n</td>
+      <td>Numeric</td>
+      <td># Absent - Not Tested -- Reading -- All Students</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>r_all_oth_n</td>
+      <td>Numeric</td>
+      <td># Other - Not Tested -- Reading -- All Students</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>m_all_docs_n</td>
+      <td>Numeric</td>
+      <td># Answer Documents Submitted -- Mathematics -- All Students</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>m_all_abs_n</td>
+      <td>Numeric</td>
+      <td># Absent - Not Tested -- Mathematics -- All Students</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>m_all_oth_n</td>
+      <td>Numeric</td>
+      <td># Other - Not Tested -- Mathematics -- All Students</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>r_all_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- All Students</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>r_sexm_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- Male Students</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>r_sexf_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- Female Students</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>r_sexv_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- No Sex Info Students</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>r_ethh_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- Hispanic/Latino Students</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>r_ethi_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- American Indian or Alaska Native Students</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>r_etha_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- Asian Students</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>It appears at first glance, that the pattern is subject, student demographic group, variable type. However, we can see this doesn’t remain consistent.</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df.tail(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Variable</th>
+      <th>Format_Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2078</th>
+      <td>m_spen_pct_cat4</td>
+      <td>Numeric</td>
+      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Not Special Ed Students</td>
+    </tr>
+    <tr>
+      <th>2079</th>
+      <td>m_spev_avg_cat4</td>
+      <td>Numeric</td>
+      <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info Special Ed Students</td>
+    </tr>
+    <tr>
+      <th>2080</th>
+      <td>m_spev_pct_cat4</td>
+      <td>Numeric</td>
+      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info Special Ed Students</td>
+    </tr>
+    <tr>
+      <th>2081</th>
+      <td>m_gify_avg_cat4</td>
+      <td>Numeric</td>
+      <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- Gifted/Talented Students</td>
+    </tr>
+    <tr>
+      <th>2082</th>
+      <td>m_gify_pct_cat4</td>
+      <td>Numeric</td>
+      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Gifted/Talented Students</td>
+    </tr>
+    <tr>
+      <th>2083</th>
+      <td>m_gifn_avg_cat4</td>
+      <td>Numeric</td>
+      <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- Not Gifted/Talented Students</td>
+    </tr>
+    <tr>
+      <th>2084</th>
+      <td>m_gifn_pct_cat4</td>
+      <td>Numeric</td>
+      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Not Gifted/Talented Students</td>
+    </tr>
+    <tr>
+      <th>2085</th>
+      <td>m_gifv_avg_cat4</td>
+      <td>Numeric</td>
+      <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info Gifted/Talented Students</td>
+    </tr>
+    <tr>
+      <th>2086</th>
+      <td>m_gifv_pct_cat4</td>
+      <td>Numeric</td>
+      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info Gifted/Talented Students</td>
+    </tr>
+    <tr>
+      <th>2087</th>
+      <td>m_atry_avg_cat4</td>
+      <td>Numeric</td>
+      <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- At-Risk Students</td>
+    </tr>
+    <tr>
+      <th>2088</th>
+      <td>m_atry_pct_cat4</td>
+      <td>Numeric</td>
+      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- At-Risk Students</td>
+    </tr>
+    <tr>
+      <th>2089</th>
+      <td>m_atrn_avg_cat4</td>
+      <td>Numeric</td>
+      <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- Not At-Risk Students</td>
+    </tr>
+    <tr>
+      <th>2090</th>
+      <td>m_atrn_pct_cat4</td>
+      <td>Numeric</td>
+      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Not At-Risk Students</td>
+    </tr>
+    <tr>
+      <th>2091</th>
+      <td>m_atrv_avg_cat4</td>
+      <td>Numeric</td>
+      <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info At-Risk Students</td>
+    </tr>
+    <tr>
+      <th>2092</th>
+      <td>m_atrv_pct_cat4</td>
+      <td>Numeric</td>
+      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info At-Risk Students</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>In these latter cases, there is a 4th variable reporting category that comes before the subject and student group.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df[<span class="dv">195</span>:<span class="dv">215</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Variable</th>
+      <th>Format_Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>195</th>
+      <td>r_atrv_unsatgl_nm</td>
+      <td>Numeric</td>
+      <td># Did Not Meet Grade Level Performance -- Reading -- No Info At-Risk Students</td>
+    </tr>
+    <tr>
+      <th>196</th>
+      <td>r_all_approgl_nm</td>
+      <td>Numeric</td>
+      <td># Approaches Grade Level Performance -- Reading -- All Students</td>
+    </tr>
+    <tr>
+      <th>197</th>
+      <td>r_sexm_approgl_nm</td>
+      <td>Numeric</td>
+      <td># Approaches Grade Level Performance -- Reading -- Male Students</td>
+    </tr>
+    <tr>
+      <th>198</th>
+      <td>r_sexf_approgl_nm</td>
+      <td>Numeric</td>
+      <td># Approaches Grade Level Performance -- Reading -- Female Students</td>
+    </tr>
+    <tr>
+      <th>199</th>
+      <td>r_sexv_approgl_nm</td>
+      <td>Numeric</td>
+      <td># Approaches Grade Level Performance -- Reading -- No Sex Info Students</td>
+    </tr>
+    <tr>
+      <th>200</th>
+      <td>r_ethh_approgl_nm</td>
+      <td>Numeric</td>
+      <td># Approaches Grade Level Performance -- Reading -- Hispanic/Latino Students</td>
+    </tr>
+    <tr>
+      <th>201</th>
+      <td>r_ethi_approgl_nm</td>
+      <td>Numeric</td>
+      <td># Approaches Grade Level Performance -- Reading -- American Indian or Alaska Native Students</td>
+    </tr>
+    <tr>
+      <th>202</th>
+      <td>r_etha_approgl_nm</td>
+      <td>Numeric</td>
+      <td># Approaches Grade Level Performance -- Reading -- Asian Students</td>
+    </tr>
+    <tr>
+      <th>203</th>
+      <td>r_ethb_approgl_nm</td>
+      <td>Numeric</td>
+      <td># Approaches Grade Level Performance -- Reading -- Black or African American Students</td>
+    </tr>
+    <tr>
+      <th>204</th>
+      <td>r_ethp_approgl_nm</td>
+      <td>Numeric</td>
+      <td># Approaches Grade Level Performance -- Reading -- Native Hawaiian or Other Pacific Islander Students</td>
+    </tr>
+    <tr>
+      <th>205</th>
+      <td>r_ethw_approgl_nm</td>
+      <td>Numeric</td>
+      <td># Approaches Grade Level Performance -- Reading -- White Students</td>
+    </tr>
+    <tr>
+      <th>206</th>
+      <td>r_eth2_approgl_nm</td>
+      <td>Numeric</td>
+      <td># Approaches Grade Level Performance -- Reading -- Two or More Races Students</td>
+    </tr>
+    <tr>
+      <th>207</th>
+      <td>r_ethv_approgl_nm</td>
+      <td>Numeric</td>
+      <td># Approaches Grade Level Performance -- Reading -- No Ethnicity Info Students</td>
+    </tr>
+    <tr>
+      <th>208</th>
+      <td>r_ecoy_approgl_nm</td>
+      <td>Numeric</td>
+      <td># Approaches Grade Level Performance -- Reading -- Econ Disadv Students Codes: 1 2 9</td>
+    </tr>
+    <tr>
+      <th>209</th>
+      <td>r_econ_approgl_nm</td>
+      <td>Numeric</td>
+      <td># Approaches Grade Level Performance -- Reading -- Not Econ Disadv Students</td>
+    </tr>
+    <tr>
+      <th>210</th>
+      <td>r_eco1_approgl_nm</td>
+      <td>Numeric</td>
+      <td># Approaches Grade Level Performance -- Reading -- Free Meals Students</td>
+    </tr>
+    <tr>
+      <th>211</th>
+      <td>r_eco2_approgl_nm</td>
+      <td>Numeric</td>
+      <td># Approaches Grade Level Performance -- Reading -- Reduced-Price Meals Students</td>
+    </tr>
+    <tr>
+      <th>212</th>
+      <td>r_eco9_approgl_nm</td>
+      <td>Numeric</td>
+      <td># Approaches Grade Level Performance -- Reading -- Other Econ Disadvantaged Students</td>
+    </tr>
+    <tr>
+      <th>213</th>
+      <td>r_ecov_approgl_nm</td>
+      <td>Numeric</td>
+      <td># Approaches Grade Level Performance -- Reading -- No Info Econ Students</td>
+    </tr>
+    <tr>
+      <th>214</th>
+      <td>r_ti1y_approgl_nm</td>
+      <td>Numeric</td>
+      <td># Approaches Grade Level Performance -- Reading -- Title-I Participant Students Codes: 6 7 9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>There is another pattern with 4 parts for the proficiency levels that is subject, student group, and then a two part string for the variable type.</p>
+<p>These differences would make it challenging to simply split on the <code>_</code> character. Even distinguishing between the three part and four part variables isn’t sufficient, because there are two types of the four part variables.</p>
+</section>
+<section id="a-different-solution" class="level2">
+<h2 class="anchored" data-anchor-id="a-different-solution">A Different Solution</h2>
+<p>However, we can simply ignore the variables. We have a description column that also has it’s own delimiter: <code>--</code>.</p>
+<div class="cell" data-execution_count="52">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>descriptions <span class="op">=</span> df.Description.values.tolist()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> description <span class="kw">in</span> descriptions[:<span class="dv">20</span>]:</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    parts <span class="op">=</span> description.split(<span class="st">'--'</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(parts)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">...</span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> description <span class="kw">in</span> descriptions[<span class="op">-</span><span class="dv">5</span>:]:</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    parts <span class="op">=</span> description.split(<span class="st">'--'</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(parts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['Campus Number']
+['Test Administration Year']
+['Education Service Center (Region) Number']
+['District Number']
+['District Name']
+['Campus Name']
+['Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)']
+['# Answer Documents Submitted ', ' Reading ', ' All Students']
+['# Absent - Not Tested ', ' Reading ', ' All Students']
+['# Other - Not Tested ', ' Reading ', ' All Students']
+['# Answer Documents Submitted ', ' Mathematics ', ' All Students']
+['# Absent - Not Tested ', ' Mathematics ', ' All Students']
+['# Other - Not Tested ', ' Mathematics ', ' All Students']
+['# Tested ', ' Reading ', ' All Students']
+['# Tested ', ' Reading ', ' Male Students']
+['# Tested ', ' Reading ', ' Female Students']
+['# Tested ', ' Reading ', ' No Sex Info Students']
+['# Tested ', ' Reading ', ' Hispanic/Latino Students']
+['# Tested ', ' Reading ', ' American Indian or Alaska Native Students']
+['# Tested ', ' Reading ', ' Asian Students']
+
+...
+
+['% Avg Items Correct', 'Reporting Category 4 ', ' Mathematics ', ' At-Risk Students']
+['# Avg Items Correct', 'Reporting Category 4 ', ' Mathematics ', ' Not At-Risk Students']
+['% Avg Items Correct', 'Reporting Category 4 ', ' Mathematics ', ' Not At-Risk Students']
+['# Avg Items Correct', 'Reporting Category 4 ', ' Mathematics ', ' No Info At-Risk Students']
+['% Avg Items Correct', 'Reporting Category 4 ', ' Mathematics ', ' No Info At-Risk Students']</code></pre>
+</div>
+</div>
+<p>This mostly works. We have three different types of descriptions/variables: - 1 part variables like <code>['Campus Number']</code> - 3 part variables like <code>['# Tested ', ' Reading ', ' All Students']</code> - 4 part variables like <code>['% Avg Items Correct', 'Reporting Category 4 ', ' Mathematics ', ' At-Risk Students']</code></p>
+<p>That means we can use the list length to determine the order of the variable values: variable name, test subject, and student group. The fourth part reporting category is basically a modifier for the variable name so we can combine those.</p>
+<p>By examining a single variable name, we can see that <code># Tested</code>, for example, isn’t actually 122 different variables but rather a single variable with 122 permutations of test subject and student group: <strong>61 student groups * 2 test subjects</strong></p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df[df.Description.<span class="bu">str</span>.contains(<span class="st">'# Tested'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Variable</th>
+      <th>Format_Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>13</th>
+      <td>r_all_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- All Students</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>r_sexm_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- Male Students</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>r_sexf_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- Female Students</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>r_sexv_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- No Sex Info Students</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>r_ethh_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- Hispanic/Latino Students</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>130</th>
+      <td>m_gifn_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Mathematics -- Not Gifted/Talented Students</td>
+    </tr>
+    <tr>
+      <th>131</th>
+      <td>m_gifv_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Mathematics -- No Info Gifted/Talented Students</td>
+    </tr>
+    <tr>
+      <th>132</th>
+      <td>m_atry_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Mathematics -- At-Risk Students</td>
+    </tr>
+    <tr>
+      <th>133</th>
+      <td>m_atrn_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Mathematics -- Not At-Risk Students</td>
+    </tr>
+    <tr>
+      <th>134</th>
+      <td>m_atrv_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Mathematics -- No Info At-Risk Students</td>
+    </tr>
+  </tbody>
+</table>
+<p>122 rows × 3 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="extracting-the-variable-descriptors" class="level2">
+<h2 class="anchored" data-anchor-id="extracting-the-variable-descriptors">Extracting the Variable Descriptors</h2>
+<p>In addition to pulling out the test subject and student group from the variable description, it will be useful to rename the columns into a common naming convention that is more human readable than the current encodings.</p>
+<p><strong>Example</strong>:</p>
+<p>If we take the initial variable example <code>r_all_d</code> for <code># Tested -- Reading -- All Students</code> and remove the subject and student group we would be left with simply <code>d</code> as the variable/column name. But a better description would be <code># Tested</code> or even better (to eliminate special characters that would be problematic in the database) <code>n_tested</code>.</p>
+<section id="splitting-the-description" class="level3">
+<h3 class="anchored" data-anchor-id="splitting-the-description">Splitting the Description</h3>
+<p>To start let’s add a new column to the dataframe that has the array of descriptors. We can also remove any leading or trailing whitespace from both the variable and description to prevent mismatch issues later.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Variable"</span>] <span class="op">=</span> df[<span class="st">"Variable"</span>].<span class="bu">str</span>.strip()</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Description"</span>] <span class="op">=</span> df[<span class="st">"Description"</span>].<span class="bu">str</span>.strip()</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"desc_list"</span>] <span class="op">=</span> df[<span class="st">"Description"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: x.split(<span class="st">"--"</span>))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Variable</th>
+      <th>Format_Type</th>
+      <th>Description</th>
+      <th>desc_list</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>campus</td>
+      <td>Character</td>
+      <td>Campus Number</td>
+      <td>[Campus Number]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>year</td>
+      <td>Character</td>
+      <td>Test Administration Year</td>
+      <td>[Test Administration Year]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>region</td>
+      <td>Character</td>
+      <td>Education Service Center (Region) Number</td>
+      <td>[Education Service Center (Region) Number]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>district</td>
+      <td>Character</td>
+      <td>District Number</td>
+      <td>[District Number]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>dname</td>
+      <td>Character</td>
+      <td>District Name</td>
+      <td>[District Name]</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2088</th>
+      <td>m_atry_pct_cat4</td>
+      <td>Numeric</td>
+      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- At-Risk Students</td>
+      <td>[% Avg Items Correct, Reporting Category 4 ,  Mathematics ,  At-Risk Students]</td>
+    </tr>
+    <tr>
+      <th>2089</th>
+      <td>m_atrn_avg_cat4</td>
+      <td>Numeric</td>
+      <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- Not At-Risk Students</td>
+      <td>[# Avg Items Correct, Reporting Category 4 ,  Mathematics ,  Not At-Risk Students]</td>
+    </tr>
+    <tr>
+      <th>2090</th>
+      <td>m_atrn_pct_cat4</td>
+      <td>Numeric</td>
+      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Not At-Risk Students</td>
+      <td>[% Avg Items Correct, Reporting Category 4 ,  Mathematics ,  Not At-Risk Students]</td>
+    </tr>
+    <tr>
+      <th>2091</th>
+      <td>m_atrv_avg_cat4</td>
+      <td>Numeric</td>
+      <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info At-Risk Students</td>
+      <td>[# Avg Items Correct, Reporting Category 4 ,  Mathematics ,  No Info At-Risk Students]</td>
+    </tr>
+    <tr>
+      <th>2092</th>
+      <td>m_atrv_pct_cat4</td>
+      <td>Numeric</td>
+      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info At-Risk Students</td>
+      <td>[% Avg Items Correct, Reporting Category 4 ,  Mathematics ,  No Info At-Risk Students]</td>
+    </tr>
+  </tbody>
+</table>
+<p>2093 rows × 4 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="extracting-test-subject" class="level3">
+<h3 class="anchored" data-anchor-id="extracting-test-subject">Extracting Test Subject</h3>
+<p>In most cases the test subject is the 2nd part of the variable description with two exceptions: if the variable is one of the campus/grade variables that only has a single part or for the four part variables that include reporting category.</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_subject(desc_list):</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Return the 2nd part of 3 part descriptors, the 3rd part of 4 part descriptors, or None.</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Note: Else None is not necessary here, since functions return None by default in Python</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    length <span class="op">=</span> <span class="bu">len</span>(desc_list)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> length <span class="op">==</span> <span class="dv">4</span>:</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> desc_list[<span class="dv">2</span>]</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> length <span class="op">&gt;</span> <span class="dv">1</span>:</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> desc_list[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"subject"</span>] <span class="op">=</span> df[<span class="st">"desc_list"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: get_subject(x))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Variable</th>
+      <th>Format_Type</th>
+      <th>Description</th>
+      <th>desc_list</th>
+      <th>subject</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>campus</td>
+      <td>Character</td>
+      <td>Campus Number</td>
+      <td>[Campus Number]</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>year</td>
+      <td>Character</td>
+      <td>Test Administration Year</td>
+      <td>[Test Administration Year]</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>region</td>
+      <td>Character</td>
+      <td>Education Service Center (Region) Number</td>
+      <td>[Education Service Center (Region) Number]</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>district</td>
+      <td>Character</td>
+      <td>District Number</td>
+      <td>[District Number]</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>dname</td>
+      <td>Character</td>
+      <td>District Name</td>
+      <td>[District Name]</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>cname</td>
+      <td>Character</td>
+      <td>Campus Name</td>
+      <td>[Campus Name]</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>grade</td>
+      <td>Character</td>
+      <td>Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)</td>
+      <td>[Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)]</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>r_all_docs_n</td>
+      <td>Numeric</td>
+      <td># Answer Documents Submitted -- Reading -- All Students</td>
+      <td>[# Answer Documents Submitted ,  Reading ,  All Students]</td>
+      <td>Reading</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>r_all_abs_n</td>
+      <td>Numeric</td>
+      <td># Absent - Not Tested -- Reading -- All Students</td>
+      <td>[# Absent - Not Tested ,  Reading ,  All Students]</td>
+      <td>Reading</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>r_all_oth_n</td>
+      <td>Numeric</td>
+      <td># Other - Not Tested -- Reading -- All Students</td>
+      <td>[# Other - Not Tested ,  Reading ,  All Students]</td>
+      <td>Reading</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>m_all_docs_n</td>
+      <td>Numeric</td>
+      <td># Answer Documents Submitted -- Mathematics -- All Students</td>
+      <td>[# Answer Documents Submitted ,  Mathematics ,  All Students]</td>
+      <td>Mathematics</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>m_all_abs_n</td>
+      <td>Numeric</td>
+      <td># Absent - Not Tested -- Mathematics -- All Students</td>
+      <td>[# Absent - Not Tested ,  Mathematics ,  All Students]</td>
+      <td>Mathematics</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>m_all_oth_n</td>
+      <td>Numeric</td>
+      <td># Other - Not Tested -- Mathematics -- All Students</td>
+      <td>[# Other - Not Tested ,  Mathematics ,  All Students]</td>
+      <td>Mathematics</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>r_all_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- All Students</td>
+      <td>[# Tested ,  Reading ,  All Students]</td>
+      <td>Reading</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>r_sexm_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- Male Students</td>
+      <td>[# Tested ,  Reading ,  Male Students]</td>
+      <td>Reading</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>r_sexf_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- Female Students</td>
+      <td>[# Tested ,  Reading ,  Female Students]</td>
+      <td>Reading</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>r_sexv_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- No Sex Info Students</td>
+      <td>[# Tested ,  Reading ,  No Sex Info Students]</td>
+      <td>Reading</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>r_ethh_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- Hispanic/Latino Students</td>
+      <td>[# Tested ,  Reading ,  Hispanic/Latino Students]</td>
+      <td>Reading</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>r_ethi_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- American Indian or Alaska Native Students</td>
+      <td>[# Tested ,  Reading ,  American Indian or Alaska Native Students]</td>
+      <td>Reading</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>r_etha_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- Asian Students</td>
+      <td>[# Tested ,  Reading ,  Asian Students]</td>
+      <td>Reading</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="extracting-student-group" class="level2">
+<h2 class="anchored" data-anchor-id="extracting-student-group">Extracting Student Group</h2>
+<p>In all cases (except the single descriptor variables) the student group is included at the end of the description.</p>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_student_group(desc_list):</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Unless the description has only one part, return the final part.</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(desc_list) <span class="op">&gt;</span> <span class="dv">1</span>:</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> desc_list[<span class="op">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"student_group"</span>] <span class="op">=</span> df[<span class="st">"desc_list"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: get_student_group(x))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Variable</th>
+      <th>Format_Type</th>
+      <th>Description</th>
+      <th>desc_list</th>
+      <th>subject</th>
+      <th>student_group</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>campus</td>
+      <td>Character</td>
+      <td>Campus Number</td>
+      <td>[Campus Number]</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>year</td>
+      <td>Character</td>
+      <td>Test Administration Year</td>
+      <td>[Test Administration Year]</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>region</td>
+      <td>Character</td>
+      <td>Education Service Center (Region) Number</td>
+      <td>[Education Service Center (Region) Number]</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>district</td>
+      <td>Character</td>
+      <td>District Number</td>
+      <td>[District Number]</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>dname</td>
+      <td>Character</td>
+      <td>District Name</td>
+      <td>[District Name]</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>cname</td>
+      <td>Character</td>
+      <td>Campus Name</td>
+      <td>[Campus Name]</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>grade</td>
+      <td>Character</td>
+      <td>Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)</td>
+      <td>[Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)]</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>r_all_docs_n</td>
+      <td>Numeric</td>
+      <td># Answer Documents Submitted -- Reading -- All Students</td>
+      <td>[# Answer Documents Submitted ,  Reading ,  All Students]</td>
+      <td>Reading</td>
+      <td>All Students</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>r_all_abs_n</td>
+      <td>Numeric</td>
+      <td># Absent - Not Tested -- Reading -- All Students</td>
+      <td>[# Absent - Not Tested ,  Reading ,  All Students]</td>
+      <td>Reading</td>
+      <td>All Students</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>r_all_oth_n</td>
+      <td>Numeric</td>
+      <td># Other - Not Tested -- Reading -- All Students</td>
+      <td>[# Other - Not Tested ,  Reading ,  All Students]</td>
+      <td>Reading</td>
+      <td>All Students</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>m_all_docs_n</td>
+      <td>Numeric</td>
+      <td># Answer Documents Submitted -- Mathematics -- All Students</td>
+      <td>[# Answer Documents Submitted ,  Mathematics ,  All Students]</td>
+      <td>Mathematics</td>
+      <td>All Students</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>m_all_abs_n</td>
+      <td>Numeric</td>
+      <td># Absent - Not Tested -- Mathematics -- All Students</td>
+      <td>[# Absent - Not Tested ,  Mathematics ,  All Students]</td>
+      <td>Mathematics</td>
+      <td>All Students</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>m_all_oth_n</td>
+      <td>Numeric</td>
+      <td># Other - Not Tested -- Mathematics -- All Students</td>
+      <td>[# Other - Not Tested ,  Mathematics ,  All Students]</td>
+      <td>Mathematics</td>
+      <td>All Students</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>r_all_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- All Students</td>
+      <td>[# Tested ,  Reading ,  All Students]</td>
+      <td>Reading</td>
+      <td>All Students</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>r_sexm_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- Male Students</td>
+      <td>[# Tested ,  Reading ,  Male Students]</td>
+      <td>Reading</td>
+      <td>Male Students</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>r_sexf_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- Female Students</td>
+      <td>[# Tested ,  Reading ,  Female Students]</td>
+      <td>Reading</td>
+      <td>Female Students</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>r_sexv_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- No Sex Info Students</td>
+      <td>[# Tested ,  Reading ,  No Sex Info Students]</td>
+      <td>Reading</td>
+      <td>No Sex Info Students</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>r_ethh_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- Hispanic/Latino Students</td>
+      <td>[# Tested ,  Reading ,  Hispanic/Latino Students]</td>
+      <td>Reading</td>
+      <td>Hispanic/Latino Students</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>r_ethi_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- American Indian or Alaska Native Students</td>
+      <td>[# Tested ,  Reading ,  American Indian or Alaska Native Students]</td>
+      <td>Reading</td>
+      <td>American Indian or Alaska Native Students</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>r_etha_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- Asian Students</td>
+      <td>[# Tested ,  Reading ,  Asian Students]</td>
+      <td>Reading</td>
+      <td>Asian Students</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-a-new-variable-name" class="level2">
+<h2 class="anchored" data-anchor-id="creating-a-new-variable-name">Creating a New Variable Name</h2>
+<p>There are a few problematic characters like <code>#</code> and <code>%</code> in the names of the variables that should be replaced as well as replacing spaces and abbreviating some longer words in the names. This also uses some regex parsing to remove any text contained in parenthesis.</p>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rename_variable(desc_list):</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Replace special characters and append reporting category when present.</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    variable_name <span class="op">=</span> desc_list[<span class="dv">0</span>].lower().strip()</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(desc_list) <span class="op">==</span> <span class="dv">4</span>:</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>        variable_name <span class="op">+=</span> desc_list[<span class="dv">1</span>].lower().strip()</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    replacements <span class="op">=</span> {</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">'-'</span>: <span class="st">''</span>,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'#'</span>: <span class="st">'n'</span>,</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">'%'</span>: <span class="st">'pct'</span>,</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">'average'</span>: <span class="st">'avg'</span>,</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">'reporting category'</span>: <span class="st">'rpt cat'</span>,</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">' '</span>: <span class="st">'_'</span>,</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">'__'</span>: <span class="st">'_'</span>,</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> old, new <span class="kw">in</span> replacements.items():</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>        variable_name <span class="op">=</span> re.sub(<span class="vs">r"\([^()]*\)"</span>, <span class="st">""</span>, variable_name).strip()</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>        variable_name <span class="op">=</span> variable_name.replace(old, new)</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> variable_name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"name"</span>] <span class="op">=</span> df[<span class="st">"desc_list"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: rename_variable(x))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="30">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Variable</th>
+      <th>Format_Type</th>
+      <th>Description</th>
+      <th>desc_list</th>
+      <th>subject</th>
+      <th>student_group</th>
+      <th>name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>campus</td>
+      <td>Character</td>
+      <td>Campus Number</td>
+      <td>[Campus Number]</td>
+      <td>None</td>
+      <td>None</td>
+      <td>campus_number</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>year</td>
+      <td>Character</td>
+      <td>Test Administration Year</td>
+      <td>[Test Administration Year]</td>
+      <td>None</td>
+      <td>None</td>
+      <td>test_administration_year</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>region</td>
+      <td>Character</td>
+      <td>Education Service Center (Region) Number</td>
+      <td>[Education Service Center (Region) Number]</td>
+      <td>None</td>
+      <td>None</td>
+      <td>education_service_center_number</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>district</td>
+      <td>Character</td>
+      <td>District Number</td>
+      <td>[District Number]</td>
+      <td>None</td>
+      <td>None</td>
+      <td>district_number</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>dname</td>
+      <td>Character</td>
+      <td>District Name</td>
+      <td>[District Name]</td>
+      <td>None</td>
+      <td>None</td>
+      <td>district_name</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>cname</td>
+      <td>Character</td>
+      <td>Campus Name</td>
+      <td>[Campus Name]</td>
+      <td>None</td>
+      <td>None</td>
+      <td>campus_name</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>grade</td>
+      <td>Character</td>
+      <td>Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)</td>
+      <td>[Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)]</td>
+      <td>None</td>
+      <td>None</td>
+      <td>tested_grade</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>r_all_docs_n</td>
+      <td>Numeric</td>
+      <td># Answer Documents Submitted -- Reading -- All Students</td>
+      <td>[# Answer Documents Submitted ,  Reading ,  All Students]</td>
+      <td>Reading</td>
+      <td>All Students</td>
+      <td>n_answer_documents_submitted</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>r_all_abs_n</td>
+      <td>Numeric</td>
+      <td># Absent - Not Tested -- Reading -- All Students</td>
+      <td>[# Absent - Not Tested ,  Reading ,  All Students]</td>
+      <td>Reading</td>
+      <td>All Students</td>
+      <td>n_absent_not_tested</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>r_all_oth_n</td>
+      <td>Numeric</td>
+      <td># Other - Not Tested -- Reading -- All Students</td>
+      <td>[# Other - Not Tested ,  Reading ,  All Students]</td>
+      <td>Reading</td>
+      <td>All Students</td>
+      <td>n_other_not_tested</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>m_all_docs_n</td>
+      <td>Numeric</td>
+      <td># Answer Documents Submitted -- Mathematics -- All Students</td>
+      <td>[# Answer Documents Submitted ,  Mathematics ,  All Students]</td>
+      <td>Mathematics</td>
+      <td>All Students</td>
+      <td>n_answer_documents_submitted</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>m_all_abs_n</td>
+      <td>Numeric</td>
+      <td># Absent - Not Tested -- Mathematics -- All Students</td>
+      <td>[# Absent - Not Tested ,  Mathematics ,  All Students]</td>
+      <td>Mathematics</td>
+      <td>All Students</td>
+      <td>n_absent_not_tested</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>m_all_oth_n</td>
+      <td>Numeric</td>
+      <td># Other - Not Tested -- Mathematics -- All Students</td>
+      <td>[# Other - Not Tested ,  Mathematics ,  All Students]</td>
+      <td>Mathematics</td>
+      <td>All Students</td>
+      <td>n_other_not_tested</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>r_all_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- All Students</td>
+      <td>[# Tested ,  Reading ,  All Students]</td>
+      <td>Reading</td>
+      <td>All Students</td>
+      <td>n_tested</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>r_sexm_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- Male Students</td>
+      <td>[# Tested ,  Reading ,  Male Students]</td>
+      <td>Reading</td>
+      <td>Male Students</td>
+      <td>n_tested</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>r_sexf_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- Female Students</td>
+      <td>[# Tested ,  Reading ,  Female Students]</td>
+      <td>Reading</td>
+      <td>Female Students</td>
+      <td>n_tested</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>r_sexv_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- No Sex Info Students</td>
+      <td>[# Tested ,  Reading ,  No Sex Info Students]</td>
+      <td>Reading</td>
+      <td>No Sex Info Students</td>
+      <td>n_tested</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>r_ethh_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- Hispanic/Latino Students</td>
+      <td>[# Tested ,  Reading ,  Hispanic/Latino Students]</td>
+      <td>Reading</td>
+      <td>Hispanic/Latino Students</td>
+      <td>n_tested</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>r_ethi_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- American Indian or Alaska Native Students</td>
+      <td>[# Tested ,  Reading ,  American Indian or Alaska Native Students]</td>
+      <td>Reading</td>
+      <td>American Indian or Alaska Native Students</td>
+      <td>n_tested</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>r_etha_d</td>
+      <td>Numeric</td>
+      <td># Tested -- Reading -- Asian Students</td>
+      <td>[# Tested ,  Reading ,  Asian Students]</td>
+      <td>Reading</td>
+      <td>Asian Students</td>
+      <td>n_tested</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="bringing-it-all-together" class="level2">
+<h2 class="anchored" data-anchor-id="bringing-it-all-together">Bringing it All Together</h2>
+<p>Because we’re going to iterate over each variable list (there are six files: one for each grade between 3 and 8), we can simplify this by running all these change operations at once. We also want to remove unneeded columns and rename the original columns to standardize the naming conventions and make for an easy join condition later.</p>
+<div class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_descriptors(df):</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"Variable"</span>] <span class="op">=</span> df[<span class="st">"Variable"</span>].<span class="bu">str</span>.strip()</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"Description"</span>] <span class="op">=</span> df[<span class="st">"Description"</span>].<span class="bu">str</span>.strip()</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"desc_list"</span>] <span class="op">=</span> df[<span class="st">"Description"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: x.split(<span class="st">'--'</span>))</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"name"</span>] <span class="op">=</span> df[<span class="st">"desc_list"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: rename_variable(x))</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"subject"</span>] <span class="op">=</span> df[<span class="st">"desc_list"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: get_subject(x))</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"student_group"</span>] <span class="op">=</span> df[<span class="st">"desc_list"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: get_student_group(x))</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    df.drop(columns<span class="op">=</span>[<span class="st">"Description"</span>, <span class="st">"desc_list"</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    df.rename(columns<span class="op">=</span>{<span class="st">'Variable'</span>: <span class="st">'variable'</span>, <span class="st">'Format_Type'</span>: <span class="st">'format_type'</span>}, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="a-path-forward" class="level2">
+<h2 class="anchored" data-anchor-id="a-path-forward">A Path Forward</h2>
+<p>That means it would be possible to pivot this data long for each distinct variable after extracting the subject and student group from the variable description. This information, though, is split across two different files: the test data in the <code>.dat</code> files and the variable descriptions in the <code>.xls</code> files.</p>
+<p><strong>My plan then is to:</strong> 1. Match the corresponding dat file to its variable list 2. Pivot the test data long so that each variable and value is a single row 3. Extract the test subject and student group data points from the variable description 4. Join the two datasets together using the variable name as a unique identifier 5. Once more pivot the combined data such that each distinct variable becomes its own column 6. Combine those standardized data structures for each grade into a single dataset 7. Write that new dataset out to a compressed csv file for importing into BigQuery</p>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>base_url <span class="op">=</span> <span class="st">"https://tea.texas.gov/sites/default/files/"</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>dat_files <span class="op">=</span> [<span class="st">"cfy21e3.dat"</span>, <span class="st">"cfy21e4.dat"</span>, <span class="st">"cfy21e5.dat"</span>, <span class="st">"cfy21e6.dat"</span>, <span class="st">"cfy21e7.dat"</span>, <span class="st">"cfy21e8.dat"</span>]</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>var_files <span class="op">=</span> [<span class="st">"fy21_varlist_g03.xls"</span>, <span class="st">"fy21_varlist_g04.xls"</span>, <span class="st">"fy21_varlist_g05.xls"</span>, <span class="st">"fy21_varlist_g06.xls"</span>, <span class="st">"fy21_varlist_g07.xls"</span>, <span class="st">"fy21_varlist_g08.xls"</span>]</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Match the dat file with its corresponding var file</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>all_files <span class="op">=</span> <span class="bu">zip</span>(dat_files, var_files)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a list to concatenate the resulting grade level data frames later</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>all_grades <span class="op">=</span> []</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dat_file, var_file <span class="kw">in</span> all_files:</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    test_data <span class="op">=</span> pd.read_csv(<span class="ss">f"</span><span class="sc">{</span>base_url<span class="sc">}{</span>dat_file<span class="sc">}</span><span class="ss">"</span>, dtype<span class="op">=</span><span class="st">"string"</span>)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    variables <span class="op">=</span> pd.read_excel(<span class="ss">f"</span><span class="sc">{</span>base_url<span class="sc">}{</span>var_file<span class="sc">}</span><span class="ss">"</span>, dtype<span class="op">=</span><span class="st">"string"</span>)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Parsing:"</span>, dat_file, <span class="st">"rows/cols:"</span>, test_data.shape)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 2. melt the dataframe (pivot wide to long) but keep all the site and grade identifiers out of the pivot</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    identifiers <span class="op">=</span> variables[variables.Format_Type <span class="op">==</span> <span class="st">'Character'</span>].Variable.tolist()</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    id_vars <span class="op">=</span> [identifier.upper() <span class="cf">for</span> identifier <span class="kw">in</span> identifiers]</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    test_data <span class="op">=</span> pd.melt(test_data, id_vars<span class="op">=</span>id_vars)</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Pivoted:"</span>, dat_file, <span class="st">"rows/cols:"</span>, test_data.shape)</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3. extract the subject and student groups</span></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    variables <span class="op">=</span> add_descriptors(variables)</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 4. join the two dataset together using the variable name as the unique identifier</span></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>    combined <span class="op">=</span> test_data.merge(variables, how<span class="op">=</span><span class="st">'left'</span>, on<span class="op">=</span><span class="st">'variable'</span>)</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Joined:"</span>, dat_file, <span class="st">"+"</span>, var_file, <span class="st">"rows/cols:"</span>, combined.shape)</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 5. pivot back wide but with only the distinct variables</span></span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>    cols <span class="op">=</span> combined.columns.tolist()</span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>    combined[cols] <span class="op">=</span> combined[cols].<span class="bu">apply</span>(<span class="kw">lambda</span> x: x.<span class="bu">str</span>.strip())</span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>    combined.columns <span class="op">=</span> combined.columns.<span class="bu">str</span>.lower()</span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>    columns <span class="op">=</span> [<span class="st">'campus'</span>,<span class="st">'year'</span>,<span class="st">'region'</span>,<span class="st">'district'</span>,<span class="st">'dname'</span>,<span class="st">'cname'</span>,<span class="st">'grade'</span>,<span class="st">'format_type'</span>,<span class="st">'subject'</span>,<span class="st">'student_group'</span>,<span class="st">'name'</span>]</span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>    combined <span class="op">=</span> combined.set_index(columns)[<span class="st">'value'</span>].unstack().reset_index()</span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Combined:"</span>, dat_file, <span class="st">"+"</span>, var_file, <span class="st">"rows/cols:"</span>, combined.shape)</span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 6. append data for each grade into a single data structure and concatenate</span></span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>    all_grades.append(combined)</span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.concat(all_grades)</span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Final rows/cols:"</span>, df.shape)</span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a><span class="co"># 7. write to compressed csv</span></span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">"TX_STAAR_3_8_2021.csv.gz"</span>, index<span class="op">=</span><span class="va">False</span>, compression<span class="op">=</span><span class="st">"gzip"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>WARNING *** OLE2 inconsistency: SSCS size is 0 but SSAT size is non-zero
+Parsing: cfy21e3.dat rows/cols: (4643, 2093)
+Pivoted: cfy21e3.dat rows/cols: (9685298, 9)
+Joined: cfy21e3.dat + fy21_varlist_g03.xls rows/cols: (9685298, 13)
+Combined: cfy21e3.dat + fy21_varlist_g03.xls rows/cols: (571089, 35)
+WARNING *** OLE2 inconsistency: SSCS size is 0 but SSAT size is non-zero
+Parsing: cfy21e4.dat rows/cols: (4622, 3075)
+Pivoted: cfy21e4.dat rows/cols: (14180296, 9)
+Joined: cfy21e4.dat + fy21_varlist_g04.xls rows/cols: (14180296, 13)
+Combined: cfy21e4.dat + fy21_varlist_g04.xls rows/cols: (850448, 35)
+WARNING *** OLE2 inconsistency: SSCS size is 0 but SSAT size is non-zero
+Parsing: cfy21e5.dat rows/cols: (4415, 3197)
+Pivoted: cfy21e5.dat rows/cols: (14083850, 9)
+Joined: cfy21e5.dat + fy21_varlist_g05.xls rows/cols: (14083850, 13)
+Combined: cfy21e5.dat + fy21_varlist_g05.xls rows/cols: (812360, 35)
+WARNING *** OLE2 inconsistency: SSCS size is 0 but SSAT size is non-zero
+Parsing: cfy21e6.dat rows/cols: (2700, 2093)
+Pivoted: cfy21e6.dat rows/cols: (5632200, 9)
+Joined: cfy21e6.dat + fy21_varlist_g06.xls rows/cols: (5632200, 13)
+Combined: cfy21e6.dat + fy21_varlist_g06.xls rows/cols: (332100, 35)
+WARNING *** OLE2 inconsistency: SSCS size is 0 but SSAT size is non-zero
+Parsing: cfy21e7.dat rows/cols: (2337, 3075)
+Pivoted: cfy21e7.dat rows/cols: (7169916, 9)
+Joined: cfy21e7.dat + fy21_varlist_g07.xls rows/cols: (7169916, 13)
+Combined: cfy21e7.dat + fy21_varlist_g07.xls rows/cols: (430008, 35)
+WARNING *** OLE2 inconsistency: SSCS size is 0 but SSAT size is non-zero
+Parsing: cfy21e8.dat rows/cols: (2370, 4301)
+Pivoted: cfy21e8.dat rows/cols: (10176780, 9)
+Joined: cfy21e8.dat + fy21_varlist_g08.xls rows/cols: (10176780, 13)
+Combined: cfy21e8.dat + fy21_varlist_g08.xls rows/cols: (580650, 35)
+Final rows/cols: (3576655, 35)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="33">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th>name</th>
+      <th>campus</th>
+      <th>year</th>
+      <th>region</th>
+      <th>district</th>
+      <th>dname</th>
+      <th>cname</th>
+      <th>grade</th>
+      <th>format_type</th>
+      <th>subject</th>
+      <th>student_group</th>
+      <th>NaN</th>
+      <th>avg_scale_score</th>
+      <th>n_absent_not_tested</th>
+      <th>n_answer_documents_submitted</th>
+      <th>n_approaches_grade_level_performance</th>
+      <th>n_avg_items_correctrpt_cat_1</th>
+      <th>n_avg_items_correctrpt_cat_2</th>
+      <th>n_avg_items_correctrpt_cat_3</th>
+      <th>n_avg_items_correctrpt_cat_4</th>
+      <th>n_did_not_meet_grade_level_performance</th>
+      <th>n_masters_grade_level_performance</th>
+      <th>n_meets_grade_level_performance</th>
+      <th>n_other_not_tested</th>
+      <th>n_tested</th>
+      <th>pct_absent_not_tested</th>
+      <th>pct_answer_documents_submitted</th>
+      <th>pct_approaches_grade_level_performance</th>
+      <th>pct_avg_items_correctrpt_cat_1</th>
+      <th>pct_avg_items_correctrpt_cat_2</th>
+      <th>pct_avg_items_correctrpt_cat_3</th>
+      <th>pct_avg_items_correctrpt_cat_4</th>
+      <th>pct_did_not_meet_grade_level_performance</th>
+      <th>pct_masters_grade_level_performance</th>
+      <th>pct_meets_grade_level_performance</th>
+      <th>pct_other_not_tested</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>001902103</td>
+      <td>21</td>
+      <td>07</td>
+      <td>001902</td>
+      <td>CAYUGA ISD</td>
+      <td>CAYUGA ELEM.</td>
+      <td>03</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td></td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>001902103</td>
+      <td>21</td>
+      <td>07</td>
+      <td>001902</td>
+      <td>CAYUGA ISD</td>
+      <td>CAYUGA ELEM.</td>
+      <td>03</td>
+      <td>Numeric</td>
+      <td>Mathematics</td>
+      <td>All Students</td>
+      <td>NaN</td>
+      <td>1607</td>
+      <td>0</td>
+      <td>26</td>
+      <td>22</td>
+      <td>6.3</td>
+      <td>10.7</td>
+      <td>5</td>
+      <td>3.3</td>
+      <td>4</td>
+      <td>16</td>
+      <td>19</td>
+      <td>0</td>
+      <td>26</td>
+      <td>0</td>
+      <td>100</td>
+      <td>85</td>
+      <td>79</td>
+      <td>83</td>
+      <td>71</td>
+      <td>84</td>
+      <td>15</td>
+      <td>62</td>
+      <td>73</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>001902103</td>
+      <td>21</td>
+      <td>07</td>
+      <td>001902</td>
+      <td>CAYUGA ISD</td>
+      <td>CAYUGA ELEM.</td>
+      <td>03</td>
+      <td>Numeric</td>
+      <td>Mathematics</td>
+      <td>American Indian or Alaska Native Students</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>001902103</td>
+      <td>21</td>
+      <td>07</td>
+      <td>001902</td>
+      <td>CAYUGA ISD</td>
+      <td>CAYUGA ELEM.</td>
+      <td>03</td>
+      <td>Numeric</td>
+      <td>Mathematics</td>
+      <td>Asian Students</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>001902103</td>
+      <td>21</td>
+      <td>07</td>
+      <td>001902</td>
+      <td>CAYUGA ISD</td>
+      <td>CAYUGA ELEM.</td>
+      <td>03</td>
+      <td>Numeric</td>
+      <td>Mathematics</td>
+      <td>At-Risk Students</td>
+      <td>NaN</td>
+      <td>1465</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>5</td>
+      <td>5.1</td>
+      <td>9.3</td>
+      <td>3.3</td>
+      <td>2.7</td>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+      <td>NaN</td>
+      <td>7</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>71</td>
+      <td>64</td>
+      <td>71</td>
+      <td>47</td>
+      <td>68</td>
+      <td>29</td>
+      <td>29</td>
+      <td>43</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>580645</th>
+      <td>254902001</td>
+      <td>21</td>
+      <td>20</td>
+      <td>254902</td>
+      <td>LA PRYOR ISD</td>
+      <td>LA PRYOR H.S.</td>
+      <td>08</td>
+      <td>Numeric</td>
+      <td>Social Studies</td>
+      <td>Title-I Participant Students Codes: 6 7 9</td>
+      <td>NaN</td>
+      <td>3425</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>12</td>
+      <td>6.9</td>
+      <td>5.4</td>
+      <td>4.2</td>
+      <td>3.2</td>
+      <td>23</td>
+      <td>0</td>
+      <td>4</td>
+      <td>NaN</td>
+      <td>35</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>34</td>
+      <td>41</td>
+      <td>54</td>
+      <td>42</td>
+      <td>46</td>
+      <td>66</td>
+      <td>0</td>
+      <td>11</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>580646</th>
+      <td>254902001</td>
+      <td>21</td>
+      <td>20</td>
+      <td>254902</td>
+      <td>LA PRYOR ISD</td>
+      <td>LA PRYOR H.S.</td>
+      <td>08</td>
+      <td>Numeric</td>
+      <td>Social Studies</td>
+      <td>Transitional Bilingual/Early Exit Students</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>580647</th>
+      <td>254902001</td>
+      <td>21</td>
+      <td>20</td>
+      <td>254902</td>
+      <td>LA PRYOR ISD</td>
+      <td>LA PRYOR H.S.</td>
+      <td>08</td>
+      <td>Numeric</td>
+      <td>Social Studies</td>
+      <td>Transitional Bilingual/Late Exit Students</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>580648</th>
+      <td>254902001</td>
+      <td>21</td>
+      <td>20</td>
+      <td>254902</td>
+      <td>LA PRYOR ISD</td>
+      <td>LA PRYOR H.S.</td>
+      <td>08</td>
+      <td>Numeric</td>
+      <td>Social Studies</td>
+      <td>Two or More Races Students</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>580649</th>
+      <td>254902001</td>
+      <td>21</td>
+      <td>20</td>
+      <td>254902</td>
+      <td>LA PRYOR ISD</td>
+      <td>LA PRYOR H.S.</td>
+      <td>08</td>
+      <td>Numeric</td>
+      <td>Social Studies</td>
+      <td>White Students</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>3576655 rows × 35 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>The resulting dataset/file ends up being ~3.5 million rows in length and a consistent 35 columns wide. You can download the reshaped dataset here: <a href="../../extra/TX_STAAR_3_8_2021.csv.gz">TX STAAR 2021 - Grades 3-8</a></p>
+<p>We can now run simpler queries on the reshaped data such as:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> TX_STAAR_2021</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> subject <span class="op">=</span> <span class="st">'Reading'</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="kw">AND</span> student_group <span class="op">=</span> <span class="st">'All Students'</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="kw">AND</span> grade <span class="kw">IN</span> (<span class="st">'6'</span>, <span class="st">'7'</span>, <span class="st">'8'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A similar query using the original datasets would’ve required unioning three different datasets and a much more complicated set of column matching to filter down to the right subject and student group.</p>
+<p>In our production environment, the approach is similar but we initially load the raw dat and var files into Google Cloud Storage and as well as the resulting csv. That is then converted to avro for better query performance and an <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro">external table</a> is generated in BigQuery using their API.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

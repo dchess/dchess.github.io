@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2021-01-12">
+
+<title>dchess.org - Normalize JSON with Pandas</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">dchess.org</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://drive.google.com/file/d/1O0-Le26SdL-DhDo2LsOQVWR5BAV4I17F/view">
+ <span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/dchess"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/dchess"><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Normalize JSON with Pandas</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">tutorial</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 12, 2021</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>When processing nested <code>JSON</code> data into a flat structure for importing into a relational database, it can be tricky to structure the data into the right shape. <a href="https://pandas.pydata.org/">Pandas</a> has a great tool for doing this called <code>pandas.json_normalize()</code> but the <a href="https://pandas.pydata.org/docs/reference/api/pandas.json_normalize.html?highlight=json_normalize">documentation</a> doesn’t make it obvious how to leverage its capabilities for handling nested data structures.</p>
+<p>I thought I could provide a brief example using some randomly generated survey response data (using the <a href="https://faker.readthedocs.io/en/master/">Faker</a> library) to illustrate it’s advantages.</p>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<p>To start, I’m going to be using pandas and Faker so we’ll import those. I’m also going to need to easily display the parsed json as well as the returned dataframes, so I’m importing the json module from the standard lib as well as some IPython notebook helpers for displaying dataframes as HTML tables.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, HTML</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> faker <span class="im">import</span> Faker</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> faker.providers <span class="im">import</span> BaseProvider, date_time, internet</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="fake-data" class="level2">
+<h2 class="anchored" data-anchor-id="fake-data">Fake Data</h2>
+<p>Faker doesn’t have a built in provider for survey questions, so let’s go ahead and add a simple one that creates non-sensical questions with a simple hack to the sentence provider.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MyProvider(BaseProvider):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> question(<span class="va">self</span>):</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        stems <span class="op">=</span> (<span class="st">'Does'</span>, <span class="st">'How does'</span>, <span class="st">'Which'</span>, <span class="st">'Why does'</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        stem <span class="op">=</span> Faker().random_choices(elements<span class="op">=</span>stems, length<span class="op">=</span><span class="dv">1</span>)[<span class="dv">0</span>]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        sentence <span class="op">=</span> Faker().sentence()</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        sentence <span class="op">=</span> sentence[<span class="dv">0</span>].lower() <span class="op">+</span> sentence[<span class="dv">1</span>:]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        question <span class="op">=</span> sentence.replace(<span class="st">"."</span>, <span class="st">"?"</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        question <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>stem<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>question<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> question</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Using this new question provider, we’ll construct a few records of fake survey response data with some respondent level data like a respondent_id, survey_date, and respondent email. Within that we’ll nest a list of responses which will in turn have it’s own dictionary of data at the question level: id, question text, and choices. The choices list will be singular here, but assume it has that structure because the API this comes from has to also account for multi-select options and we’ll need to parse it as a list regardless. <em>Depending on our analysis needs, this might also be a place where we’d want to keep these in a comma separated string, but for our purposes here we’ll ignore that use case.</em></p>
+<div class="cell" data-tags="[]" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fake <span class="op">=</span> Faker()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>fake.add_provider(MyProvider)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>choices <span class="op">=</span> (<span class="st">'Strongly Agree'</span>, <span class="st">'Agree'</span>, <span class="st">'Neutral'</span>, <span class="st">'Disagree'</span>, <span class="st">'Strongly Disagree'</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>sample_data <span class="op">=</span> [</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"respondent_id"</span>: fake.bothify(text<span class="op">=</span><span class="st">"#?##??###?#"</span>),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"survey_date"</span>: fake.date(),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"email"</span>: fake.email(domain<span class="op">=</span><span class="st">"example.com"</span>),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"responses"</span>: [</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            {</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                <span class="st">"question_id"</span>: fake.bothify(text<span class="op">=</span><span class="st">"#??#??###?#"</span>),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                <span class="st">"question_text"</span>: fake.question(),</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                <span class="st">"choices"</span>: [</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                    {</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"choice"</span>: fake.random_choices(elements<span class="op">=</span>choices, length<span class="op">=</span><span class="dv">1</span>)[<span class="dv">0</span>],</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"number"</span>: fake.random_digit(),</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                ]</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>            } <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>) </span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s print out a single record to see the resulting data structure that has been generated randomly.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(json.dumps(sample_data[<span class="dv">0</span>], indent<span class="op">=</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{
+  "respondent_id": "1W38Sn628N9",
+  "survey_date": "1985-09-30",
+  "email": "ofrench@example.com",
+  "responses": [
+    {
+      "question_id": "9lQ8OH810H2",
+      "question_text": "How does mean action onto south usually prepare that?",
+      "choices": [
+        {
+          "choice": "Strongly Disagree",
+          "number": 9
+        }
+      ]
+    },
+    {
+      "question_id": "8YZ3Ri208p1",
+      "question_text": "Does million mean tax foot statement?",
+      "choices": [
+        {
+          "choice": "Strongly Disagree",
+          "number": 4
+        }
+      ]
+    },
+    {
+      "question_id": "2Ys2yn819r0",
+      "question_text": "How does decade what air scientist defense allow entire?",
+      "choices": [
+        {
+          "choice": "Disagree",
+          "number": 2
+        }
+      ]
+    },
+    {
+      "question_id": "3ii1tu719B3",
+      "question_text": "Does focus statement peace forward do relate?",
+      "choices": [
+        {
+          "choice": "Neutral",
+          "number": 6
+        }
+      ]
+    },
+    {
+      "question_id": "9xv2JX456C7",
+      "question_text": "Does explain ability plant?",
+      "choices": [
+        {
+          "choice": "Strongly Disagree",
+          "number": 5
+        }
+      ]
+    }
+  ]
+}</code></pre>
+</div>
+</div>
+</section>
+<section id="reading-with-pandas" class="level2">
+<h2 class="anchored" data-anchor-id="reading-with-pandas">Reading with Pandas</h2>
+<p>As you can see below, simply reading this directly into a dataframe only parses the top level respondent data, but then keeps the responses data as a json array. Which isn’t great for simple analysis. Could you load that “as is” into a jsonb field in PostgreSQL? Sure. If you like parsing json with SQL. Yuck!</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(sample_data)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>respondent_id</th>
+      <th>survey_date</th>
+      <th>email</th>
+      <th>responses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>[{'question_id': '9lQ8OH810H2', 'question_text...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>[{'question_id': '3sG5am762C6', 'question_text...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="a-messy-custom-parser" class="level2">
+<h2 class="anchored" data-anchor-id="a-messy-custom-parser">A messy custom parser</h2>
+<p>We could attempt to reshape this by writing some custom functions to handle extracting the responses and merging that data with the top-level meta data about the respondent with some dictionary unpacking, but this gets messy and would fall apart quickly as the structure changed. While this approach works, it’s not ideal.</p>
+<p>Sure this code could be further refactored to simplify the logic, but it’s not worth it since the <code>pandas.json_normalize()</code> can do this for us easily.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> record_format(responses):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> []</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> response <span class="kw">in</span> responses:</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        record <span class="op">=</span> {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">"question_id"</span>: response.get(<span class="st">"question_id"</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">"question_text"</span>: response.get(<span class="st">"question_text"</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">"choice"</span>: response.get(<span class="st">"choices"</span>)[<span class="dv">0</span>].get(<span class="st">"choice"</span>),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">"number"</span>: response.get(<span class="st">"choices"</span>)[<span class="dv">0</span>].get(<span class="st">"number"</span>),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        data.append(record)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse_json(records):</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> []</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> record <span class="kw">in</span> sample_data:</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        meta <span class="op">=</span> {</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">"respondent_id"</span>: record.get(<span class="st">"respondent_id"</span>),</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">"survey_date"</span>: record.get(<span class="st">"survey_date"</span>),</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">"email"</span>: record.get(<span class="st">"email"</span>),</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        responses <span class="op">=</span> record.get(<span class="st">"responses"</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>        formatted_responses <span class="op">=</span> record_format(responses)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> response <span class="kw">in</span> formatted_responses:</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>            combined <span class="op">=</span> {<span class="op">**</span>meta, <span class="op">**</span>response}</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>            data.append(combined)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>clean_data <span class="op">=</span> parse_json(sample_data)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(clean_data)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>respondent_id</th>
+      <th>survey_date</th>
+      <th>email</th>
+      <th>question_id</th>
+      <th>question_text</th>
+      <th>choice</th>
+      <th>number</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>9lQ8OH810H2</td>
+      <td>How does mean action onto south usually prepar...</td>
+      <td>Strongly Disagree</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>8YZ3Ri208p1</td>
+      <td>Does million mean tax foot statement?</td>
+      <td>Strongly Disagree</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>2Ys2yn819r0</td>
+      <td>How does decade what air scientist defense all...</td>
+      <td>Disagree</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>3ii1tu719B3</td>
+      <td>Does focus statement peace forward do relate?</td>
+      <td>Neutral</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>9xv2JX456C7</td>
+      <td>Does explain ability plant?</td>
+      <td>Strongly Disagree</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>3sG5am762C6</td>
+      <td>Why does know writer ball bad whole?</td>
+      <td>Agree</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>5uM6LP013p7</td>
+      <td>Why does break chance boy enjoy call paper yet?</td>
+      <td>Strongly Disagree</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>3NE9pu846z1</td>
+      <td>Does note spring newspaper and that thing?</td>
+      <td>Neutral</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>6ge7Zt058d3</td>
+      <td>Why does message next eat the stay?</td>
+      <td>Neutral</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>2EB3vo658l2</td>
+      <td>How does no later then inside fill discover?</td>
+      <td>Agree</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="json-normalize" class="level2">
+<h2 class="anchored" data-anchor-id="json-normalize">JSON Normalize</h2>
+<p>Thankfully there is the <code>json_normalize()</code> function, but it requires a little understanding to get it to satisfactorily parse flat. Simply passing it the sample data without any parameters results in a very familiar result that gets us no further than we started in the first attempt.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.json_normalize(sample_data)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>respondent_id</th>
+      <th>survey_date</th>
+      <th>email</th>
+      <th>responses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>[{'question_id': '9lQ8OH810H2', 'question_text...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>[{'question_id': '3sG5am762C6', 'question_text...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>A few optional parameters can be used here to parse the first nested array called <code>responses</code>. We can direct the pandas json parser to a specific key as the source of records. The <code>record_path</code> parameter takes either a string or list of strings to construct that path. The name of this parameter is a hint about how to think of this when passed as a list as we’ll see later.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.json_normalize(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    sample_data, </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    record_path<span class="op">=</span><span class="st">"responses"</span>, </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>question_id</th>
+      <th>question_text</th>
+      <th>choices</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>9lQ8OH810H2</td>
+      <td>How does mean action onto south usually prepar...</td>
+      <td>[{'choice': 'Strongly Disagree', 'number': 9}]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>8YZ3Ri208p1</td>
+      <td>Does million mean tax foot statement?</td>
+      <td>[{'choice': 'Strongly Disagree', 'number': 4}]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2Ys2yn819r0</td>
+      <td>How does decade what air scientist defense all...</td>
+      <td>[{'choice': 'Disagree', 'number': 2}]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3ii1tu719B3</td>
+      <td>Does focus statement peace forward do relate?</td>
+      <td>[{'choice': 'Neutral', 'number': 6}]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>9xv2JX456C7</td>
+      <td>Does explain ability plant?</td>
+      <td>[{'choice': 'Strongly Disagree', 'number': 5}]</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>3sG5am762C6</td>
+      <td>Why does know writer ball bad whole?</td>
+      <td>[{'choice': 'Agree', 'number': 3}]</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>5uM6LP013p7</td>
+      <td>Why does break chance boy enjoy call paper yet?</td>
+      <td>[{'choice': 'Strongly Disagree', 'number': 9}]</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>3NE9pu846z1</td>
+      <td>Does note spring newspaper and that thing?</td>
+      <td>[{'choice': 'Neutral', 'number': 7}]</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>6ge7Zt058d3</td>
+      <td>Why does message next eat the stay?</td>
+      <td>[{'choice': 'Neutral', 'number': 0}]</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2EB3vo658l2</td>
+      <td>How does no later then inside fill discover?</td>
+      <td>[{'choice': 'Agree', 'number': 4}]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>But when we direct the parser to just unpack the <code>reponses</code> array, we lose our data from the level above. Pandas can be instructed to keep this by giving it a list of metadata to repeat for each record it unpacks from the level above. We use the <code>meta</code> parameter and pass it a list of the fields to include.</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.json_normalize(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    sample_data, </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    record_path<span class="op">=</span><span class="st">"responses"</span>, </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>     meta<span class="op">=</span>[</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"respondent_id"</span>, </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"survey_date"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"email"</span>, </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>df</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>question_id</th>
+      <th>question_text</th>
+      <th>choices</th>
+      <th>respondent_id</th>
+      <th>survey_date</th>
+      <th>email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>9lQ8OH810H2</td>
+      <td>How does mean action onto south usually prepar...</td>
+      <td>[{'choice': 'Strongly Disagree', 'number': 9}]</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>8YZ3Ri208p1</td>
+      <td>Does million mean tax foot statement?</td>
+      <td>[{'choice': 'Strongly Disagree', 'number': 4}]</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2Ys2yn819r0</td>
+      <td>How does decade what air scientist defense all...</td>
+      <td>[{'choice': 'Disagree', 'number': 2}]</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3ii1tu719B3</td>
+      <td>Does focus statement peace forward do relate?</td>
+      <td>[{'choice': 'Neutral', 'number': 6}]</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>9xv2JX456C7</td>
+      <td>Does explain ability plant?</td>
+      <td>[{'choice': 'Strongly Disagree', 'number': 5}]</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>3sG5am762C6</td>
+      <td>Why does know writer ball bad whole?</td>
+      <td>[{'choice': 'Agree', 'number': 3}]</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>5uM6LP013p7</td>
+      <td>Why does break chance boy enjoy call paper yet?</td>
+      <td>[{'choice': 'Strongly Disagree', 'number': 9}]</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>3NE9pu846z1</td>
+      <td>Does note spring newspaper and that thing?</td>
+      <td>[{'choice': 'Neutral', 'number': 7}]</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>6ge7Zt058d3</td>
+      <td>Why does message next eat the stay?</td>
+      <td>[{'choice': 'Neutral', 'number': 0}]</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2EB3vo658l2</td>
+      <td>How does no later then inside fill discover?</td>
+      <td>[{'choice': 'Agree', 'number': 4}]</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="we-must-go-deeper" class="level2">
+<h2 class="anchored" data-anchor-id="we-must-go-deeper">We must go deeper!</h2>
+<p>That works for the most part, but we still have that annoying <strong>choices</strong> json array that would be nice to split out into columns.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df5 <span class="op">=</span> pd.json_normalize(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    sample_data, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    record_path<span class="op">=</span><span class="st">"choices"</span>, </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    meta<span class="op">=</span>[</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"respondent_id"</span>, </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"survey_date"</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"email"</span>, </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Simply passing the choices field to the <code>record_path</code> param results in a <code>KeyError</code> though. This is because the <strong>choices</strong> field is actually nested in the <strong>responses</strong> field. So pandas need us to construct a path to reach it. We can get to it by passing each key as a record in the list to construct a path. Here that looks like <code>["responses", "choices"]</code>.</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.json_normalize(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    sample_data, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    record_path<span class="op">=</span>[<span class="st">"responses"</span>, <span class="st">"choices"</span>], </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    meta<span class="op">=</span>[</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"respondent_id"</span>, </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"survey_date"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"email"</span>, </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>choice</th>
+      <th>number</th>
+      <th>respondent_id</th>
+      <th>survey_date</th>
+      <th>email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Strongly Disagree</td>
+      <td>9</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Strongly Disagree</td>
+      <td>4</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Disagree</td>
+      <td>2</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Neutral</td>
+      <td>6</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Strongly Disagree</td>
+      <td>5</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Agree</td>
+      <td>3</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Strongly Disagree</td>
+      <td>9</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Neutral</td>
+      <td>7</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Neutral</td>
+      <td>0</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Agree</td>
+      <td>4</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>But when we do that, we lose our <strong>question_id</strong> and <strong>question_text</strong> fields. That’s because we need to add them in the meta list and pass their paths like the record path param. See below.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.json_normalize(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    sample_data, </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    record_path<span class="op">=</span>[<span class="st">"responses"</span>, <span class="st">"choices"</span>], </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    meta<span class="op">=</span>[</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"respondent_id"</span>, </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"survey_date"</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"email"</span>, </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        [<span class="st">"responses"</span>, <span class="st">"question_id"</span>],</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        [<span class="st">"responses"</span>, <span class="st">"question_text"</span>],</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>choice</th>
+      <th>number</th>
+      <th>respondent_id</th>
+      <th>survey_date</th>
+      <th>email</th>
+      <th>responses.question_id</th>
+      <th>responses.question_text</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Strongly Disagree</td>
+      <td>9</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>9lQ8OH810H2</td>
+      <td>How does mean action onto south usually prepar...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Strongly Disagree</td>
+      <td>4</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>8YZ3Ri208p1</td>
+      <td>Does million mean tax foot statement?</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Disagree</td>
+      <td>2</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>2Ys2yn819r0</td>
+      <td>How does decade what air scientist defense all...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Neutral</td>
+      <td>6</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>3ii1tu719B3</td>
+      <td>Does focus statement peace forward do relate?</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Strongly Disagree</td>
+      <td>5</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>9xv2JX456C7</td>
+      <td>Does explain ability plant?</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Agree</td>
+      <td>3</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>3sG5am762C6</td>
+      <td>Why does know writer ball bad whole?</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Strongly Disagree</td>
+      <td>9</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>5uM6LP013p7</td>
+      <td>Why does break chance boy enjoy call paper yet?</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Neutral</td>
+      <td>7</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>3NE9pu846z1</td>
+      <td>Does note spring newspaper and that thing?</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Neutral</td>
+      <td>0</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>6ge7Zt058d3</td>
+      <td>Why does message next eat the stay?</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Agree</td>
+      <td>4</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>2EB3vo658l2</td>
+      <td>How does no later then inside fill discover?</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>One last tweak: some databases (like MS SQL) don’t like naming columns with that period in the name. As a work around you can give the <code>json_normalize</code> function a custom separator such as an underscore instead.</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.json_normalize(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    sample_data, </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    sep<span class="op">=</span><span class="st">"_"</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    record_path<span class="op">=</span>[<span class="st">"responses"</span>, <span class="st">"choices"</span>], </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    meta<span class="op">=</span>[</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"respondent_id"</span>, </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"survey_date"</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"email"</span>, </span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        [<span class="st">"responses"</span>, <span class="st">"question_id"</span>],</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>        [<span class="st">"responses"</span>, <span class="st">"question_text"</span>]</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>choice</th>
+      <th>number</th>
+      <th>respondent_id</th>
+      <th>survey_date</th>
+      <th>email</th>
+      <th>responses_question_id</th>
+      <th>responses_question_text</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Strongly Disagree</td>
+      <td>9</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>9lQ8OH810H2</td>
+      <td>How does mean action onto south usually prepar...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Strongly Disagree</td>
+      <td>4</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>8YZ3Ri208p1</td>
+      <td>Does million mean tax foot statement?</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Disagree</td>
+      <td>2</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>2Ys2yn819r0</td>
+      <td>How does decade what air scientist defense all...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Neutral</td>
+      <td>6</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>3ii1tu719B3</td>
+      <td>Does focus statement peace forward do relate?</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Strongly Disagree</td>
+      <td>5</td>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>9xv2JX456C7</td>
+      <td>Does explain ability plant?</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Agree</td>
+      <td>3</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>3sG5am762C6</td>
+      <td>Why does know writer ball bad whole?</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Strongly Disagree</td>
+      <td>9</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>5uM6LP013p7</td>
+      <td>Why does break chance boy enjoy call paper yet?</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Neutral</td>
+      <td>7</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>3NE9pu846z1</td>
+      <td>Does note spring newspaper and that thing?</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Neutral</td>
+      <td>0</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>6ge7Zt058d3</td>
+      <td>Why does message next eat the stay?</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Agree</td>
+      <td>4</td>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>2EB3vo658l2</td>
+      <td>How does no later then inside fill discover?</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Finally, we’ll order the columns from the least nested level on the left all the way to the most nested on the right for easier readability.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>column_order <span class="op">=</span> [<span class="st">"respondent_id"</span>, <span class="st">"survey_date"</span>, <span class="st">"email"</span>, <span class="st">"responses_question_id"</span>, <span class="st">"responses_question_text"</span>, <span class="st">"choice"</span>, <span class="st">"number"</span>]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[column_order]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>respondent_id</th>
+      <th>survey_date</th>
+      <th>email</th>
+      <th>responses_question_id</th>
+      <th>responses_question_text</th>
+      <th>choice</th>
+      <th>number</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>9lQ8OH810H2</td>
+      <td>How does mean action onto south usually prepar...</td>
+      <td>Strongly Disagree</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>8YZ3Ri208p1</td>
+      <td>Does million mean tax foot statement?</td>
+      <td>Strongly Disagree</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>2Ys2yn819r0</td>
+      <td>How does decade what air scientist defense all...</td>
+      <td>Disagree</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>3ii1tu719B3</td>
+      <td>Does focus statement peace forward do relate?</td>
+      <td>Neutral</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1W38Sn628N9</td>
+      <td>1985-09-30</td>
+      <td>ofrench@example.com</td>
+      <td>9xv2JX456C7</td>
+      <td>Does explain ability plant?</td>
+      <td>Strongly Disagree</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>3sG5am762C6</td>
+      <td>Why does know writer ball bad whole?</td>
+      <td>Agree</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>5uM6LP013p7</td>
+      <td>Why does break chance boy enjoy call paper yet?</td>
+      <td>Strongly Disagree</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>3NE9pu846z1</td>
+      <td>Does note spring newspaper and that thing?</td>
+      <td>Neutral</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>6ge7Zt058d3</td>
+      <td>Why does message next eat the stay?</td>
+      <td>Neutral</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>8J14yp561A1</td>
+      <td>1970-07-08</td>
+      <td>halvarado@example.com</td>
+      <td>2EB3vo658l2</td>
+      <td>How does no later then inside fill discover?</td>
+      <td>Agree</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="parsed-and-ready-to-import" class="level2">
+<h2 class="anchored" data-anchor-id="parsed-and-ready-to-import">Parsed and ready to import</h2>
+<p>At this point our data is in a simple tabular format and ready to import into a database table with something like <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_sql.html?highlight=to_sql">pandas.to_sql()</a> function, but we’ll save that for another post.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

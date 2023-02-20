@@ -1,0 +1,20 @@
+[
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/python-training/index.html",
+      "/posts/parsing-texas-assessment-data/parsing-texas-assessment-data.html",
+      "/posts/word-cloud/word-cloud.html",
+      "/posts/simple-api/index.html",
+      "/posts/student-support-spotlight/index.html",
+      "/posts/how-i-teach-git/index.html",
+      "/posts/json-normalize/json-normalize.html",
+      "/posts/google-classroom-connector/index.html",
+      "/posts/manager-readme/index.html",
+      "/posts/dev-env-setup/index.html",
+      "/posts/how-memes-inform-my-work/index.html",
+      "/posts/new-years-resolutions/index.html",
+      "/posts/powerschool-api.md/index.html"
+    ]
+  }
+]
