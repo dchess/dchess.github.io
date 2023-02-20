@@ -1,0 +1,44 @@
+---
+title: "About"
+image: profile.jpeg
+about:
+  template: trestles
+  image-shape: round
+  links:
+    - icon: filetype-pdf
+      text: resume
+      href: https://drive.google.com/file/d/1O0-Le26SdL-DhDo2LsOQVWR5BAV4I17F/view
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com/in/dchess
+    - icon: github
+      text: Github
+      href: https://github.com/dchess
+
+---
+
+## Former Teacher Turned Software Engineer
+I got started, as a young teen, programming in BASIC on a used Commodore64 in the early 90s. I quickly found my way to HTML4 and built some of my first websites on GeoCities.
+
+![](C64combo.jpeg)
+
+In college I tried my hand at Computer Science, but was more and more attracted to the Social Sciences and eventually ended up teaching high school Social Studies.
+
+I soon needed better tools to support my students and started building out some simple web apps in PHP on the backend of a Wordpress blog to help me teach in the days before blended learning and EdTech were ubiquitous in the education sector.
+
+After a few years of building my skills, I eventually found myself working for Aspire Public Schools on the Godzilla team alongside the folks who went on to start [Schoolzilla](https://www.renaissance.com/products/schoolzilla/). I've been hacking away ever since building data integrations and web applications to support our students, teachers, and back-office staff.
+
+I'm a polyglot programmer with a deep understanding of data integrations, data warehousing, and back-end APIs. I'm a decent full stack developer when it comes to enterprise web apps and work primarily in python these days.
+
+### Skills
+- **Front End**: HTML5/CSS3/ES6, SASS, JQuery, Bootstrap, Material Design
+- **Back End**: Python, Django, Flask, Ruby on Rails, NodeJS, C#, MS SQL, PostgreSQL, BigQuery, dbt
+- **Scripting**: Bash, PowerShell, Python, Ruby
+- **DevOps**: VirtualBox, Heroku, AWS, S3, Docker, DigitalOcean, Google Cloud Platform
+
+### Interests
+I am an avid homebrewer and will wax philosophical on the merits of late boil hop additions if given the chance. But I'm also happy to enjoy some lawn-mower beer while sitting on the patio.
+
+I love making music and recently started publishing some of my work on Spotify under the pseudonym [Mister Yeti](https://open.spotify.com/artist/0Ppm2v91iFqVZPXMApdlkO).
+
+I'm also a husband and father and love nothing better than sitting around playing with my son. He's still young, but I'm really looking forward to sharing the joy of programming with him when he's a little older.

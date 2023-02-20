@@ -1,0 +1,23 @@
+project:
+  type: website
+
+website:
+  title: "dchess.org"
+  navbar:
+    background: '#d9411e'
+    search: true
+    right:
+      - about.qmd
+      - text: Resume
+        href: https://drive.google.com/file/d/1O0-Le26SdL-DhDo2LsOQVWR5BAV4I17F/view
+      - icon: github
+        href: https://github.com/dchess
+      - icon: linkedin
+        href: https://linkedin.com/in/dchess
+format:
+  html:
+    theme: united
+    css: styles.css
+
+execute:
+  freeze: auto

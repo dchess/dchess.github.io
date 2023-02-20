@@ -1,0 +1,24 @@
+---
+title: "InnovateEDU Webinar - 19 November 2020"
+date: "2020-11-19"
+categories: [projects]
+image: google-classroom.png
+---
+
+## Google Classroom Connector
+In the wake of COVID19, we needed to provide [our schools](www.kippnorcal.org) with visibility into student engagement with distance learning. The majority of our schools were using Google Classroom as their LMS (Learning Management System) and we knew that pulling this data down into our data warehouse ASAP would be a vital piece of that puzzle. 
+
+We initially built a data pipeline or "connector" using the Google Classroom API and published it to a [public repo](https://github.com/kippnorcal/google_classroom) for others to use. I partnered closely with [Zach Kagin](https://www.linkedin.com/in/zachkagin) who had volunteered his time pro-bono to the project to support us in this vital time. Shout out to his incredible work on batching the API calls which substantially improved the performance of the codebase.
+
+Soon after, [Erin Mote](https://www.linkedin.com/in/erinmote) from [InnovateEDU](https://www.innovateedunyc.org/) reached out about a possible partnership to [fork the repo](https://github.com/InnovateEDU-NYC/google_classroom) and produce a version that could load the data to BigQuery rather than SQL Server so it could be run on a free instance of Google Cloud Platform with minimal effort. I partnered with [Marcos Alcozer](https://www.linkedin.com/in/marcos-alcozer) to translate our inital work into something that would be easily deployable on Google Cloud Shell. His team then put together [beautiful and simple documentation](https://innovateedu-nyc.github.io/google_classroom/index.html#0) to make it even more effortless to spin up this solution for Districts and CMOs around the country. 
+
+
+## Webinar
+You can see Erin and I presenting a tutorial on how to deploy this solution below. 
+
+<p style="text-align:center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YeJnHmKBClk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen align="middle"></iframe>
+</p>
+
+I'm incredibly proud of this work and the impact it was able to have in such a critical time. It was instrumental in my team's ability to produce meaningful insights on distance learning engagement and even helped support tracking asynchronous attendance with a level of fidelity other orgs struggled to produce without massive manual overhead. 
+

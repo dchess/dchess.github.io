@@ -1,0 +1,33 @@
+---
+title: "I Can Python, So Can You"
+date: "2023-02-11"
+categories: [tutorial]
+image: colab.png
+---
+
+Before I left [Aspire](https://aspirepublicschools.org/), I had started an internal training on Python for those in the org who were interested in
+learning to do a bit of coding. Inspired by the tag line from an old favorite cooking show from the 1980s, [Yan Can Cook](https://yancancook.com/home/), I titled the course "I Can Python, So Can You". 
+
+The scope of that original course was heaviliy inspired by Al Swiegart's [Automate The Boring Stuff With Python](https://automatetheboringstuff.com/) and was focused on building skills around office task automation. My colleague, and good friend, [Jason Baek](https://github.com/jbaek) helped me design the course and content and we co-taught it during our time there. 
+
+When I left Aspire and began work at [KIPP Northern California](https://kippnorcal.org/), there was once again an interest from colleagues to learn a little python. So I updated the course, added some additional homework and projects, and taught it once again. I learned a lot that time around and got some great feedback from my data team about the skills they were most interested in (such as learning pandas, APIs, and data visualization). 
+
+In the summer of 2019, I was asked by the [KIPP Foundation](https://www.kipp.org/) to design a single day version of the course for a data convening in Chicago. I recruited my data engineering colleague, [Charlie Bini](https://github.com/cbini), to help me build out a streamlined version of the content and to co-teach with me at the convening. We reworked the content to incorporate a more data-focused curriculum and taught it over the course of a six-hour session at the convening. We repeated the course with further updates the following year, although we did it remotely as we were in the midst of the pandemic. 
+
+One of the core ideas in all of the incarnations was that the environment setup and IDE learning curve would be a roadblock for many newbies and we didn't want that to stand in the way of jumping in and learning to code in python. 
+So we reached for [Google Colab](https://research.google.com/colaboratory/faq.html), which had the ease of Jupyter Notebooks but with in an browser, cloud hosted environment, and was shareable like any other Google Doc. 
+
+I'm hoping to write a new version of these lessons soon, but in the meantime I wanted to get them up on my blog as a reference for folks who ask about learning resources and to hopefully cultivate some additional feedback that I can incorporate in the next iteration. 
+
+Without further ado, here are the links to the colab notebooks. I hope they are useful to anyone who finds this post. 
+
+### I Can Python, So Can You
+
+1. [Introduction](https://colab.research.google.com/drive/1Cq-by_cx8-PEgsq-c-Zfl6KWB-qTXh7_#forceEdit=true&sandboxMode=true)
+2. [Fundamentals](https://colab.research.google.com/drive/1Kdzs3ICGnJ6dAIQsZX4zlQi8p8MgdkyT#forceEdit=true&sandboxMode=true)
+3. [Control Flow](https://colab.research.google.com/drive/14AXeyRSddc80XnBM7qMxFgo1KfNyoYI3#forceEdit=true&sandboxMode=true)
+4. [Loops & Lists](https://colab.research.google.com/drive/1R0kFjjJXFxhkuVMfedLrv7fX2YMLKlTU#forceEdit=true&sandboxMode=true)
+5. [Recap & APIs](https://colab.research.google.com/drive/10_PwrV0VYnRG8QoggQv3La_bhHhMZfAx#forceEdit=true&sandboxMode=true)
+6. [Pandas](https://colab.research.google.com/drive/1F1gzo0Vr2tGKhXC34Il4kAY6g8FUKY9c#forceEdit=true&sandboxMode=true)
+7. [Course Capstone: Star Wars](https://colab.research.google.com/drive/11IsQ4gzLh6XdD5L59iicY97uI-wolacw#forceEdit=true&sandboxMode=true)
+
