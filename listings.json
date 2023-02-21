@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/quarto-blog/index.html",
       "/posts/python-training/index.html",
       "/posts/parsing-texas-assessment-data/parsing-texas-assessment-data.html",
       "/posts/word-cloud/word-cloud.html",
