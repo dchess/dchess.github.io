@@ -2,7 +2,7 @@
 title: "Goodbye Pelican, Hello Quarto"
 date: "2023-02-20"
 categories: [blog]
-draft: true
+image: quarto.png
 ---
 
 # Where it All Started
