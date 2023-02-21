@@ -15,7 +15,7 @@ When I left Aspire and began work at [KIPP Northern California](https://kippnorc
 In the summer of 2019, I was asked by the [KIPP Foundation](https://www.kipp.org/) to design a single day version of the course for a data convening in Chicago. I recruited my data engineering colleague, [Charlie Bini](https://github.com/cbini), to help me build out a streamlined version of the content and to co-teach with me at the convening. We reworked the content to incorporate a more data-focused curriculum and taught it over the course of a six-hour session at the convening. We repeated the course with further updates the following year, although we did it remotely as we were in the midst of the pandemic. 
 
 One of the core ideas in all of the incarnations was that the environment setup and IDE learning curve would be a roadblock for many newbies and we didn't want that to stand in the way of jumping in and learning to code in python. 
-So we reached for [Google Colab](https://research.google.com/colaboratory/faq.html), which had the ease of Jupyter Notebooks but with in an browser, cloud hosted environment, and was shareable like any other Google Doc. 
+So we reached for [Google Colab](https://research.google.com/colaboratory/faq.html), which had the ease of Jupyter Notebooks but with an in-browser, cloud hosted environment, and was shareable like any other Google Doc. 
 
 I'm hoping to write a new version of these lessons soon, but in the meantime I wanted to get them up on my blog as a reference for folks who ask about learning resources and to hopefully cultivate some additional feedback that I can incorporate in the next iteration. 
 
