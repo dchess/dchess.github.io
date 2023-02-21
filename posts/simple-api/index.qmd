@@ -173,7 +173,7 @@ $ pipenv run flask run
 I wouldn't take this and deploy it to production anywhere without some serious security
 decisions, but it makes for a nice proof-of-concept. And certainly could be expanded to
 include user authentication, a proper production server like [gunicorn](https://gunicorn.org/) and a nicer
-user interface. But at point you might be better off with [Flask-API](https://www.flaskapi.org/) or 
+user interface. But at that point you might be better off with [Flask-API](https://www.flaskapi.org/) or 
 [Django REST Framework](https://www.django-rest-framework.org/), both of which I've used with success. 
 
 But still, not bad for less than 20 lines of code. 
