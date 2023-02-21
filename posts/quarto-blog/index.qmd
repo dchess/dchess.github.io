@@ -38,7 +38,7 @@ Before long I had a proof of concept stood up in parallel and was able to not on
 locally in VS Code, eliminate the need for a second repo, and the themes and layouts were based on simple [bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/). The current look and feel is a bit more basic, but the focus is more on the content
 and there is even a built in search tool. 
 
-Even better, they had explicit directions for [publishing to Github Pages using Github Actions]([https://quarto.org/docs/publishing/github-pages.html](https://quarto.org/docs/publishing/github-pages.html#github-action).
+Even better, they had explicit directions for [publishing to Github Pages using Github Actions](https://quarto.org/docs/publishing/github-pages.html#github-action).
 This made it easier than ever to write content and publish withough worrying about the static site generation. In fact, I could even write markdown
 directly in Github (in the browser) and commit to the repo and the publish action would immediately deploy to my site! **So cool**.
 
