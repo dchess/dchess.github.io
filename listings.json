@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/mermaid-diagrams/index.html",
       "/posts/quarto-blog/index.html",
       "/posts/python-training/index.html",
       "/posts/parsing-texas-assessment-data/parsing-texas-assessment-data.html",
@@ -13,8 +14,8 @@
       "/posts/google-classroom-connector/index.html",
       "/posts/manager-readme/index.html",
       "/posts/dev-env-setup/index.html",
-      "/posts/how-memes-inform-my-work/index.html",
       "/posts/new-years-resolutions/index.html",
+      "/posts/how-memes-inform-my-work/index.html",
       "/posts/powerschool-api.md/index.html"
     ]
   }

@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2020-11-19">
+<meta name="dcterms.date" content="2023-06-19">
 
-<title>dchess.org - InnovateEDU Webinar - 19 November 2020</title>
+<title>dchess.org - Treating Diagrams Like Code</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -60,6 +60,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -111,9 +114,9 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">InnovateEDU Webinar - 19 November 2020</h1>
+      <h1 class="title">Treating Diagrams Like Code</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">projects</div>
+                <div class="quarto-category">blog</div>
               </div>
                   </div>
   </div>
@@ -125,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 19, 2020</p>
+        <p class="date">June 19, 2023</p>
       </div>
     </div>
     
@@ -143,23 +146,33 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="google-classroom-connector" class="level2">
-<h2 class="anchored" data-anchor-id="google-classroom-connector">Google Classroom Connector</h2>
-<p>In the wake of COVID19, we needed to provide <a href="www.kippnorcal.org">our schools</a> with visibility into student engagement with distance learning. The majority of our schools were using Google Classroom as their LMS (Learning Management System) and we knew that pulling this data down into our data warehouse ASAP would be a vital piece of that puzzle.</p>
-<p>We initially built a data pipeline or “connector” using the Google Classroom API and published it to a <a href="https://github.com/kippnorcal/google_classroom">public repo</a> for others to use. I partnered closely with <a href="https://www.linkedin.com/in/zachkagin">Zach Kagin</a> who had volunteered his time pro-bono to the project to support us in this vital time. Shout out to his incredible work on batching the API calls which substantially improved the performance of the codebase.</p>
-<p>Soon after, <a href="https://www.linkedin.com/in/erinmote">Erin Mote</a> from <a href="https://www.innovateedunyc.org/">InnovateEDU</a> reached out about a possible partnership to <a href="https://github.com/InnovateEDU-NYC/google_classroom">fork the repo</a> and produce a version that could load the data to BigQuery rather than SQL Server so it could be run on a free instance of Google Cloud Platform with minimal effort. I partnered with <a href="https://www.linkedin.com/in/marcos-alcozer">Marcos Alcozer</a> to translate our inital work into something that would be easily deployable on Google Cloud Shell. His team then put together <a href="https://innovateedu-nyc.github.io/google_classroom/index.html#0">beautiful and simple documentation</a> to make it even more effortless to spin up this solution for Districts and CMOs around the country.</p>
-</section>
-<section id="webinar" class="level2">
-<h2 class="anchored" data-anchor-id="webinar">Webinar</h2>
-<p>You can see Erin and I presenting a tutorial on how to deploy this solution below.</p>
-<p style="text-align:center;">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/YeJnHmKBClk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" align="middle">
-</iframe>
-</p>
-<p>I’m incredibly proud of this work and the impact it was able to have in such a critical time. It was instrumental in my team’s ability to produce meaningful insights on distance learning engagement and even helped support tracking asynchronous attendance with a level of fidelity other orgs struggled to produce without massive manual overhead.</p>
+<p>There is a common saying in software development that “code should speak for itself” and while I agree with the ideas behind that statement and the need for code that is inherently readable and “self-documenting”, I often find myself drawing diagrams to explain many things related to code. Such as:</p>
+<ul>
+<li>data models/schemas</li>
+<li>infrastructure components</li>
+<li>workflows</li>
+<li>software architecture</li>
+</ul>
+<p>Diagrams are useful for a number of reasons. But mostly they are a vehicle for collaboration. Being able to take a complex idea and reduce it to a simpler high level explanation allows easier hand-off and/or onboarding of collaborators. Not only that, but it is helpful for communicating with less technical audiences without completely hand-waving the complexity away as technical wizardry.</p>
+<p>It’s also incredibly useful for crystalizing a strategy into a coherent vision <strong>before</strong> executing. I.E. a low-effort way to vet ideas before spending time building them out.</p>
+<p>That said, I find myself repeatedly at a loss for a good diagramming tool that feels like it is a part of the software development tool chain instead of set apart like any other document. For documentation, I can reach for yaml when writing dbt models and have that feel like a seemless part of my development workflow or markdown in other python repos. But for diagrams, I find myself creating them in some other tool (like Lucidchart) and then having to export them to an image and embed that in my other documentation. That feels lackluster on many levels, not the least of which is the lack of version control to capture the iteration of ideas in the diagrams but also that the <em>source</em> of that diagram is elsewhere.</p>
+<p>I’ve recently discovered <a href="https://mermaid.js.org/#/">mermaid</a> and have begun experimenting with it and so far I am wanting to learn more. It has a ton of potential. The diagrams aren’t the prettiest but the fact that they are code-based and can be expressed in markdown and quarto is pretty exciting.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  A[Hard edge] --&gt; B(Round edge)
+  B --&gt; C{Decision}
+  C --&gt; D[Result one]
+  C --&gt; E[Result two]
+</pre>
+</div>
+</div>
+</div>
+</div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

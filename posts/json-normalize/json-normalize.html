@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.3.361">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -18,9 +18,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -47,43 +48,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -119,7 +90,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
@@ -141,31 +113,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <span class="navbar-title">dchess.org</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
+    <a class="nav-link" href="../../about.html" rel="" target="">
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://drive.google.com/file/d/1O0-Le26SdL-DhDo2LsOQVWR5BAV4I17F/view">
+    <a class="nav-link" href="https://drive.google.com/file/d/1O0-Le26SdL-DhDo2LsOQVWR5BAV4I17F/view" rel="" target="">
  <span class="menu-text">Resume</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/dchess"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/dchess" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://linkedin.com/in/dchess"><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://linkedin.com/in/dchess" rel="" target=""><i class="bi bi-linkedin" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -331,36 +305,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(sample_data)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>respondent_id</th>
-      <th>survey_date</th>
-      <th>email</th>
-      <th>responses</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>[{'question_id': '9lQ8OH810H2', 'question_text...</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>[{'question_id': '3sG5am762C6', 'question_text...</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">respondent_id</th>
+<th data-quarto-table-cell-role="th">survey_date</th>
+<th data-quarto-table-cell-role="th">email</th>
+<th data-quarto-table-cell-role="th">responses</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>[{'question_id': '9lQ8OH810H2', 'question_text...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>[{'question_id': '3sG5am762C6', 'question_text...</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -401,125 +376,126 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(clean_data)</span>
 <span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>respondent_id</th>
-      <th>survey_date</th>
-      <th>email</th>
-      <th>question_id</th>
-      <th>question_text</th>
-      <th>choice</th>
-      <th>number</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>9lQ8OH810H2</td>
-      <td>How does mean action onto south usually prepar...</td>
-      <td>Strongly Disagree</td>
-      <td>9</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>8YZ3Ri208p1</td>
-      <td>Does million mean tax foot statement?</td>
-      <td>Strongly Disagree</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>2Ys2yn819r0</td>
-      <td>How does decade what air scientist defense all...</td>
-      <td>Disagree</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>3ii1tu719B3</td>
-      <td>Does focus statement peace forward do relate?</td>
-      <td>Neutral</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>9xv2JX456C7</td>
-      <td>Does explain ability plant?</td>
-      <td>Strongly Disagree</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>3sG5am762C6</td>
-      <td>Why does know writer ball bad whole?</td>
-      <td>Agree</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>5uM6LP013p7</td>
-      <td>Why does break chance boy enjoy call paper yet?</td>
-      <td>Strongly Disagree</td>
-      <td>9</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>3NE9pu846z1</td>
-      <td>Does note spring newspaper and that thing?</td>
-      <td>Neutral</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>6ge7Zt058d3</td>
-      <td>Why does message next eat the stay?</td>
-      <td>Neutral</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>2EB3vo658l2</td>
-      <td>How does no later then inside fill discover?</td>
-      <td>Agree</td>
-      <td>4</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">respondent_id</th>
+<th data-quarto-table-cell-role="th">survey_date</th>
+<th data-quarto-table-cell-role="th">email</th>
+<th data-quarto-table-cell-role="th">question_id</th>
+<th data-quarto-table-cell-role="th">question_text</th>
+<th data-quarto-table-cell-role="th">choice</th>
+<th data-quarto-table-cell-role="th">number</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>9lQ8OH810H2</td>
+<td>How does mean action onto south usually prepar...</td>
+<td>Strongly Disagree</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>8YZ3Ri208p1</td>
+<td>Does million mean tax foot statement?</td>
+<td>Strongly Disagree</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>2Ys2yn819r0</td>
+<td>How does decade what air scientist defense all...</td>
+<td>Disagree</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>3ii1tu719B3</td>
+<td>Does focus statement peace forward do relate?</td>
+<td>Neutral</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>9xv2JX456C7</td>
+<td>Does explain ability plant?</td>
+<td>Strongly Disagree</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>3sG5am762C6</td>
+<td>Why does know writer ball bad whole?</td>
+<td>Agree</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>5uM6LP013p7</td>
+<td>Why does break chance boy enjoy call paper yet?</td>
+<td>Strongly Disagree</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>3NE9pu846z1</td>
+<td>Does note spring newspaper and that thing?</td>
+<td>Neutral</td>
+<td>7</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>6ge7Zt058d3</td>
+<td>Why does message next eat the stay?</td>
+<td>Neutral</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>2EB3vo658l2</td>
+<td>How does no later then inside fill discover?</td>
+<td>Agree</td>
+<td>4</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -531,36 +507,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.json_normalize(sample_data)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>respondent_id</th>
-      <th>survey_date</th>
-      <th>email</th>
-      <th>responses</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>[{'question_id': '9lQ8OH810H2', 'question_text...</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>[{'question_id': '3sG5am762C6', 'question_text...</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">respondent_id</th>
+<th data-quarto-table-cell-role="th">survey_date</th>
+<th data-quarto-table-cell-role="th">email</th>
+<th data-quarto-table-cell-role="th">responses</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>[{'question_id': '9lQ8OH810H2', 'question_text...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>[{'question_id': '3sG5am762C6', 'question_text...</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -572,81 +549,82 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>question_id</th>
-      <th>question_text</th>
-      <th>choices</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>9lQ8OH810H2</td>
-      <td>How does mean action onto south usually prepar...</td>
-      <td>[{'choice': 'Strongly Disagree', 'number': 9}]</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>8YZ3Ri208p1</td>
-      <td>Does million mean tax foot statement?</td>
-      <td>[{'choice': 'Strongly Disagree', 'number': 4}]</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2Ys2yn819r0</td>
-      <td>How does decade what air scientist defense all...</td>
-      <td>[{'choice': 'Disagree', 'number': 2}]</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>3ii1tu719B3</td>
-      <td>Does focus statement peace forward do relate?</td>
-      <td>[{'choice': 'Neutral', 'number': 6}]</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>9xv2JX456C7</td>
-      <td>Does explain ability plant?</td>
-      <td>[{'choice': 'Strongly Disagree', 'number': 5}]</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>3sG5am762C6</td>
-      <td>Why does know writer ball bad whole?</td>
-      <td>[{'choice': 'Agree', 'number': 3}]</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>5uM6LP013p7</td>
-      <td>Why does break chance boy enjoy call paper yet?</td>
-      <td>[{'choice': 'Strongly Disagree', 'number': 9}]</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>3NE9pu846z1</td>
-      <td>Does note spring newspaper and that thing?</td>
-      <td>[{'choice': 'Neutral', 'number': 7}]</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>6ge7Zt058d3</td>
-      <td>Why does message next eat the stay?</td>
-      <td>[{'choice': 'Neutral', 'number': 0}]</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>2EB3vo658l2</td>
-      <td>How does no later then inside fill discover?</td>
-      <td>[{'choice': 'Agree', 'number': 4}]</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">question_id</th>
+<th data-quarto-table-cell-role="th">question_text</th>
+<th data-quarto-table-cell-role="th">choices</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>9lQ8OH810H2</td>
+<td>How does mean action onto south usually prepar...</td>
+<td>[{'choice': 'Strongly Disagree', 'number': 9}]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>8YZ3Ri208p1</td>
+<td>Does million mean tax foot statement?</td>
+<td>[{'choice': 'Strongly Disagree', 'number': 4}]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2Ys2yn819r0</td>
+<td>How does decade what air scientist defense all...</td>
+<td>[{'choice': 'Disagree', 'number': 2}]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>3ii1tu719B3</td>
+<td>Does focus statement peace forward do relate?</td>
+<td>[{'choice': 'Neutral', 'number': 6}]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>9xv2JX456C7</td>
+<td>Does explain ability plant?</td>
+<td>[{'choice': 'Strongly Disagree', 'number': 5}]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>3sG5am762C6</td>
+<td>Why does know writer ball bad whole?</td>
+<td>[{'choice': 'Agree', 'number': 3}]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>5uM6LP013p7</td>
+<td>Why does break chance boy enjoy call paper yet?</td>
+<td>[{'choice': 'Strongly Disagree', 'number': 9}]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>3NE9pu846z1</td>
+<td>Does note spring newspaper and that thing?</td>
+<td>[{'choice': 'Neutral', 'number': 7}]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>6ge7Zt058d3</td>
+<td>Why does message next eat the stay?</td>
+<td>[{'choice': 'Neutral', 'number': 0}]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>2EB3vo658l2</td>
+<td>How does no later then inside fill discover?</td>
+<td>[{'choice': 'Agree', 'number': 4}]</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -664,114 +642,115 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>df</span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>question_id</th>
-      <th>question_text</th>
-      <th>choices</th>
-      <th>respondent_id</th>
-      <th>survey_date</th>
-      <th>email</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>9lQ8OH810H2</td>
-      <td>How does mean action onto south usually prepar...</td>
-      <td>[{'choice': 'Strongly Disagree', 'number': 9}]</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>8YZ3Ri208p1</td>
-      <td>Does million mean tax foot statement?</td>
-      <td>[{'choice': 'Strongly Disagree', 'number': 4}]</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2Ys2yn819r0</td>
-      <td>How does decade what air scientist defense all...</td>
-      <td>[{'choice': 'Disagree', 'number': 2}]</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>3ii1tu719B3</td>
-      <td>Does focus statement peace forward do relate?</td>
-      <td>[{'choice': 'Neutral', 'number': 6}]</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>9xv2JX456C7</td>
-      <td>Does explain ability plant?</td>
-      <td>[{'choice': 'Strongly Disagree', 'number': 5}]</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>3sG5am762C6</td>
-      <td>Why does know writer ball bad whole?</td>
-      <td>[{'choice': 'Agree', 'number': 3}]</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>5uM6LP013p7</td>
-      <td>Why does break chance boy enjoy call paper yet?</td>
-      <td>[{'choice': 'Strongly Disagree', 'number': 9}]</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>3NE9pu846z1</td>
-      <td>Does note spring newspaper and that thing?</td>
-      <td>[{'choice': 'Neutral', 'number': 7}]</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>6ge7Zt058d3</td>
-      <td>Why does message next eat the stay?</td>
-      <td>[{'choice': 'Neutral', 'number': 0}]</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>2EB3vo658l2</td>
-      <td>How does no later then inside fill discover?</td>
-      <td>[{'choice': 'Agree', 'number': 4}]</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">question_id</th>
+<th data-quarto-table-cell-role="th">question_text</th>
+<th data-quarto-table-cell-role="th">choices</th>
+<th data-quarto-table-cell-role="th">respondent_id</th>
+<th data-quarto-table-cell-role="th">survey_date</th>
+<th data-quarto-table-cell-role="th">email</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>9lQ8OH810H2</td>
+<td>How does mean action onto south usually prepar...</td>
+<td>[{'choice': 'Strongly Disagree', 'number': 9}]</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>8YZ3Ri208p1</td>
+<td>Does million mean tax foot statement?</td>
+<td>[{'choice': 'Strongly Disagree', 'number': 4}]</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2Ys2yn819r0</td>
+<td>How does decade what air scientist defense all...</td>
+<td>[{'choice': 'Disagree', 'number': 2}]</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>3ii1tu719B3</td>
+<td>Does focus statement peace forward do relate?</td>
+<td>[{'choice': 'Neutral', 'number': 6}]</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>9xv2JX456C7</td>
+<td>Does explain ability plant?</td>
+<td>[{'choice': 'Strongly Disagree', 'number': 5}]</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>3sG5am762C6</td>
+<td>Why does know writer ball bad whole?</td>
+<td>[{'choice': 'Agree', 'number': 3}]</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>5uM6LP013p7</td>
+<td>Why does break chance boy enjoy call paper yet?</td>
+<td>[{'choice': 'Strongly Disagree', 'number': 9}]</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>3NE9pu846z1</td>
+<td>Does note spring newspaper and that thing?</td>
+<td>[{'choice': 'Neutral', 'number': 7}]</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>6ge7Zt058d3</td>
+<td>Why does message next eat the stay?</td>
+<td>[{'choice': 'Neutral', 'number': 0}]</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>2EB3vo658l2</td>
+<td>How does no later then inside fill discover?</td>
+<td>[{'choice': 'Agree', 'number': 4}]</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -801,103 +780,104 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>choice</th>
-      <th>number</th>
-      <th>respondent_id</th>
-      <th>survey_date</th>
-      <th>email</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Strongly Disagree</td>
-      <td>9</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Strongly Disagree</td>
-      <td>4</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Disagree</td>
-      <td>2</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Neutral</td>
-      <td>6</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Strongly Disagree</td>
-      <td>5</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Agree</td>
-      <td>3</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>Strongly Disagree</td>
-      <td>9</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>Neutral</td>
-      <td>7</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>Neutral</td>
-      <td>0</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>Agree</td>
-      <td>4</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">choice</th>
+<th data-quarto-table-cell-role="th">number</th>
+<th data-quarto-table-cell-role="th">respondent_id</th>
+<th data-quarto-table-cell-role="th">survey_date</th>
+<th data-quarto-table-cell-role="th">email</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Strongly Disagree</td>
+<td>9</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Strongly Disagree</td>
+<td>4</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Disagree</td>
+<td>2</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Neutral</td>
+<td>6</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Strongly Disagree</td>
+<td>5</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Agree</td>
+<td>3</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>Strongly Disagree</td>
+<td>9</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>Neutral</td>
+<td>7</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>Neutral</td>
+<td>0</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>Agree</td>
+<td>4</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -916,125 +896,126 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>choice</th>
-      <th>number</th>
-      <th>respondent_id</th>
-      <th>survey_date</th>
-      <th>email</th>
-      <th>responses.question_id</th>
-      <th>responses.question_text</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Strongly Disagree</td>
-      <td>9</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>9lQ8OH810H2</td>
-      <td>How does mean action onto south usually prepar...</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Strongly Disagree</td>
-      <td>4</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>8YZ3Ri208p1</td>
-      <td>Does million mean tax foot statement?</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Disagree</td>
-      <td>2</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>2Ys2yn819r0</td>
-      <td>How does decade what air scientist defense all...</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Neutral</td>
-      <td>6</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>3ii1tu719B3</td>
-      <td>Does focus statement peace forward do relate?</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Strongly Disagree</td>
-      <td>5</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>9xv2JX456C7</td>
-      <td>Does explain ability plant?</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Agree</td>
-      <td>3</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>3sG5am762C6</td>
-      <td>Why does know writer ball bad whole?</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>Strongly Disagree</td>
-      <td>9</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>5uM6LP013p7</td>
-      <td>Why does break chance boy enjoy call paper yet?</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>Neutral</td>
-      <td>7</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>3NE9pu846z1</td>
-      <td>Does note spring newspaper and that thing?</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>Neutral</td>
-      <td>0</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>6ge7Zt058d3</td>
-      <td>Why does message next eat the stay?</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>Agree</td>
-      <td>4</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>2EB3vo658l2</td>
-      <td>How does no later then inside fill discover?</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">choice</th>
+<th data-quarto-table-cell-role="th">number</th>
+<th data-quarto-table-cell-role="th">respondent_id</th>
+<th data-quarto-table-cell-role="th">survey_date</th>
+<th data-quarto-table-cell-role="th">email</th>
+<th data-quarto-table-cell-role="th">responses.question_id</th>
+<th data-quarto-table-cell-role="th">responses.question_text</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Strongly Disagree</td>
+<td>9</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>9lQ8OH810H2</td>
+<td>How does mean action onto south usually prepar...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Strongly Disagree</td>
+<td>4</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>8YZ3Ri208p1</td>
+<td>Does million mean tax foot statement?</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Disagree</td>
+<td>2</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>2Ys2yn819r0</td>
+<td>How does decade what air scientist defense all...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Neutral</td>
+<td>6</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>3ii1tu719B3</td>
+<td>Does focus statement peace forward do relate?</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Strongly Disagree</td>
+<td>5</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>9xv2JX456C7</td>
+<td>Does explain ability plant?</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Agree</td>
+<td>3</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>3sG5am762C6</td>
+<td>Why does know writer ball bad whole?</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>Strongly Disagree</td>
+<td>9</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>5uM6LP013p7</td>
+<td>Why does break chance boy enjoy call paper yet?</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>Neutral</td>
+<td>7</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>3NE9pu846z1</td>
+<td>Does note spring newspaper and that thing?</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>Neutral</td>
+<td>0</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>6ge7Zt058d3</td>
+<td>Why does message next eat the stay?</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>Agree</td>
+<td>4</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>2EB3vo658l2</td>
+<td>How does no later then inside fill discover?</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -1054,125 +1035,126 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>choice</th>
-      <th>number</th>
-      <th>respondent_id</th>
-      <th>survey_date</th>
-      <th>email</th>
-      <th>responses_question_id</th>
-      <th>responses_question_text</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Strongly Disagree</td>
-      <td>9</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>9lQ8OH810H2</td>
-      <td>How does mean action onto south usually prepar...</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Strongly Disagree</td>
-      <td>4</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>8YZ3Ri208p1</td>
-      <td>Does million mean tax foot statement?</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Disagree</td>
-      <td>2</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>2Ys2yn819r0</td>
-      <td>How does decade what air scientist defense all...</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Neutral</td>
-      <td>6</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>3ii1tu719B3</td>
-      <td>Does focus statement peace forward do relate?</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Strongly Disagree</td>
-      <td>5</td>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>9xv2JX456C7</td>
-      <td>Does explain ability plant?</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Agree</td>
-      <td>3</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>3sG5am762C6</td>
-      <td>Why does know writer ball bad whole?</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>Strongly Disagree</td>
-      <td>9</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>5uM6LP013p7</td>
-      <td>Why does break chance boy enjoy call paper yet?</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>Neutral</td>
-      <td>7</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>3NE9pu846z1</td>
-      <td>Does note spring newspaper and that thing?</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>Neutral</td>
-      <td>0</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>6ge7Zt058d3</td>
-      <td>Why does message next eat the stay?</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>Agree</td>
-      <td>4</td>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>2EB3vo658l2</td>
-      <td>How does no later then inside fill discover?</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">choice</th>
+<th data-quarto-table-cell-role="th">number</th>
+<th data-quarto-table-cell-role="th">respondent_id</th>
+<th data-quarto-table-cell-role="th">survey_date</th>
+<th data-quarto-table-cell-role="th">email</th>
+<th data-quarto-table-cell-role="th">responses_question_id</th>
+<th data-quarto-table-cell-role="th">responses_question_text</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Strongly Disagree</td>
+<td>9</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>9lQ8OH810H2</td>
+<td>How does mean action onto south usually prepar...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Strongly Disagree</td>
+<td>4</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>8YZ3Ri208p1</td>
+<td>Does million mean tax foot statement?</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Disagree</td>
+<td>2</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>2Ys2yn819r0</td>
+<td>How does decade what air scientist defense all...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Neutral</td>
+<td>6</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>3ii1tu719B3</td>
+<td>Does focus statement peace forward do relate?</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Strongly Disagree</td>
+<td>5</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>9xv2JX456C7</td>
+<td>Does explain ability plant?</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Agree</td>
+<td>3</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>3sG5am762C6</td>
+<td>Why does know writer ball bad whole?</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>Strongly Disagree</td>
+<td>9</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>5uM6LP013p7</td>
+<td>Why does break chance boy enjoy call paper yet?</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>Neutral</td>
+<td>7</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>3NE9pu846z1</td>
+<td>Does note spring newspaper and that thing?</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>Neutral</td>
+<td>0</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>6ge7Zt058d3</td>
+<td>Why does message next eat the stay?</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>Agree</td>
+<td>4</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>2EB3vo658l2</td>
+<td>How does no later then inside fill discover?</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -1182,125 +1164,126 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[column_order]</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>respondent_id</th>
-      <th>survey_date</th>
-      <th>email</th>
-      <th>responses_question_id</th>
-      <th>responses_question_text</th>
-      <th>choice</th>
-      <th>number</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>9lQ8OH810H2</td>
-      <td>How does mean action onto south usually prepar...</td>
-      <td>Strongly Disagree</td>
-      <td>9</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>8YZ3Ri208p1</td>
-      <td>Does million mean tax foot statement?</td>
-      <td>Strongly Disagree</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>2Ys2yn819r0</td>
-      <td>How does decade what air scientist defense all...</td>
-      <td>Disagree</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>3ii1tu719B3</td>
-      <td>Does focus statement peace forward do relate?</td>
-      <td>Neutral</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1W38Sn628N9</td>
-      <td>1985-09-30</td>
-      <td>ofrench@example.com</td>
-      <td>9xv2JX456C7</td>
-      <td>Does explain ability plant?</td>
-      <td>Strongly Disagree</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>3sG5am762C6</td>
-      <td>Why does know writer ball bad whole?</td>
-      <td>Agree</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>5uM6LP013p7</td>
-      <td>Why does break chance boy enjoy call paper yet?</td>
-      <td>Strongly Disagree</td>
-      <td>9</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>3NE9pu846z1</td>
-      <td>Does note spring newspaper and that thing?</td>
-      <td>Neutral</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>6ge7Zt058d3</td>
-      <td>Why does message next eat the stay?</td>
-      <td>Neutral</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>8J14yp561A1</td>
-      <td>1970-07-08</td>
-      <td>halvarado@example.com</td>
-      <td>2EB3vo658l2</td>
-      <td>How does no later then inside fill discover?</td>
-      <td>Agree</td>
-      <td>4</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">respondent_id</th>
+<th data-quarto-table-cell-role="th">survey_date</th>
+<th data-quarto-table-cell-role="th">email</th>
+<th data-quarto-table-cell-role="th">responses_question_id</th>
+<th data-quarto-table-cell-role="th">responses_question_text</th>
+<th data-quarto-table-cell-role="th">choice</th>
+<th data-quarto-table-cell-role="th">number</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>9lQ8OH810H2</td>
+<td>How does mean action onto south usually prepar...</td>
+<td>Strongly Disagree</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>8YZ3Ri208p1</td>
+<td>Does million mean tax foot statement?</td>
+<td>Strongly Disagree</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>2Ys2yn819r0</td>
+<td>How does decade what air scientist defense all...</td>
+<td>Disagree</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>3ii1tu719B3</td>
+<td>Does focus statement peace forward do relate?</td>
+<td>Neutral</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1W38Sn628N9</td>
+<td>1985-09-30</td>
+<td>ofrench@example.com</td>
+<td>9xv2JX456C7</td>
+<td>Does explain ability plant?</td>
+<td>Strongly Disagree</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>3sG5am762C6</td>
+<td>Why does know writer ball bad whole?</td>
+<td>Agree</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>5uM6LP013p7</td>
+<td>Why does break chance boy enjoy call paper yet?</td>
+<td>Strongly Disagree</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>3NE9pu846z1</td>
+<td>Does note spring newspaper and that thing?</td>
+<td>Neutral</td>
+<td>7</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>6ge7Zt058d3</td>
+<td>Why does message next eat the stay?</td>
+<td>Neutral</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>8J14yp561A1</td>
+<td>1970-07-08</td>
+<td>halvarado@example.com</td>
+<td>2EB3vo658l2</td>
+<td>How does no later then inside fill discover?</td>
+<td>Agree</td>
+<td>4</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -1340,9 +1323,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1407,6 +1404,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

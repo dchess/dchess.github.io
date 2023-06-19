@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.3.361">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -18,9 +18,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -47,43 +48,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -119,7 +90,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
@@ -141,31 +113,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <span class="navbar-title">dchess.org</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
+    <a class="nav-link" href="../../about.html" rel="" target="">
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://drive.google.com/file/d/1O0-Le26SdL-DhDo2LsOQVWR5BAV4I17F/view">
+    <a class="nav-link" href="https://drive.google.com/file/d/1O0-Le26SdL-DhDo2LsOQVWR5BAV4I17F/view" rel="" target="">
  <span class="menu-text">Resume</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/dchess"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/dchess" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://linkedin.com/in/dchess"><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://linkedin.com/in/dchess" rel="" target=""><i class="bi bi-linkedin" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -280,141 +254,142 @@ cfy21e8 (2370, 4301)</code></pre>
 <pre><code>WARNING *** OLE2 inconsistency: SSCS size is 0 but SSAT size is non-zero</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="11">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Variable</th>
-      <th>Format_Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>campus</td>
-      <td>Character</td>
-      <td>Campus Number</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>year</td>
-      <td>Character</td>
-      <td>Test Administration Year</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>region</td>
-      <td>Character</td>
-      <td>Education Service Center (Region) Number</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>district</td>
-      <td>Character</td>
-      <td>District Number</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>dname</td>
-      <td>Character</td>
-      <td>District Name</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>cname</td>
-      <td>Character</td>
-      <td>Campus Name</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>grade</td>
-      <td>Character</td>
-      <td>Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>r_all_docs_n</td>
-      <td>Numeric</td>
-      <td># Answer Documents Submitted -- Reading -- All Students</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>r_all_abs_n</td>
-      <td>Numeric</td>
-      <td># Absent - Not Tested -- Reading -- All Students</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>r_all_oth_n</td>
-      <td>Numeric</td>
-      <td># Other - Not Tested -- Reading -- All Students</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>m_all_docs_n</td>
-      <td>Numeric</td>
-      <td># Answer Documents Submitted -- Mathematics -- All Students</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>m_all_abs_n</td>
-      <td>Numeric</td>
-      <td># Absent - Not Tested -- Mathematics -- All Students</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>m_all_oth_n</td>
-      <td>Numeric</td>
-      <td># Other - Not Tested -- Mathematics -- All Students</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>r_all_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- All Students</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>r_sexm_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- Male Students</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>r_sexf_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- Female Students</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>r_sexv_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- No Sex Info Students</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>r_ethh_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- Hispanic/Latino Students</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>r_ethi_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- American Indian or Alaska Native Students</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>r_etha_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- Asian Students</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">Format_Type</th>
+<th data-quarto-table-cell-role="th">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>campus</td>
+<td>Character</td>
+<td>Campus Number</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>year</td>
+<td>Character</td>
+<td>Test Administration Year</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>region</td>
+<td>Character</td>
+<td>Education Service Center (Region) Number</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>district</td>
+<td>Character</td>
+<td>District Number</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>dname</td>
+<td>Character</td>
+<td>District Name</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>cname</td>
+<td>Character</td>
+<td>Campus Name</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>grade</td>
+<td>Character</td>
+<td>Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>r_all_docs_n</td>
+<td>Numeric</td>
+<td># Answer Documents Submitted -- Reading -- All Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>r_all_abs_n</td>
+<td>Numeric</td>
+<td># Absent - Not Tested -- Reading -- All Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>r_all_oth_n</td>
+<td>Numeric</td>
+<td># Other - Not Tested -- Reading -- All Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>m_all_docs_n</td>
+<td>Numeric</td>
+<td># Answer Documents Submitted -- Mathematics -- All Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>m_all_abs_n</td>
+<td>Numeric</td>
+<td># Absent - Not Tested -- Mathematics -- All Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>m_all_oth_n</td>
+<td>Numeric</td>
+<td># Other - Not Tested -- Mathematics -- All Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>r_all_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- All Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>r_sexm_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- Male Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>r_sexf_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- Female Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>r_sexv_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- No Sex Info Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>r_ethh_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- Hispanic/Latino Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>r_ethi_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- American Indian or Alaska Native Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
+<td>r_etha_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- Asian Students</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -422,111 +397,112 @@ cfy21e8 (2370, 4301)</code></pre>
 <div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df.tail(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Variable</th>
-      <th>Format_Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2078</th>
-      <td>m_spen_pct_cat4</td>
-      <td>Numeric</td>
-      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Not Special Ed Students</td>
-    </tr>
-    <tr>
-      <th>2079</th>
-      <td>m_spev_avg_cat4</td>
-      <td>Numeric</td>
-      <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info Special Ed Students</td>
-    </tr>
-    <tr>
-      <th>2080</th>
-      <td>m_spev_pct_cat4</td>
-      <td>Numeric</td>
-      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info Special Ed Students</td>
-    </tr>
-    <tr>
-      <th>2081</th>
-      <td>m_gify_avg_cat4</td>
-      <td>Numeric</td>
-      <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- Gifted/Talented Students</td>
-    </tr>
-    <tr>
-      <th>2082</th>
-      <td>m_gify_pct_cat4</td>
-      <td>Numeric</td>
-      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Gifted/Talented Students</td>
-    </tr>
-    <tr>
-      <th>2083</th>
-      <td>m_gifn_avg_cat4</td>
-      <td>Numeric</td>
-      <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- Not Gifted/Talented Students</td>
-    </tr>
-    <tr>
-      <th>2084</th>
-      <td>m_gifn_pct_cat4</td>
-      <td>Numeric</td>
-      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Not Gifted/Talented Students</td>
-    </tr>
-    <tr>
-      <th>2085</th>
-      <td>m_gifv_avg_cat4</td>
-      <td>Numeric</td>
-      <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info Gifted/Talented Students</td>
-    </tr>
-    <tr>
-      <th>2086</th>
-      <td>m_gifv_pct_cat4</td>
-      <td>Numeric</td>
-      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info Gifted/Talented Students</td>
-    </tr>
-    <tr>
-      <th>2087</th>
-      <td>m_atry_avg_cat4</td>
-      <td>Numeric</td>
-      <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- At-Risk Students</td>
-    </tr>
-    <tr>
-      <th>2088</th>
-      <td>m_atry_pct_cat4</td>
-      <td>Numeric</td>
-      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- At-Risk Students</td>
-    </tr>
-    <tr>
-      <th>2089</th>
-      <td>m_atrn_avg_cat4</td>
-      <td>Numeric</td>
-      <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- Not At-Risk Students</td>
-    </tr>
-    <tr>
-      <th>2090</th>
-      <td>m_atrn_pct_cat4</td>
-      <td>Numeric</td>
-      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Not At-Risk Students</td>
-    </tr>
-    <tr>
-      <th>2091</th>
-      <td>m_atrv_avg_cat4</td>
-      <td>Numeric</td>
-      <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info At-Risk Students</td>
-    </tr>
-    <tr>
-      <th>2092</th>
-      <td>m_atrv_pct_cat4</td>
-      <td>Numeric</td>
-      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info At-Risk Students</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">Format_Type</th>
+<th data-quarto-table-cell-role="th">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2078</td>
+<td>m_spen_pct_cat4</td>
+<td>Numeric</td>
+<td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Not Special Ed Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2079</td>
+<td>m_spev_avg_cat4</td>
+<td>Numeric</td>
+<td># Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info Special Ed Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2080</td>
+<td>m_spev_pct_cat4</td>
+<td>Numeric</td>
+<td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info Special Ed Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2081</td>
+<td>m_gify_avg_cat4</td>
+<td>Numeric</td>
+<td># Avg Items Correct--Reporting Category 4 -- Mathematics -- Gifted/Talented Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2082</td>
+<td>m_gify_pct_cat4</td>
+<td>Numeric</td>
+<td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Gifted/Talented Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2083</td>
+<td>m_gifn_avg_cat4</td>
+<td>Numeric</td>
+<td># Avg Items Correct--Reporting Category 4 -- Mathematics -- Not Gifted/Talented Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2084</td>
+<td>m_gifn_pct_cat4</td>
+<td>Numeric</td>
+<td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Not Gifted/Talented Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2085</td>
+<td>m_gifv_avg_cat4</td>
+<td>Numeric</td>
+<td># Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info Gifted/Talented Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2086</td>
+<td>m_gifv_pct_cat4</td>
+<td>Numeric</td>
+<td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info Gifted/Talented Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2087</td>
+<td>m_atry_avg_cat4</td>
+<td>Numeric</td>
+<td># Avg Items Correct--Reporting Category 4 -- Mathematics -- At-Risk Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2088</td>
+<td>m_atry_pct_cat4</td>
+<td>Numeric</td>
+<td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- At-Risk Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2089</td>
+<td>m_atrn_avg_cat4</td>
+<td>Numeric</td>
+<td># Avg Items Correct--Reporting Category 4 -- Mathematics -- Not At-Risk Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2090</td>
+<td>m_atrn_pct_cat4</td>
+<td>Numeric</td>
+<td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Not At-Risk Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2091</td>
+<td>m_atrv_avg_cat4</td>
+<td>Numeric</td>
+<td># Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info At-Risk Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2092</td>
+<td>m_atrv_pct_cat4</td>
+<td>Numeric</td>
+<td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info At-Risk Students</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -534,141 +510,142 @@ cfy21e8 (2370, 4301)</code></pre>
 <div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df[<span class="dv">195</span>:<span class="dv">215</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Variable</th>
-      <th>Format_Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>195</th>
-      <td>r_atrv_unsatgl_nm</td>
-      <td>Numeric</td>
-      <td># Did Not Meet Grade Level Performance -- Reading -- No Info At-Risk Students</td>
-    </tr>
-    <tr>
-      <th>196</th>
-      <td>r_all_approgl_nm</td>
-      <td>Numeric</td>
-      <td># Approaches Grade Level Performance -- Reading -- All Students</td>
-    </tr>
-    <tr>
-      <th>197</th>
-      <td>r_sexm_approgl_nm</td>
-      <td>Numeric</td>
-      <td># Approaches Grade Level Performance -- Reading -- Male Students</td>
-    </tr>
-    <tr>
-      <th>198</th>
-      <td>r_sexf_approgl_nm</td>
-      <td>Numeric</td>
-      <td># Approaches Grade Level Performance -- Reading -- Female Students</td>
-    </tr>
-    <tr>
-      <th>199</th>
-      <td>r_sexv_approgl_nm</td>
-      <td>Numeric</td>
-      <td># Approaches Grade Level Performance -- Reading -- No Sex Info Students</td>
-    </tr>
-    <tr>
-      <th>200</th>
-      <td>r_ethh_approgl_nm</td>
-      <td>Numeric</td>
-      <td># Approaches Grade Level Performance -- Reading -- Hispanic/Latino Students</td>
-    </tr>
-    <tr>
-      <th>201</th>
-      <td>r_ethi_approgl_nm</td>
-      <td>Numeric</td>
-      <td># Approaches Grade Level Performance -- Reading -- American Indian or Alaska Native Students</td>
-    </tr>
-    <tr>
-      <th>202</th>
-      <td>r_etha_approgl_nm</td>
-      <td>Numeric</td>
-      <td># Approaches Grade Level Performance -- Reading -- Asian Students</td>
-    </tr>
-    <tr>
-      <th>203</th>
-      <td>r_ethb_approgl_nm</td>
-      <td>Numeric</td>
-      <td># Approaches Grade Level Performance -- Reading -- Black or African American Students</td>
-    </tr>
-    <tr>
-      <th>204</th>
-      <td>r_ethp_approgl_nm</td>
-      <td>Numeric</td>
-      <td># Approaches Grade Level Performance -- Reading -- Native Hawaiian or Other Pacific Islander Students</td>
-    </tr>
-    <tr>
-      <th>205</th>
-      <td>r_ethw_approgl_nm</td>
-      <td>Numeric</td>
-      <td># Approaches Grade Level Performance -- Reading -- White Students</td>
-    </tr>
-    <tr>
-      <th>206</th>
-      <td>r_eth2_approgl_nm</td>
-      <td>Numeric</td>
-      <td># Approaches Grade Level Performance -- Reading -- Two or More Races Students</td>
-    </tr>
-    <tr>
-      <th>207</th>
-      <td>r_ethv_approgl_nm</td>
-      <td>Numeric</td>
-      <td># Approaches Grade Level Performance -- Reading -- No Ethnicity Info Students</td>
-    </tr>
-    <tr>
-      <th>208</th>
-      <td>r_ecoy_approgl_nm</td>
-      <td>Numeric</td>
-      <td># Approaches Grade Level Performance -- Reading -- Econ Disadv Students Codes: 1 2 9</td>
-    </tr>
-    <tr>
-      <th>209</th>
-      <td>r_econ_approgl_nm</td>
-      <td>Numeric</td>
-      <td># Approaches Grade Level Performance -- Reading -- Not Econ Disadv Students</td>
-    </tr>
-    <tr>
-      <th>210</th>
-      <td>r_eco1_approgl_nm</td>
-      <td>Numeric</td>
-      <td># Approaches Grade Level Performance -- Reading -- Free Meals Students</td>
-    </tr>
-    <tr>
-      <th>211</th>
-      <td>r_eco2_approgl_nm</td>
-      <td>Numeric</td>
-      <td># Approaches Grade Level Performance -- Reading -- Reduced-Price Meals Students</td>
-    </tr>
-    <tr>
-      <th>212</th>
-      <td>r_eco9_approgl_nm</td>
-      <td>Numeric</td>
-      <td># Approaches Grade Level Performance -- Reading -- Other Econ Disadvantaged Students</td>
-    </tr>
-    <tr>
-      <th>213</th>
-      <td>r_ecov_approgl_nm</td>
-      <td>Numeric</td>
-      <td># Approaches Grade Level Performance -- Reading -- No Info Econ Students</td>
-    </tr>
-    <tr>
-      <th>214</th>
-      <td>r_ti1y_approgl_nm</td>
-      <td>Numeric</td>
-      <td># Approaches Grade Level Performance -- Reading -- Title-I Participant Students Codes: 6 7 9</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">Format_Type</th>
+<th data-quarto-table-cell-role="th">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">195</td>
+<td>r_atrv_unsatgl_nm</td>
+<td>Numeric</td>
+<td># Did Not Meet Grade Level Performance -- Reading -- No Info At-Risk Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">196</td>
+<td>r_all_approgl_nm</td>
+<td>Numeric</td>
+<td># Approaches Grade Level Performance -- Reading -- All Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">197</td>
+<td>r_sexm_approgl_nm</td>
+<td>Numeric</td>
+<td># Approaches Grade Level Performance -- Reading -- Male Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">198</td>
+<td>r_sexf_approgl_nm</td>
+<td>Numeric</td>
+<td># Approaches Grade Level Performance -- Reading -- Female Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">199</td>
+<td>r_sexv_approgl_nm</td>
+<td>Numeric</td>
+<td># Approaches Grade Level Performance -- Reading -- No Sex Info Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">200</td>
+<td>r_ethh_approgl_nm</td>
+<td>Numeric</td>
+<td># Approaches Grade Level Performance -- Reading -- Hispanic/Latino Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">201</td>
+<td>r_ethi_approgl_nm</td>
+<td>Numeric</td>
+<td># Approaches Grade Level Performance -- Reading -- American Indian or Alaska Native Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">202</td>
+<td>r_etha_approgl_nm</td>
+<td>Numeric</td>
+<td># Approaches Grade Level Performance -- Reading -- Asian Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">203</td>
+<td>r_ethb_approgl_nm</td>
+<td>Numeric</td>
+<td># Approaches Grade Level Performance -- Reading -- Black or African American Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">204</td>
+<td>r_ethp_approgl_nm</td>
+<td>Numeric</td>
+<td># Approaches Grade Level Performance -- Reading -- Native Hawaiian or Other Pacific Islander Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">205</td>
+<td>r_ethw_approgl_nm</td>
+<td>Numeric</td>
+<td># Approaches Grade Level Performance -- Reading -- White Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">206</td>
+<td>r_eth2_approgl_nm</td>
+<td>Numeric</td>
+<td># Approaches Grade Level Performance -- Reading -- Two or More Races Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">207</td>
+<td>r_ethv_approgl_nm</td>
+<td>Numeric</td>
+<td># Approaches Grade Level Performance -- Reading -- No Ethnicity Info Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">208</td>
+<td>r_ecoy_approgl_nm</td>
+<td>Numeric</td>
+<td># Approaches Grade Level Performance -- Reading -- Econ Disadv Students Codes: 1 2 9</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">209</td>
+<td>r_econ_approgl_nm</td>
+<td>Numeric</td>
+<td># Approaches Grade Level Performance -- Reading -- Not Econ Disadv Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">210</td>
+<td>r_eco1_approgl_nm</td>
+<td>Numeric</td>
+<td># Approaches Grade Level Performance -- Reading -- Free Meals Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">211</td>
+<td>r_eco2_approgl_nm</td>
+<td>Numeric</td>
+<td># Approaches Grade Level Performance -- Reading -- Reduced-Price Meals Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">212</td>
+<td>r_eco9_approgl_nm</td>
+<td>Numeric</td>
+<td># Approaches Grade Level Performance -- Reading -- Other Econ Disadvantaged Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">213</td>
+<td>r_ecov_approgl_nm</td>
+<td>Numeric</td>
+<td># Approaches Grade Level Performance -- Reading -- No Info Econ Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">214</td>
+<td>r_ti1y_approgl_nm</td>
+<td>Numeric</td>
+<td># Approaches Grade Level Performance -- Reading -- Title-I Participant Students Codes: 6 7 9</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -727,87 +704,88 @@ cfy21e8 (2370, 4301)</code></pre>
 <div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df[df.Description.<span class="bu">str</span>.contains(<span class="st">'# Tested'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Variable</th>
-      <th>Format_Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>13</th>
-      <td>r_all_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- All Students</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>r_sexm_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- Male Students</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>r_sexf_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- Female Students</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>r_sexv_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- No Sex Info Students</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>r_ethh_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- Hispanic/Latino Students</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>130</th>
-      <td>m_gifn_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Mathematics -- Not Gifted/Talented Students</td>
-    </tr>
-    <tr>
-      <th>131</th>
-      <td>m_gifv_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Mathematics -- No Info Gifted/Talented Students</td>
-    </tr>
-    <tr>
-      <th>132</th>
-      <td>m_atry_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Mathematics -- At-Risk Students</td>
-    </tr>
-    <tr>
-      <th>133</th>
-      <td>m_atrn_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Mathematics -- Not At-Risk Students</td>
-    </tr>
-    <tr>
-      <th>134</th>
-      <td>m_atrv_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Mathematics -- No Info At-Risk Students</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">Format_Type</th>
+<th data-quarto-table-cell-role="th">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">13</td>
+<td>r_all_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- All Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">14</td>
+<td>r_sexm_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- Male Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">15</td>
+<td>r_sexf_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- Female Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">16</td>
+<td>r_sexv_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- No Sex Info Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">17</td>
+<td>r_ethh_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- Hispanic/Latino Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">130</td>
+<td>m_gifn_d</td>
+<td>Numeric</td>
+<td># Tested -- Mathematics -- Not Gifted/Talented Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">131</td>
+<td>m_gifv_d</td>
+<td>Numeric</td>
+<td># Tested -- Mathematics -- No Info Gifted/Talented Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">132</td>
+<td>m_atry_d</td>
+<td>Numeric</td>
+<td># Tested -- Mathematics -- At-Risk Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">133</td>
+<td>m_atrn_d</td>
+<td>Numeric</td>
+<td># Tested -- Mathematics -- Not At-Risk Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">134</td>
+<td>m_atrv_d</td>
+<td>Numeric</td>
+<td># Tested -- Mathematics -- No Info At-Risk Students</td>
+</tr>
+</tbody>
 </table>
+
 <p>122 rows × 3 columns</p>
 </div>
 </div>
@@ -827,99 +805,100 @@ cfy21e8 (2370, 4301)</code></pre>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"desc_list"</span>] <span class="op">=</span> df[<span class="st">"Description"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: x.split(<span class="st">"--"</span>))</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Variable</th>
-      <th>Format_Type</th>
-      <th>Description</th>
-      <th>desc_list</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>campus</td>
-      <td>Character</td>
-      <td>Campus Number</td>
-      <td>[Campus Number]</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>year</td>
-      <td>Character</td>
-      <td>Test Administration Year</td>
-      <td>[Test Administration Year]</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>region</td>
-      <td>Character</td>
-      <td>Education Service Center (Region) Number</td>
-      <td>[Education Service Center (Region) Number]</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>district</td>
-      <td>Character</td>
-      <td>District Number</td>
-      <td>[District Number]</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>dname</td>
-      <td>Character</td>
-      <td>District Name</td>
-      <td>[District Name]</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>2088</th>
-      <td>m_atry_pct_cat4</td>
-      <td>Numeric</td>
-      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- At-Risk Students</td>
-      <td>[% Avg Items Correct, Reporting Category 4 ,  Mathematics ,  At-Risk Students]</td>
-    </tr>
-    <tr>
-      <th>2089</th>
-      <td>m_atrn_avg_cat4</td>
-      <td>Numeric</td>
-      <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- Not At-Risk Students</td>
-      <td>[# Avg Items Correct, Reporting Category 4 ,  Mathematics ,  Not At-Risk Students]</td>
-    </tr>
-    <tr>
-      <th>2090</th>
-      <td>m_atrn_pct_cat4</td>
-      <td>Numeric</td>
-      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Not At-Risk Students</td>
-      <td>[% Avg Items Correct, Reporting Category 4 ,  Mathematics ,  Not At-Risk Students]</td>
-    </tr>
-    <tr>
-      <th>2091</th>
-      <td>m_atrv_avg_cat4</td>
-      <td>Numeric</td>
-      <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info At-Risk Students</td>
-      <td>[# Avg Items Correct, Reporting Category 4 ,  Mathematics ,  No Info At-Risk Students]</td>
-    </tr>
-    <tr>
-      <th>2092</th>
-      <td>m_atrv_pct_cat4</td>
-      <td>Numeric</td>
-      <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info At-Risk Students</td>
-      <td>[% Avg Items Correct, Reporting Category 4 ,  Mathematics ,  No Info At-Risk Students]</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">Format_Type</th>
+<th data-quarto-table-cell-role="th">Description</th>
+<th data-quarto-table-cell-role="th">desc_list</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>campus</td>
+<td>Character</td>
+<td>Campus Number</td>
+<td>[Campus Number]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>year</td>
+<td>Character</td>
+<td>Test Administration Year</td>
+<td>[Test Administration Year]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>region</td>
+<td>Character</td>
+<td>Education Service Center (Region) Number</td>
+<td>[Education Service Center (Region) Number]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>district</td>
+<td>Character</td>
+<td>District Number</td>
+<td>[District Number]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>dname</td>
+<td>Character</td>
+<td>District Name</td>
+<td>[District Name]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2088</td>
+<td>m_atry_pct_cat4</td>
+<td>Numeric</td>
+<td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- At-Risk Students</td>
+<td>[% Avg Items Correct, Reporting Category 4 , Mathematics , At-Risk Students]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2089</td>
+<td>m_atrn_avg_cat4</td>
+<td>Numeric</td>
+<td># Avg Items Correct--Reporting Category 4 -- Mathematics -- Not At-Risk Students</td>
+<td>[# Avg Items Correct, Reporting Category 4 , Mathematics , Not At-Risk Students]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2090</td>
+<td>m_atrn_pct_cat4</td>
+<td>Numeric</td>
+<td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Not At-Risk Students</td>
+<td>[% Avg Items Correct, Reporting Category 4 , Mathematics , Not At-Risk Students]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2091</td>
+<td>m_atrv_avg_cat4</td>
+<td>Numeric</td>
+<td># Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info At-Risk Students</td>
+<td>[# Avg Items Correct, Reporting Category 4 , Mathematics , No Info At-Risk Students]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2092</td>
+<td>m_atrv_pct_cat4</td>
+<td>Numeric</td>
+<td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info At-Risk Students</td>
+<td>[% Avg Items Correct, Reporting Category 4 , Mathematics , No Info At-Risk Students]</td>
+</tr>
+</tbody>
 </table>
+
 <p>2093 rows × 4 columns</p>
 </div>
 </div>
@@ -945,183 +924,184 @@ cfy21e8 (2370, 4301)</code></pre>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"subject"</span>] <span class="op">=</span> df[<span class="st">"desc_list"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: get_subject(x))</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Variable</th>
-      <th>Format_Type</th>
-      <th>Description</th>
-      <th>desc_list</th>
-      <th>subject</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>campus</td>
-      <td>Character</td>
-      <td>Campus Number</td>
-      <td>[Campus Number]</td>
-      <td>None</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>year</td>
-      <td>Character</td>
-      <td>Test Administration Year</td>
-      <td>[Test Administration Year]</td>
-      <td>None</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>region</td>
-      <td>Character</td>
-      <td>Education Service Center (Region) Number</td>
-      <td>[Education Service Center (Region) Number]</td>
-      <td>None</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>district</td>
-      <td>Character</td>
-      <td>District Number</td>
-      <td>[District Number]</td>
-      <td>None</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>dname</td>
-      <td>Character</td>
-      <td>District Name</td>
-      <td>[District Name]</td>
-      <td>None</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>cname</td>
-      <td>Character</td>
-      <td>Campus Name</td>
-      <td>[Campus Name]</td>
-      <td>None</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>grade</td>
-      <td>Character</td>
-      <td>Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)</td>
-      <td>[Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)]</td>
-      <td>None</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>r_all_docs_n</td>
-      <td>Numeric</td>
-      <td># Answer Documents Submitted -- Reading -- All Students</td>
-      <td>[# Answer Documents Submitted ,  Reading ,  All Students]</td>
-      <td>Reading</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>r_all_abs_n</td>
-      <td>Numeric</td>
-      <td># Absent - Not Tested -- Reading -- All Students</td>
-      <td>[# Absent - Not Tested ,  Reading ,  All Students]</td>
-      <td>Reading</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>r_all_oth_n</td>
-      <td>Numeric</td>
-      <td># Other - Not Tested -- Reading -- All Students</td>
-      <td>[# Other - Not Tested ,  Reading ,  All Students]</td>
-      <td>Reading</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>m_all_docs_n</td>
-      <td>Numeric</td>
-      <td># Answer Documents Submitted -- Mathematics -- All Students</td>
-      <td>[# Answer Documents Submitted ,  Mathematics ,  All Students]</td>
-      <td>Mathematics</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>m_all_abs_n</td>
-      <td>Numeric</td>
-      <td># Absent - Not Tested -- Mathematics -- All Students</td>
-      <td>[# Absent - Not Tested ,  Mathematics ,  All Students]</td>
-      <td>Mathematics</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>m_all_oth_n</td>
-      <td>Numeric</td>
-      <td># Other - Not Tested -- Mathematics -- All Students</td>
-      <td>[# Other - Not Tested ,  Mathematics ,  All Students]</td>
-      <td>Mathematics</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>r_all_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- All Students</td>
-      <td>[# Tested ,  Reading ,  All Students]</td>
-      <td>Reading</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>r_sexm_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- Male Students</td>
-      <td>[# Tested ,  Reading ,  Male Students]</td>
-      <td>Reading</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>r_sexf_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- Female Students</td>
-      <td>[# Tested ,  Reading ,  Female Students]</td>
-      <td>Reading</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>r_sexv_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- No Sex Info Students</td>
-      <td>[# Tested ,  Reading ,  No Sex Info Students]</td>
-      <td>Reading</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>r_ethh_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- Hispanic/Latino Students</td>
-      <td>[# Tested ,  Reading ,  Hispanic/Latino Students]</td>
-      <td>Reading</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>r_ethi_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- American Indian or Alaska Native Students</td>
-      <td>[# Tested ,  Reading ,  American Indian or Alaska Native Students]</td>
-      <td>Reading</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>r_etha_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- Asian Students</td>
-      <td>[# Tested ,  Reading ,  Asian Students]</td>
-      <td>Reading</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">Format_Type</th>
+<th data-quarto-table-cell-role="th">Description</th>
+<th data-quarto-table-cell-role="th">desc_list</th>
+<th data-quarto-table-cell-role="th">subject</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>campus</td>
+<td>Character</td>
+<td>Campus Number</td>
+<td>[Campus Number]</td>
+<td>None</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>year</td>
+<td>Character</td>
+<td>Test Administration Year</td>
+<td>[Test Administration Year]</td>
+<td>None</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>region</td>
+<td>Character</td>
+<td>Education Service Center (Region) Number</td>
+<td>[Education Service Center (Region) Number]</td>
+<td>None</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>district</td>
+<td>Character</td>
+<td>District Number</td>
+<td>[District Number]</td>
+<td>None</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>dname</td>
+<td>Character</td>
+<td>District Name</td>
+<td>[District Name]</td>
+<td>None</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>cname</td>
+<td>Character</td>
+<td>Campus Name</td>
+<td>[Campus Name]</td>
+<td>None</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>grade</td>
+<td>Character</td>
+<td>Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)</td>
+<td>[Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)]</td>
+<td>None</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>r_all_docs_n</td>
+<td>Numeric</td>
+<td># Answer Documents Submitted -- Reading -- All Students</td>
+<td>[# Answer Documents Submitted , Reading , All Students]</td>
+<td>Reading</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>r_all_abs_n</td>
+<td>Numeric</td>
+<td># Absent - Not Tested -- Reading -- All Students</td>
+<td>[# Absent - Not Tested , Reading , All Students]</td>
+<td>Reading</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>r_all_oth_n</td>
+<td>Numeric</td>
+<td># Other - Not Tested -- Reading -- All Students</td>
+<td>[# Other - Not Tested , Reading , All Students]</td>
+<td>Reading</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>m_all_docs_n</td>
+<td>Numeric</td>
+<td># Answer Documents Submitted -- Mathematics -- All Students</td>
+<td>[# Answer Documents Submitted , Mathematics , All Students]</td>
+<td>Mathematics</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>m_all_abs_n</td>
+<td>Numeric</td>
+<td># Absent - Not Tested -- Mathematics -- All Students</td>
+<td>[# Absent - Not Tested , Mathematics , All Students]</td>
+<td>Mathematics</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>m_all_oth_n</td>
+<td>Numeric</td>
+<td># Other - Not Tested -- Mathematics -- All Students</td>
+<td>[# Other - Not Tested , Mathematics , All Students]</td>
+<td>Mathematics</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>r_all_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- All Students</td>
+<td>[# Tested , Reading , All Students]</td>
+<td>Reading</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>r_sexm_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- Male Students</td>
+<td>[# Tested , Reading , Male Students]</td>
+<td>Reading</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>r_sexf_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- Female Students</td>
+<td>[# Tested , Reading , Female Students]</td>
+<td>Reading</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>r_sexv_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- No Sex Info Students</td>
+<td>[# Tested , Reading , No Sex Info Students]</td>
+<td>Reading</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>r_ethh_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- Hispanic/Latino Students</td>
+<td>[# Tested , Reading , Hispanic/Latino Students]</td>
+<td>Reading</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>r_ethi_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- American Indian or Alaska Native Students</td>
+<td>[# Tested , Reading , American Indian or Alaska Native Students]</td>
+<td>Reading</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
+<td>r_etha_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- Asian Students</td>
+<td>[# Tested , Reading , Asian Students]</td>
+<td>Reading</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -1142,204 +1122,205 @@ cfy21e8 (2370, 4301)</code></pre>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"student_group"</span>] <span class="op">=</span> df[<span class="st">"desc_list"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: get_student_group(x))</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="20">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Variable</th>
-      <th>Format_Type</th>
-      <th>Description</th>
-      <th>desc_list</th>
-      <th>subject</th>
-      <th>student_group</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>campus</td>
-      <td>Character</td>
-      <td>Campus Number</td>
-      <td>[Campus Number]</td>
-      <td>None</td>
-      <td>None</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>year</td>
-      <td>Character</td>
-      <td>Test Administration Year</td>
-      <td>[Test Administration Year]</td>
-      <td>None</td>
-      <td>None</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>region</td>
-      <td>Character</td>
-      <td>Education Service Center (Region) Number</td>
-      <td>[Education Service Center (Region) Number]</td>
-      <td>None</td>
-      <td>None</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>district</td>
-      <td>Character</td>
-      <td>District Number</td>
-      <td>[District Number]</td>
-      <td>None</td>
-      <td>None</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>dname</td>
-      <td>Character</td>
-      <td>District Name</td>
-      <td>[District Name]</td>
-      <td>None</td>
-      <td>None</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>cname</td>
-      <td>Character</td>
-      <td>Campus Name</td>
-      <td>[Campus Name]</td>
-      <td>None</td>
-      <td>None</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>grade</td>
-      <td>Character</td>
-      <td>Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)</td>
-      <td>[Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)]</td>
-      <td>None</td>
-      <td>None</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>r_all_docs_n</td>
-      <td>Numeric</td>
-      <td># Answer Documents Submitted -- Reading -- All Students</td>
-      <td>[# Answer Documents Submitted ,  Reading ,  All Students]</td>
-      <td>Reading</td>
-      <td>All Students</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>r_all_abs_n</td>
-      <td>Numeric</td>
-      <td># Absent - Not Tested -- Reading -- All Students</td>
-      <td>[# Absent - Not Tested ,  Reading ,  All Students]</td>
-      <td>Reading</td>
-      <td>All Students</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>r_all_oth_n</td>
-      <td>Numeric</td>
-      <td># Other - Not Tested -- Reading -- All Students</td>
-      <td>[# Other - Not Tested ,  Reading ,  All Students]</td>
-      <td>Reading</td>
-      <td>All Students</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>m_all_docs_n</td>
-      <td>Numeric</td>
-      <td># Answer Documents Submitted -- Mathematics -- All Students</td>
-      <td>[# Answer Documents Submitted ,  Mathematics ,  All Students]</td>
-      <td>Mathematics</td>
-      <td>All Students</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>m_all_abs_n</td>
-      <td>Numeric</td>
-      <td># Absent - Not Tested -- Mathematics -- All Students</td>
-      <td>[# Absent - Not Tested ,  Mathematics ,  All Students]</td>
-      <td>Mathematics</td>
-      <td>All Students</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>m_all_oth_n</td>
-      <td>Numeric</td>
-      <td># Other - Not Tested -- Mathematics -- All Students</td>
-      <td>[# Other - Not Tested ,  Mathematics ,  All Students]</td>
-      <td>Mathematics</td>
-      <td>All Students</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>r_all_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- All Students</td>
-      <td>[# Tested ,  Reading ,  All Students]</td>
-      <td>Reading</td>
-      <td>All Students</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>r_sexm_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- Male Students</td>
-      <td>[# Tested ,  Reading ,  Male Students]</td>
-      <td>Reading</td>
-      <td>Male Students</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>r_sexf_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- Female Students</td>
-      <td>[# Tested ,  Reading ,  Female Students]</td>
-      <td>Reading</td>
-      <td>Female Students</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>r_sexv_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- No Sex Info Students</td>
-      <td>[# Tested ,  Reading ,  No Sex Info Students]</td>
-      <td>Reading</td>
-      <td>No Sex Info Students</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>r_ethh_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- Hispanic/Latino Students</td>
-      <td>[# Tested ,  Reading ,  Hispanic/Latino Students]</td>
-      <td>Reading</td>
-      <td>Hispanic/Latino Students</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>r_ethi_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- American Indian or Alaska Native Students</td>
-      <td>[# Tested ,  Reading ,  American Indian or Alaska Native Students]</td>
-      <td>Reading</td>
-      <td>American Indian or Alaska Native Students</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>r_etha_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- Asian Students</td>
-      <td>[# Tested ,  Reading ,  Asian Students]</td>
-      <td>Reading</td>
-      <td>Asian Students</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">Format_Type</th>
+<th data-quarto-table-cell-role="th">Description</th>
+<th data-quarto-table-cell-role="th">desc_list</th>
+<th data-quarto-table-cell-role="th">subject</th>
+<th data-quarto-table-cell-role="th">student_group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>campus</td>
+<td>Character</td>
+<td>Campus Number</td>
+<td>[Campus Number]</td>
+<td>None</td>
+<td>None</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>year</td>
+<td>Character</td>
+<td>Test Administration Year</td>
+<td>[Test Administration Year]</td>
+<td>None</td>
+<td>None</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>region</td>
+<td>Character</td>
+<td>Education Service Center (Region) Number</td>
+<td>[Education Service Center (Region) Number]</td>
+<td>None</td>
+<td>None</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>district</td>
+<td>Character</td>
+<td>District Number</td>
+<td>[District Number]</td>
+<td>None</td>
+<td>None</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>dname</td>
+<td>Character</td>
+<td>District Name</td>
+<td>[District Name]</td>
+<td>None</td>
+<td>None</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>cname</td>
+<td>Character</td>
+<td>Campus Name</td>
+<td>[Campus Name]</td>
+<td>None</td>
+<td>None</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>grade</td>
+<td>Character</td>
+<td>Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)</td>
+<td>[Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)]</td>
+<td>None</td>
+<td>None</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>r_all_docs_n</td>
+<td>Numeric</td>
+<td># Answer Documents Submitted -- Reading -- All Students</td>
+<td>[# Answer Documents Submitted , Reading , All Students]</td>
+<td>Reading</td>
+<td>All Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>r_all_abs_n</td>
+<td>Numeric</td>
+<td># Absent - Not Tested -- Reading -- All Students</td>
+<td>[# Absent - Not Tested , Reading , All Students]</td>
+<td>Reading</td>
+<td>All Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>r_all_oth_n</td>
+<td>Numeric</td>
+<td># Other - Not Tested -- Reading -- All Students</td>
+<td>[# Other - Not Tested , Reading , All Students]</td>
+<td>Reading</td>
+<td>All Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>m_all_docs_n</td>
+<td>Numeric</td>
+<td># Answer Documents Submitted -- Mathematics -- All Students</td>
+<td>[# Answer Documents Submitted , Mathematics , All Students]</td>
+<td>Mathematics</td>
+<td>All Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>m_all_abs_n</td>
+<td>Numeric</td>
+<td># Absent - Not Tested -- Mathematics -- All Students</td>
+<td>[# Absent - Not Tested , Mathematics , All Students]</td>
+<td>Mathematics</td>
+<td>All Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>m_all_oth_n</td>
+<td>Numeric</td>
+<td># Other - Not Tested -- Mathematics -- All Students</td>
+<td>[# Other - Not Tested , Mathematics , All Students]</td>
+<td>Mathematics</td>
+<td>All Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>r_all_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- All Students</td>
+<td>[# Tested , Reading , All Students]</td>
+<td>Reading</td>
+<td>All Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>r_sexm_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- Male Students</td>
+<td>[# Tested , Reading , Male Students]</td>
+<td>Reading</td>
+<td>Male Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>r_sexf_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- Female Students</td>
+<td>[# Tested , Reading , Female Students]</td>
+<td>Reading</td>
+<td>Female Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>r_sexv_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- No Sex Info Students</td>
+<td>[# Tested , Reading , No Sex Info Students]</td>
+<td>Reading</td>
+<td>No Sex Info Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>r_ethh_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- Hispanic/Latino Students</td>
+<td>[# Tested , Reading , Hispanic/Latino Students]</td>
+<td>Reading</td>
+<td>Hispanic/Latino Students</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>r_ethi_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- American Indian or Alaska Native Students</td>
+<td>[# Tested , Reading , American Indian or Alaska Native Students]</td>
+<td>Reading</td>
+<td>American Indian or Alaska Native Students</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
+<td>r_etha_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- Asian Students</td>
+<td>[# Tested , Reading , Asian Students]</td>
+<td>Reading</td>
+<td>Asian Students</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -1375,225 +1356,226 @@ cfy21e8 (2370, 4301)</code></pre>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"name"</span>] <span class="op">=</span> df[<span class="st">"desc_list"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: rename_variable(x))</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="30">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Variable</th>
-      <th>Format_Type</th>
-      <th>Description</th>
-      <th>desc_list</th>
-      <th>subject</th>
-      <th>student_group</th>
-      <th>name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>campus</td>
-      <td>Character</td>
-      <td>Campus Number</td>
-      <td>[Campus Number]</td>
-      <td>None</td>
-      <td>None</td>
-      <td>campus_number</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>year</td>
-      <td>Character</td>
-      <td>Test Administration Year</td>
-      <td>[Test Administration Year]</td>
-      <td>None</td>
-      <td>None</td>
-      <td>test_administration_year</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>region</td>
-      <td>Character</td>
-      <td>Education Service Center (Region) Number</td>
-      <td>[Education Service Center (Region) Number]</td>
-      <td>None</td>
-      <td>None</td>
-      <td>education_service_center_number</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>district</td>
-      <td>Character</td>
-      <td>District Number</td>
-      <td>[District Number]</td>
-      <td>None</td>
-      <td>None</td>
-      <td>district_number</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>dname</td>
-      <td>Character</td>
-      <td>District Name</td>
-      <td>[District Name]</td>
-      <td>None</td>
-      <td>None</td>
-      <td>district_name</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>cname</td>
-      <td>Character</td>
-      <td>Campus Name</td>
-      <td>[Campus Name]</td>
-      <td>None</td>
-      <td>None</td>
-      <td>campus_name</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>grade</td>
-      <td>Character</td>
-      <td>Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)</td>
-      <td>[Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)]</td>
-      <td>None</td>
-      <td>None</td>
-      <td>tested_grade</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>r_all_docs_n</td>
-      <td>Numeric</td>
-      <td># Answer Documents Submitted -- Reading -- All Students</td>
-      <td>[# Answer Documents Submitted ,  Reading ,  All Students]</td>
-      <td>Reading</td>
-      <td>All Students</td>
-      <td>n_answer_documents_submitted</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>r_all_abs_n</td>
-      <td>Numeric</td>
-      <td># Absent - Not Tested -- Reading -- All Students</td>
-      <td>[# Absent - Not Tested ,  Reading ,  All Students]</td>
-      <td>Reading</td>
-      <td>All Students</td>
-      <td>n_absent_not_tested</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>r_all_oth_n</td>
-      <td>Numeric</td>
-      <td># Other - Not Tested -- Reading -- All Students</td>
-      <td>[# Other - Not Tested ,  Reading ,  All Students]</td>
-      <td>Reading</td>
-      <td>All Students</td>
-      <td>n_other_not_tested</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>m_all_docs_n</td>
-      <td>Numeric</td>
-      <td># Answer Documents Submitted -- Mathematics -- All Students</td>
-      <td>[# Answer Documents Submitted ,  Mathematics ,  All Students]</td>
-      <td>Mathematics</td>
-      <td>All Students</td>
-      <td>n_answer_documents_submitted</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>m_all_abs_n</td>
-      <td>Numeric</td>
-      <td># Absent - Not Tested -- Mathematics -- All Students</td>
-      <td>[# Absent - Not Tested ,  Mathematics ,  All Students]</td>
-      <td>Mathematics</td>
-      <td>All Students</td>
-      <td>n_absent_not_tested</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>m_all_oth_n</td>
-      <td>Numeric</td>
-      <td># Other - Not Tested -- Mathematics -- All Students</td>
-      <td>[# Other - Not Tested ,  Mathematics ,  All Students]</td>
-      <td>Mathematics</td>
-      <td>All Students</td>
-      <td>n_other_not_tested</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>r_all_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- All Students</td>
-      <td>[# Tested ,  Reading ,  All Students]</td>
-      <td>Reading</td>
-      <td>All Students</td>
-      <td>n_tested</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>r_sexm_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- Male Students</td>
-      <td>[# Tested ,  Reading ,  Male Students]</td>
-      <td>Reading</td>
-      <td>Male Students</td>
-      <td>n_tested</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>r_sexf_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- Female Students</td>
-      <td>[# Tested ,  Reading ,  Female Students]</td>
-      <td>Reading</td>
-      <td>Female Students</td>
-      <td>n_tested</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>r_sexv_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- No Sex Info Students</td>
-      <td>[# Tested ,  Reading ,  No Sex Info Students]</td>
-      <td>Reading</td>
-      <td>No Sex Info Students</td>
-      <td>n_tested</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>r_ethh_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- Hispanic/Latino Students</td>
-      <td>[# Tested ,  Reading ,  Hispanic/Latino Students]</td>
-      <td>Reading</td>
-      <td>Hispanic/Latino Students</td>
-      <td>n_tested</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>r_ethi_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- American Indian or Alaska Native Students</td>
-      <td>[# Tested ,  Reading ,  American Indian or Alaska Native Students]</td>
-      <td>Reading</td>
-      <td>American Indian or Alaska Native Students</td>
-      <td>n_tested</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>r_etha_d</td>
-      <td>Numeric</td>
-      <td># Tested -- Reading -- Asian Students</td>
-      <td>[# Tested ,  Reading ,  Asian Students]</td>
-      <td>Reading</td>
-      <td>Asian Students</td>
-      <td>n_tested</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">Format_Type</th>
+<th data-quarto-table-cell-role="th">Description</th>
+<th data-quarto-table-cell-role="th">desc_list</th>
+<th data-quarto-table-cell-role="th">subject</th>
+<th data-quarto-table-cell-role="th">student_group</th>
+<th data-quarto-table-cell-role="th">name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>campus</td>
+<td>Character</td>
+<td>Campus Number</td>
+<td>[Campus Number]</td>
+<td>None</td>
+<td>None</td>
+<td>campus_number</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>year</td>
+<td>Character</td>
+<td>Test Administration Year</td>
+<td>[Test Administration Year]</td>
+<td>None</td>
+<td>None</td>
+<td>test_administration_year</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>region</td>
+<td>Character</td>
+<td>Education Service Center (Region) Number</td>
+<td>[Education Service Center (Region) Number]</td>
+<td>None</td>
+<td>None</td>
+<td>education_service_center_number</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>district</td>
+<td>Character</td>
+<td>District Number</td>
+<td>[District Number]</td>
+<td>None</td>
+<td>None</td>
+<td>district_number</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>dname</td>
+<td>Character</td>
+<td>District Name</td>
+<td>[District Name]</td>
+<td>None</td>
+<td>None</td>
+<td>district_name</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>cname</td>
+<td>Character</td>
+<td>Campus Name</td>
+<td>[Campus Name]</td>
+<td>None</td>
+<td>None</td>
+<td>campus_name</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>grade</td>
+<td>Character</td>
+<td>Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)</td>
+<td>[Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)]</td>
+<td>None</td>
+<td>None</td>
+<td>tested_grade</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>r_all_docs_n</td>
+<td>Numeric</td>
+<td># Answer Documents Submitted -- Reading -- All Students</td>
+<td>[# Answer Documents Submitted , Reading , All Students]</td>
+<td>Reading</td>
+<td>All Students</td>
+<td>n_answer_documents_submitted</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>r_all_abs_n</td>
+<td>Numeric</td>
+<td># Absent - Not Tested -- Reading -- All Students</td>
+<td>[# Absent - Not Tested , Reading , All Students]</td>
+<td>Reading</td>
+<td>All Students</td>
+<td>n_absent_not_tested</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>r_all_oth_n</td>
+<td>Numeric</td>
+<td># Other - Not Tested -- Reading -- All Students</td>
+<td>[# Other - Not Tested , Reading , All Students]</td>
+<td>Reading</td>
+<td>All Students</td>
+<td>n_other_not_tested</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>m_all_docs_n</td>
+<td>Numeric</td>
+<td># Answer Documents Submitted -- Mathematics -- All Students</td>
+<td>[# Answer Documents Submitted , Mathematics , All Students]</td>
+<td>Mathematics</td>
+<td>All Students</td>
+<td>n_answer_documents_submitted</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>m_all_abs_n</td>
+<td>Numeric</td>
+<td># Absent - Not Tested -- Mathematics -- All Students</td>
+<td>[# Absent - Not Tested , Mathematics , All Students]</td>
+<td>Mathematics</td>
+<td>All Students</td>
+<td>n_absent_not_tested</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>m_all_oth_n</td>
+<td>Numeric</td>
+<td># Other - Not Tested -- Mathematics -- All Students</td>
+<td>[# Other - Not Tested , Mathematics , All Students]</td>
+<td>Mathematics</td>
+<td>All Students</td>
+<td>n_other_not_tested</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>r_all_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- All Students</td>
+<td>[# Tested , Reading , All Students]</td>
+<td>Reading</td>
+<td>All Students</td>
+<td>n_tested</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>r_sexm_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- Male Students</td>
+<td>[# Tested , Reading , Male Students]</td>
+<td>Reading</td>
+<td>Male Students</td>
+<td>n_tested</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>r_sexf_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- Female Students</td>
+<td>[# Tested , Reading , Female Students]</td>
+<td>Reading</td>
+<td>Female Students</td>
+<td>n_tested</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>r_sexv_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- No Sex Info Students</td>
+<td>[# Tested , Reading , No Sex Info Students]</td>
+<td>Reading</td>
+<td>No Sex Info Students</td>
+<td>n_tested</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>r_ethh_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- Hispanic/Latino Students</td>
+<td>[# Tested , Reading , Hispanic/Latino Students]</td>
+<td>Reading</td>
+<td>Hispanic/Latino Students</td>
+<td>n_tested</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>r_ethi_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- American Indian or Alaska Native Students</td>
+<td>[# Tested , Reading , American Indian or Alaska Native Students]</td>
+<td>Reading</td>
+<td>American Indian or Alaska Native Students</td>
+<td>n_tested</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
+<td>r_etha_d</td>
+<td>Numeric</td>
+<td># Tested -- Reading -- Asian Students</td>
+<td>[# Tested , Reading , Asian Students]</td>
+<td>Reading</td>
+<td>Asian Students</td>
+<td>n_tested</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -1702,471 +1684,472 @@ Final rows/cols: (3576655, 35)</code></pre>
 <div class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="33">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th>name</th>
-      <th>campus</th>
-      <th>year</th>
-      <th>region</th>
-      <th>district</th>
-      <th>dname</th>
-      <th>cname</th>
-      <th>grade</th>
-      <th>format_type</th>
-      <th>subject</th>
-      <th>student_group</th>
-      <th>NaN</th>
-      <th>avg_scale_score</th>
-      <th>n_absent_not_tested</th>
-      <th>n_answer_documents_submitted</th>
-      <th>n_approaches_grade_level_performance</th>
-      <th>n_avg_items_correctrpt_cat_1</th>
-      <th>n_avg_items_correctrpt_cat_2</th>
-      <th>n_avg_items_correctrpt_cat_3</th>
-      <th>n_avg_items_correctrpt_cat_4</th>
-      <th>n_did_not_meet_grade_level_performance</th>
-      <th>n_masters_grade_level_performance</th>
-      <th>n_meets_grade_level_performance</th>
-      <th>n_other_not_tested</th>
-      <th>n_tested</th>
-      <th>pct_absent_not_tested</th>
-      <th>pct_answer_documents_submitted</th>
-      <th>pct_approaches_grade_level_performance</th>
-      <th>pct_avg_items_correctrpt_cat_1</th>
-      <th>pct_avg_items_correctrpt_cat_2</th>
-      <th>pct_avg_items_correctrpt_cat_3</th>
-      <th>pct_avg_items_correctrpt_cat_4</th>
-      <th>pct_did_not_meet_grade_level_performance</th>
-      <th>pct_masters_grade_level_performance</th>
-      <th>pct_meets_grade_level_performance</th>
-      <th>pct_other_not_tested</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>001902103</td>
-      <td>21</td>
-      <td>07</td>
-      <td>001902</td>
-      <td>CAYUGA ISD</td>
-      <td>CAYUGA ELEM.</td>
-      <td>03</td>
-      <td>&lt;NA&gt;</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td></td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>001902103</td>
-      <td>21</td>
-      <td>07</td>
-      <td>001902</td>
-      <td>CAYUGA ISD</td>
-      <td>CAYUGA ELEM.</td>
-      <td>03</td>
-      <td>Numeric</td>
-      <td>Mathematics</td>
-      <td>All Students</td>
-      <td>NaN</td>
-      <td>1607</td>
-      <td>0</td>
-      <td>26</td>
-      <td>22</td>
-      <td>6.3</td>
-      <td>10.7</td>
-      <td>5</td>
-      <td>3.3</td>
-      <td>4</td>
-      <td>16</td>
-      <td>19</td>
-      <td>0</td>
-      <td>26</td>
-      <td>0</td>
-      <td>100</td>
-      <td>85</td>
-      <td>79</td>
-      <td>83</td>
-      <td>71</td>
-      <td>84</td>
-      <td>15</td>
-      <td>62</td>
-      <td>73</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>001902103</td>
-      <td>21</td>
-      <td>07</td>
-      <td>001902</td>
-      <td>CAYUGA ISD</td>
-      <td>CAYUGA ELEM.</td>
-      <td>03</td>
-      <td>Numeric</td>
-      <td>Mathematics</td>
-      <td>American Indian or Alaska Native Students</td>
-      <td>NaN</td>
-      <td>&lt;NA&gt;</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>001902103</td>
-      <td>21</td>
-      <td>07</td>
-      <td>001902</td>
-      <td>CAYUGA ISD</td>
-      <td>CAYUGA ELEM.</td>
-      <td>03</td>
-      <td>Numeric</td>
-      <td>Mathematics</td>
-      <td>Asian Students</td>
-      <td>NaN</td>
-      <td>&lt;NA&gt;</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>001902103</td>
-      <td>21</td>
-      <td>07</td>
-      <td>001902</td>
-      <td>CAYUGA ISD</td>
-      <td>CAYUGA ELEM.</td>
-      <td>03</td>
-      <td>Numeric</td>
-      <td>Mathematics</td>
-      <td>At-Risk Students</td>
-      <td>NaN</td>
-      <td>1465</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>5</td>
-      <td>5.1</td>
-      <td>9.3</td>
-      <td>3.3</td>
-      <td>2.7</td>
-      <td>2</td>
-      <td>2</td>
-      <td>3</td>
-      <td>NaN</td>
-      <td>7</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>71</td>
-      <td>64</td>
-      <td>71</td>
-      <td>47</td>
-      <td>68</td>
-      <td>29</td>
-      <td>29</td>
-      <td>43</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>580645</th>
-      <td>254902001</td>
-      <td>21</td>
-      <td>20</td>
-      <td>254902</td>
-      <td>LA PRYOR ISD</td>
-      <td>LA PRYOR H.S.</td>
-      <td>08</td>
-      <td>Numeric</td>
-      <td>Social Studies</td>
-      <td>Title-I Participant Students Codes: 6 7 9</td>
-      <td>NaN</td>
-      <td>3425</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>12</td>
-      <td>6.9</td>
-      <td>5.4</td>
-      <td>4.2</td>
-      <td>3.2</td>
-      <td>23</td>
-      <td>0</td>
-      <td>4</td>
-      <td>NaN</td>
-      <td>35</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>34</td>
-      <td>41</td>
-      <td>54</td>
-      <td>42</td>
-      <td>46</td>
-      <td>66</td>
-      <td>0</td>
-      <td>11</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>580646</th>
-      <td>254902001</td>
-      <td>21</td>
-      <td>20</td>
-      <td>254902</td>
-      <td>LA PRYOR ISD</td>
-      <td>LA PRYOR H.S.</td>
-      <td>08</td>
-      <td>Numeric</td>
-      <td>Social Studies</td>
-      <td>Transitional Bilingual/Early Exit Students</td>
-      <td>NaN</td>
-      <td>&lt;NA&gt;</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>580647</th>
-      <td>254902001</td>
-      <td>21</td>
-      <td>20</td>
-      <td>254902</td>
-      <td>LA PRYOR ISD</td>
-      <td>LA PRYOR H.S.</td>
-      <td>08</td>
-      <td>Numeric</td>
-      <td>Social Studies</td>
-      <td>Transitional Bilingual/Late Exit Students</td>
-      <td>NaN</td>
-      <td>&lt;NA&gt;</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>580648</th>
-      <td>254902001</td>
-      <td>21</td>
-      <td>20</td>
-      <td>254902</td>
-      <td>LA PRYOR ISD</td>
-      <td>LA PRYOR H.S.</td>
-      <td>08</td>
-      <td>Numeric</td>
-      <td>Social Studies</td>
-      <td>Two or More Races Students</td>
-      <td>NaN</td>
-      <td>&lt;NA&gt;</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>580649</th>
-      <td>254902001</td>
-      <td>21</td>
-      <td>20</td>
-      <td>254902</td>
-      <td>LA PRYOR ISD</td>
-      <td>LA PRYOR H.S.</td>
-      <td>08</td>
-      <td>Numeric</td>
-      <td>Social Studies</td>
-      <td>White Students</td>
-      <td>NaN</td>
-      <td>&lt;NA&gt;</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>NaN</td>
-      <td>1</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>&lt;NA&gt;</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">campus</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">region</th>
+<th data-quarto-table-cell-role="th">district</th>
+<th data-quarto-table-cell-role="th">dname</th>
+<th data-quarto-table-cell-role="th">cname</th>
+<th data-quarto-table-cell-role="th">grade</th>
+<th data-quarto-table-cell-role="th">format_type</th>
+<th data-quarto-table-cell-role="th">subject</th>
+<th data-quarto-table-cell-role="th">student_group</th>
+<th data-quarto-table-cell-role="th">NaN</th>
+<th data-quarto-table-cell-role="th">avg_scale_score</th>
+<th data-quarto-table-cell-role="th">n_absent_not_tested</th>
+<th data-quarto-table-cell-role="th">n_answer_documents_submitted</th>
+<th data-quarto-table-cell-role="th">n_approaches_grade_level_performance</th>
+<th data-quarto-table-cell-role="th">n_avg_items_correctrpt_cat_1</th>
+<th data-quarto-table-cell-role="th">n_avg_items_correctrpt_cat_2</th>
+<th data-quarto-table-cell-role="th">n_avg_items_correctrpt_cat_3</th>
+<th data-quarto-table-cell-role="th">n_avg_items_correctrpt_cat_4</th>
+<th data-quarto-table-cell-role="th">n_did_not_meet_grade_level_performance</th>
+<th data-quarto-table-cell-role="th">n_masters_grade_level_performance</th>
+<th data-quarto-table-cell-role="th">n_meets_grade_level_performance</th>
+<th data-quarto-table-cell-role="th">n_other_not_tested</th>
+<th data-quarto-table-cell-role="th">n_tested</th>
+<th data-quarto-table-cell-role="th">pct_absent_not_tested</th>
+<th data-quarto-table-cell-role="th">pct_answer_documents_submitted</th>
+<th data-quarto-table-cell-role="th">pct_approaches_grade_level_performance</th>
+<th data-quarto-table-cell-role="th">pct_avg_items_correctrpt_cat_1</th>
+<th data-quarto-table-cell-role="th">pct_avg_items_correctrpt_cat_2</th>
+<th data-quarto-table-cell-role="th">pct_avg_items_correctrpt_cat_3</th>
+<th data-quarto-table-cell-role="th">pct_avg_items_correctrpt_cat_4</th>
+<th data-quarto-table-cell-role="th">pct_did_not_meet_grade_level_performance</th>
+<th data-quarto-table-cell-role="th">pct_masters_grade_level_performance</th>
+<th data-quarto-table-cell-role="th">pct_meets_grade_level_performance</th>
+<th data-quarto-table-cell-role="th">pct_other_not_tested</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>001902103</td>
+<td>21</td>
+<td>07</td>
+<td>001902</td>
+<td>CAYUGA ISD</td>
+<td>CAYUGA ELEM.</td>
+<td>03</td>
+<td>&lt;NA&gt;</td>
+<td>NaN</td>
+<td>NaN</td>
+<td></td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>001902103</td>
+<td>21</td>
+<td>07</td>
+<td>001902</td>
+<td>CAYUGA ISD</td>
+<td>CAYUGA ELEM.</td>
+<td>03</td>
+<td>Numeric</td>
+<td>Mathematics</td>
+<td>All Students</td>
+<td>NaN</td>
+<td>1607</td>
+<td>0</td>
+<td>26</td>
+<td>22</td>
+<td>6.3</td>
+<td>10.7</td>
+<td>5</td>
+<td>3.3</td>
+<td>4</td>
+<td>16</td>
+<td>19</td>
+<td>0</td>
+<td>26</td>
+<td>0</td>
+<td>100</td>
+<td>85</td>
+<td>79</td>
+<td>83</td>
+<td>71</td>
+<td>84</td>
+<td>15</td>
+<td>62</td>
+<td>73</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>001902103</td>
+<td>21</td>
+<td>07</td>
+<td>001902</td>
+<td>CAYUGA ISD</td>
+<td>CAYUGA ELEM.</td>
+<td>03</td>
+<td>Numeric</td>
+<td>Mathematics</td>
+<td>American Indian or Alaska Native Students</td>
+<td>NaN</td>
+<td>&lt;NA&gt;</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>NaN</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>001902103</td>
+<td>21</td>
+<td>07</td>
+<td>001902</td>
+<td>CAYUGA ISD</td>
+<td>CAYUGA ELEM.</td>
+<td>03</td>
+<td>Numeric</td>
+<td>Mathematics</td>
+<td>Asian Students</td>
+<td>NaN</td>
+<td>&lt;NA&gt;</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>NaN</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>001902103</td>
+<td>21</td>
+<td>07</td>
+<td>001902</td>
+<td>CAYUGA ISD</td>
+<td>CAYUGA ELEM.</td>
+<td>03</td>
+<td>Numeric</td>
+<td>Mathematics</td>
+<td>At-Risk Students</td>
+<td>NaN</td>
+<td>1465</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>5</td>
+<td>5.1</td>
+<td>9.3</td>
+<td>3.3</td>
+<td>2.7</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>NaN</td>
+<td>7</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>71</td>
+<td>64</td>
+<td>71</td>
+<td>47</td>
+<td>68</td>
+<td>29</td>
+<td>29</td>
+<td>43</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">580645</td>
+<td>254902001</td>
+<td>21</td>
+<td>20</td>
+<td>254902</td>
+<td>LA PRYOR ISD</td>
+<td>LA PRYOR H.S.</td>
+<td>08</td>
+<td>Numeric</td>
+<td>Social Studies</td>
+<td>Title-I Participant Students Codes: 6 7 9</td>
+<td>NaN</td>
+<td>3425</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>12</td>
+<td>6.9</td>
+<td>5.4</td>
+<td>4.2</td>
+<td>3.2</td>
+<td>23</td>
+<td>0</td>
+<td>4</td>
+<td>NaN</td>
+<td>35</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>34</td>
+<td>41</td>
+<td>54</td>
+<td>42</td>
+<td>46</td>
+<td>66</td>
+<td>0</td>
+<td>11</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">580646</td>
+<td>254902001</td>
+<td>21</td>
+<td>20</td>
+<td>254902</td>
+<td>LA PRYOR ISD</td>
+<td>LA PRYOR H.S.</td>
+<td>08</td>
+<td>Numeric</td>
+<td>Social Studies</td>
+<td>Transitional Bilingual/Early Exit Students</td>
+<td>NaN</td>
+<td>&lt;NA&gt;</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>NaN</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">580647</td>
+<td>254902001</td>
+<td>21</td>
+<td>20</td>
+<td>254902</td>
+<td>LA PRYOR ISD</td>
+<td>LA PRYOR H.S.</td>
+<td>08</td>
+<td>Numeric</td>
+<td>Social Studies</td>
+<td>Transitional Bilingual/Late Exit Students</td>
+<td>NaN</td>
+<td>&lt;NA&gt;</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>NaN</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">580648</td>
+<td>254902001</td>
+<td>21</td>
+<td>20</td>
+<td>254902</td>
+<td>LA PRYOR ISD</td>
+<td>LA PRYOR H.S.</td>
+<td>08</td>
+<td>Numeric</td>
+<td>Social Studies</td>
+<td>Two or More Races Students</td>
+<td>NaN</td>
+<td>&lt;NA&gt;</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>NaN</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">580649</td>
+<td>254902001</td>
+<td>21</td>
+<td>20</td>
+<td>254902</td>
+<td>LA PRYOR ISD</td>
+<td>LA PRYOR H.S.</td>
+<td>08</td>
+<td>Numeric</td>
+<td>Social Studies</td>
+<td>White Students</td>
+<td>NaN</td>
+<td>&lt;NA&gt;</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>NaN</td>
+<td>1</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>&lt;NA&gt;</td>
+<td>NaN</td>
+</tr>
+</tbody>
 </table>
+
 <p>3576655 rows × 35 columns</p>
 </div>
 </div>
@@ -2216,9 +2199,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -2283,6 +2280,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
