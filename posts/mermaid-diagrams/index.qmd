@@ -1,0 +1,38 @@
+---
+title: "Treating Diagrams Like Code"
+date: "2023-06-19"
+categories: [blog]
+image: mermaid-logo.png
+---
+
+There is a common saying in software development that "code should speak for itself" and while I agree with the ideas behind that statement and the
+need for code that is inherently readable and "self-documenting", I often find myself drawing diagrams to explain many things related to code. Such as:
+
+- data models/schemas
+- infrastructure components
+- workflows
+- software architecture
+
+Diagrams are useful for a number of reasons. But mostly they are a vehicle for collaboration. Being able to take a complex idea and reduce it to a simpler
+high level explanation allows easier hand-off and/or onboarding of collaborators. Not only that, but it is helpful for communicating with less technical
+audiences without completely hand-waving the complexity away as technical wizardry. 
+
+It's also incredibly useful for crystalizing a strategy into a coherent vision **before** executing. I.E. a low-effort way to vet ideas before spending time
+building them out. 
+
+That said, I find myself repeatedly at a loss for a good diagramming tool that feels like it is a part of the software development tool chain instead of set
+apart like any other document. For documentation, I can reach for yaml when writing dbt models and have that feel like a seemless part of my development workflow
+or markdown in other python repos. But for diagrams, I find myself creating them in some other tool (like Lucidchart) and then having to export them to an image
+and embed that in my other documentation. That feels lackluster on many levels, not the least of which is the lack of version control to capture the iteration
+of ideas in the diagrams but also that the *source* of that diagram is elsewhere.
+
+I've recently discovered [mermaid](https://mermaid.js.org/#/) and have begun experimenting with it and so far I am wanting to learn more. It has a ton of 
+potential. The diagrams aren't the prettiest but the fact that they are code-based and can be expressed in markdown and quarto is pretty exciting.
+
+```{mermaid}
+flowchart LR
+  A[Hard edge] --> B(Round edge)
+  B --> C{Decision}
+  C --> D[Result one]
+  C --> E[Result two]
+```
