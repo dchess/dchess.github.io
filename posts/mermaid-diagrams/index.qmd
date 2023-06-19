@@ -2,7 +2,7 @@
 title: "Treating Diagrams Like Code"
 date: "2023-06-19"
 categories: [blog]
-image: mermaid-logo.svg
+image: mermaid-logo.png
 ---
 
 There is a common saying in software development that "code should speak for itself" and while I agree with the ideas behind that statement and the
