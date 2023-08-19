@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2023-08-19">
+
+<title>dchess.org - Configuring Pandas with Yaml Files</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">dchess.org</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://drive.google.com/file/d/1O0-Le26SdL-DhDo2LsOQVWR5BAV4I17F/view" rel="" target="">
+ <span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/dchess" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/dchess" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Configuring Pandas with Yaml Files</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">tutorial</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 19, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>Reading data from files into pandas dataframes is largely straight-forward and easy to do. Choose the right <a href="https://pandas.pydata.org/docs/dev/reference/io.html">input function</a> depending on the file type, pass in the filepath, and add a few parameters to configure how to read the data from the file.</p>
+<p>For a csv file, that might look something like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"filename.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If this were a tab delimited file, we could override the default delimiter param (<code>","</code>):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"filename.csv"</span>, delimiter<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If there were some non-data values in the footer of the file (say the last 3 rows), we could add a param to handle that as well:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"filename.csv"</span>, delimiter<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, skipfooter<span class="op">=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depending on the number of different configuration needs, the list of optional parameters can get quite long which can be seen by the length of the <code>read_csv</code> <a href="https://pandas.pydata.org/docs/dev/reference/api/pandas.read_csv.html">function signature</a>.</p>
+<section id="when-this-falls-apart" class="level2">
+<h2 class="anchored" data-anchor-id="when-this-falls-apart">When this falls apart</h2>
+<p>I work with a lot of file-based tabular data for my day-to-day work. Most of it is research files from various state departments of education as well as <a href="https://nces.ed.gov/">NCES</a>. Individually parsing each file this way would result in massive amounts of scripts each customizing the function parameters for various pandas input functions. Instead, one way to mitigate this burden is to create configuration files for each file that specifies how it should be parsed and pass those into a single script that handles interpreting the configuration.</p>
+</section>
+<section id="getting-an-example-file" class="level2">
+<h2 class="anchored" data-anchor-id="getting-an-example-file">Getting an example file</h2>
+<p>To start, let”s pull the 2021-2022 national directory of schools from the <a href="https://nces.ed.gov/ccd/files.asp">NCES Common Core of Data (ccd) website</a> to use as a demonstration of how this might work. You can download the file directly <a href="https://nces.ed.gov/ccd/Data/zip/ccd_sch_029_2122_w_1a_071722.zip">here</a>.</p>
+<p>I”m going to stream this file into memory from the hosted zip file, extract the csv within and read it into a pandas dataframe for review.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> io</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>file_url <span class="op">=</span> <span class="st">"https://nces.ed.gov/ccd/Data/zip/ccd_sch_029_2122_w_1a_071722.zip"</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> requests.get(file_url, stream<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>content <span class="op">=</span> io.BytesIO(r.content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we have the content of the web request (our bytes data from the zip file) as in memory value. Next, we”ll extract the csv file contained in the zipfile.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> zipfile <span class="im">import</span> ZipFile</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> ZipFile(content)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>csv_data <span class="op">=</span> z.<span class="bu">open</span>(<span class="st">"ccd_sch_029_2122_w_1a_071722.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finally, we can read that csv data into a pandas dataframe for review.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(csv_data)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/q8/dgbdr1_566nf3r38kwhrw0zh0000gn/T/ipykernel_25748/4258698622.py:3: DtypeWarning: Columns (14,15,21,22,39,41,42) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(csv_data)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">SCHOOL_YEAR</th>
+<th data-quarto-table-cell-role="th">FIPST</th>
+<th data-quarto-table-cell-role="th">STATENAME</th>
+<th data-quarto-table-cell-role="th">ST</th>
+<th data-quarto-table-cell-role="th">SCH_NAME</th>
+<th data-quarto-table-cell-role="th">LEA_NAME</th>
+<th data-quarto-table-cell-role="th">STATE_AGENCY_NO</th>
+<th data-quarto-table-cell-role="th">UNION</th>
+<th data-quarto-table-cell-role="th">ST_LEAID</th>
+<th data-quarto-table-cell-role="th">LEAID</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">G_10_OFFERED</th>
+<th data-quarto-table-cell-role="th">G_11_OFFERED</th>
+<th data-quarto-table-cell-role="th">G_12_OFFERED</th>
+<th data-quarto-table-cell-role="th">G_13_OFFERED</th>
+<th data-quarto-table-cell-role="th">G_UG_OFFERED</th>
+<th data-quarto-table-cell-role="th">G_AE_OFFERED</th>
+<th data-quarto-table-cell-role="th">GSLO</th>
+<th data-quarto-table-cell-role="th">GSHI</th>
+<th data-quarto-table-cell-role="th">LEVEL</th>
+<th data-quarto-table-cell-role="th">IGOFFERED</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2021-2022</td>
+<td>1</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Middle School</td>
+<td>Albertville City</td>
+<td>1</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>07</td>
+<td>08</td>
+<td>Middle</td>
+<td>As reported</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2021-2022</td>
+<td>1</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville High School</td>
+<td>Albertville City</td>
+<td>1</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>100005</td>
+<td>...</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>09</td>
+<td>12</td>
+<td>High</td>
+<td>As reported</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2021-2022</td>
+<td>1</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Intermediate School</td>
+<td>Albertville City</td>
+<td>1</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>05</td>
+<td>06</td>
+<td>Middle</td>
+<td>As reported</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2021-2022</td>
+<td>1</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Elementary School</td>
+<td>Albertville City</td>
+<td>1</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>03</td>
+<td>04</td>
+<td>Elementary</td>
+<td>As reported</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2021-2022</td>
+<td>1</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Kindergarten and PreK</td>
+<td>Albertville City</td>
+<td>1</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>PK</td>
+<td>KG</td>
+<td>Elementary</td>
+<td>As reported</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 65 columns</p>
+</div>
+</div>
+</div>
+<p>Two things are apparent on first inspection:</p>
+<ol type="1">
+<li>a few of the columns have mixed data types we will need to handle</li>
+<li>there are many columns (its a very wide file) with obscure naming conventions we will need to interpret</li>
+</ol>
+<p>To get our head around the structure of this data, luckily there is a <a href="https://nces.ed.gov/ccd/xls/SY_2021-22_SEA_Directory_Companion.xlsx">companion documentation file</a> available from NCES as well.</p>
+<p>The full list of column names is:</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>Index(['SCHOOL_YEAR', 'FIPST', 'STATENAME', 'ST', 'SCH_NAME', 'LEA_NAME',
+       'STATE_AGENCY_NO', 'UNION', 'ST_LEAID', 'LEAID', 'ST_SCHID', 'NCESSCH',
+       'SCHID', 'MSTREET1', 'MSTREET2', 'MSTREET3', 'MCITY', 'MSTATE', 'MZIP',
+       'MZIP4', 'LSTREET1', 'LSTREET2', 'LSTREET3', 'LCITY', 'LSTATE', 'LZIP',
+       'LZIP4', 'PHONE', 'WEBSITE', 'SY_STATUS', 'SY_STATUS_TEXT',
+       'UPDATED_STATUS', 'UPDATED_STATUS_TEXT', 'EFFECTIVE_DATE',
+       'SCH_TYPE_TEXT', 'SCH_TYPE', 'RECON_STATUS', 'OUT_OF_STATE_FLAG',
+       'CHARTER_TEXT', 'CHARTAUTH1', 'CHARTAUTHN1', 'CHARTAUTH2',
+       'CHARTAUTHN2', 'NOGRADES', 'G_PK_OFFERED', 'G_KG_OFFERED',
+       'G_1_OFFERED', 'G_2_OFFERED', 'G_3_OFFERED', 'G_4_OFFERED',
+       'G_5_OFFERED', 'G_6_OFFERED', 'G_7_OFFERED', 'G_8_OFFERED',
+       'G_9_OFFERED', 'G_10_OFFERED', 'G_11_OFFERED', 'G_12_OFFERED',
+       'G_13_OFFERED', 'G_UG_OFFERED', 'G_AE_OFFERED', 'GSLO', 'GSHI', 'LEVEL',
+       'IGOFFERED'],
+      dtype='object')</code></pre>
+</div>
+</div>
+<p>We can override the data type inference that pandas is doing and specify either column specific data types or simply a default across all columns. In this case, let’s treat everything as a string. As this is a directory file, much of the data is descriptive and even values like numeric IDs that could be treated as integers will likely benefit from being handled as a string instead to preserve leading zeros that may be important for joining to other data later.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(csv_data, dtype<span class="op">=</span><span class="bu">str</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">SCHOOL_YEAR</th>
+<th data-quarto-table-cell-role="th">FIPST</th>
+<th data-quarto-table-cell-role="th">STATENAME</th>
+<th data-quarto-table-cell-role="th">ST</th>
+<th data-quarto-table-cell-role="th">SCH_NAME</th>
+<th data-quarto-table-cell-role="th">LEA_NAME</th>
+<th data-quarto-table-cell-role="th">STATE_AGENCY_NO</th>
+<th data-quarto-table-cell-role="th">UNION</th>
+<th data-quarto-table-cell-role="th">ST_LEAID</th>
+<th data-quarto-table-cell-role="th">LEAID</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">G_10_OFFERED</th>
+<th data-quarto-table-cell-role="th">G_11_OFFERED</th>
+<th data-quarto-table-cell-role="th">G_12_OFFERED</th>
+<th data-quarto-table-cell-role="th">G_13_OFFERED</th>
+<th data-quarto-table-cell-role="th">G_UG_OFFERED</th>
+<th data-quarto-table-cell-role="th">G_AE_OFFERED</th>
+<th data-quarto-table-cell-role="th">GSLO</th>
+<th data-quarto-table-cell-role="th">GSHI</th>
+<th data-quarto-table-cell-role="th">LEVEL</th>
+<th data-quarto-table-cell-role="th">IGOFFERED</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Middle School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>07</td>
+<td>08</td>
+<td>Middle</td>
+<td>As reported</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville High School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>09</td>
+<td>12</td>
+<td>High</td>
+<td>As reported</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Intermediate School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>05</td>
+<td>06</td>
+<td>Middle</td>
+<td>As reported</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Elementary School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>03</td>
+<td>04</td>
+<td>Elementary</td>
+<td>As reported</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Kindergarten and PreK</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>PK</td>
+<td>KG</td>
+<td>Elementary</td>
+<td>As reported</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 65 columns</p>
+</div>
+</div>
+</div>
+<p>That has gotten rid of the Dtype warning, but we still have these column names to deal with. Let’s create a dictionary mapping the original names to what we want them to be instead.</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>column_renames <span class="op">=</span> {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SCHOOL_YEAR"</span>: <span class="st">"school_year"</span>, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FIPST"</span>: <span class="st">"state_fips_code"</span>, </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"STATENAME"</span>: <span class="st">"state_name"</span>, </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST"</span>: <span class="st">"state_abbrev"</span>, </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SCH_NAME"</span>: <span class="st">"school_name"</span>, </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LEA_NAME"</span>: <span class="st">"lea_name"</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"STATE_AGENCY_NO"</span>: <span class="st">"state_agency_id"</span>, </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"UNION"</span>: <span class="st">"supervisory_union_id"</span>, </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST_LEAID"</span>: <span class="st">"state_lea_id"</span>, </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LEAID"</span>: <span class="st">"nces_lea_id"</span>, </span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST_SCHID"</span>: <span class="st">"state_school_id"</span>, </span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"NCESSCH"</span>: <span class="st">"nces_school_id"</span>,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SCHID"</span>: <span class="st">"school_id"</span>, </span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"MSTREET1"</span>: <span class="st">"street1_mailing_address"</span>, </span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"MSTREET2"</span>: <span class="st">"street2_mailing_address"</span>, </span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"MSTREET3"</span>: <span class="st">"street3_mailing_address"</span>, </span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"MCITY"</span>: <span class="st">"city_mailing_address"</span>, </span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"MSTATE"</span>: <span class="st">"state_mailing_address"</span>, </span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"MZIP"</span>: <span class="st">"zipcode_mailing_address"</span>,</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"MZIP4"</span>: <span class="st">"secondary_zipcode_mailing_address"</span>, </span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LSTREET1"</span>: <span class="st">"street1_location"</span>, </span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LSTREET2"</span>: <span class="st">"street2_location"</span>, </span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LSTREET3"</span>: <span class="st">"street3_location"</span>, </span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LCITY"</span>: <span class="st">"city_location"</span>, </span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LSTATE"</span>: <span class="st">"state_location"</span>, </span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LZIP"</span>: <span class="st">"zipcode_location"</span>,</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LZIP4"</span>: <span class="st">"secondary_zipcode_location"</span>, </span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PHONE"</span>: <span class="st">"phone_number"</span>, </span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">"WEBSITE"</span>: <span class="st">"website_url"</span>, </span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SY_STATUS"</span>: <span class="st">"start_of_year_status_code"</span>, </span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SY_STATUS_TEXT"</span>: <span class="st">"start_of_year_status_description"</span>,</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">"UPDATED_STATUS"</span>: <span class="st">"updated_status_code"</span>, </span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">"UPDATED_STATUS_TEXT"</span>: <span class="st">"updated_status_description"</span>, </span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">"EFFECTIVE_DATE"</span>: <span class="st">"updated_status_effective_date"</span>,</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SCH_TYPE_TEXT"</span>: <span class="st">"school_type_description"</span>, </span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SCH_TYPE"</span>: <span class="st">"school_type_code"</span>,</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">"RECON_STATUS"</span>: <span class="st">"is_reconstituted"</span>, </span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">"OUT_OF_STATE_FLAG"</span>: <span class="st">"is_out_of_state_location"</span>,</span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CHARTER_TEXT"</span>: <span class="st">"is_charter_school"</span>, </span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CHARTAUTH1"</span>: <span class="st">"charter_authorizer_id1"</span>, </span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CHARTAUTHN1"</span>: <span class="st">"charter_authorizer_name1"</span>, </span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CHARTAUTH2"</span>: <span class="st">"charter_authorizer_id2"</span>,</span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CHARTAUTHN2"</span>: <span class="st">"charter_authorizer_name2"</span>, </span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">"NOGRADES"</span>: <span class="st">"no_grades_offered"</span>, </span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">"G_PK_OFFERED"</span>: <span class="st">"grade_pk_offered"</span>, </span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">"G_KG_OFFERED"</span>: <span class="st">"grade_k_offered"</span>,</span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">"G_1_OFFERED"</span>: <span class="st">"grade_1_offered"</span>, </span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">"G_2_OFFERED"</span>: <span class="st">"grade_2_offered"</span>, </span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">"G_3_OFFERED"</span>: <span class="st">"grade_3_offered"</span>, </span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>    <span class="st">"G_4_OFFERED"</span>: <span class="st">"grade_4_offered"</span>,</span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">"G_5_OFFERED"</span>: <span class="st">"grade_5_offered"</span>, </span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>    <span class="st">"G_6_OFFERED"</span>: <span class="st">"grade_6_offered"</span>, </span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>    <span class="st">"G_7_OFFERED"</span>: <span class="st">"grade_7_offered"</span>, </span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>    <span class="st">"G_8_OFFERED"</span>: <span class="st">"grade_8_offered"</span>,</span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>    <span class="st">"G_9_OFFERED"</span>: <span class="st">"grade_9_offered"</span>, </span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>    <span class="st">"G_10_OFFERED"</span>: <span class="st">"grade_10_offered"</span>, </span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>    <span class="st">"G_11_OFFERED"</span>: <span class="st">"grade_11_offered"</span>, </span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>    <span class="st">"G_12_OFFERED"</span>: <span class="st">"grade_12_offered"</span>,</span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>    <span class="st">"G_13_OFFERED"</span>: <span class="st">"grade_13_offered"</span>, </span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>    <span class="st">"G_UG_OFFERED"</span>: <span class="st">"ungraded_offered"</span>, </span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>    <span class="st">"G_AE_OFFERED"</span>: <span class="st">"adult_education_offered"</span>, </span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>    <span class="st">"GSLO"</span>: <span class="st">"lowest_grade_offered"</span>, </span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>    <span class="st">"GSHI"</span>: <span class="st">"highest_grade_offered"</span>, </span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LEVEL"</span>: <span class="st">"school_level"</span>,</span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>    <span class="st">"IGOFFERED"</span>: <span class="st">"any_grades_offered_field_adjusted"</span>,</span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>A bit tedious, but at this point we could rename our columns and be done.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df.rename(columns<span class="op">=</span>column_renames, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">school_year</th>
+<th data-quarto-table-cell-role="th">state_fips_code</th>
+<th data-quarto-table-cell-role="th">state_name</th>
+<th data-quarto-table-cell-role="th">state_abbrev</th>
+<th data-quarto-table-cell-role="th">school_name</th>
+<th data-quarto-table-cell-role="th">lea_name</th>
+<th data-quarto-table-cell-role="th">state_agency_id</th>
+<th data-quarto-table-cell-role="th">supervisory_union_id</th>
+<th data-quarto-table-cell-role="th">state_lea_id</th>
+<th data-quarto-table-cell-role="th">nces_lea_id</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">grade_10_offered</th>
+<th data-quarto-table-cell-role="th">grade_11_offered</th>
+<th data-quarto-table-cell-role="th">grade_12_offered</th>
+<th data-quarto-table-cell-role="th">grade_13_offered</th>
+<th data-quarto-table-cell-role="th">ungraded_offered</th>
+<th data-quarto-table-cell-role="th">adult_education_offered</th>
+<th data-quarto-table-cell-role="th">lowest_grade_offered</th>
+<th data-quarto-table-cell-role="th">highest_grade_offered</th>
+<th data-quarto-table-cell-role="th">school_level</th>
+<th data-quarto-table-cell-role="th">any_grades_offered_field_adjusted</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Middle School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>07</td>
+<td>08</td>
+<td>Middle</td>
+<td>As reported</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville High School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>09</td>
+<td>12</td>
+<td>High</td>
+<td>As reported</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Intermediate School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>05</td>
+<td>06</td>
+<td>Middle</td>
+<td>As reported</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Elementary School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>03</td>
+<td>04</td>
+<td>Elementary</td>
+<td>As reported</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Kindergarten and PreK</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>PK</td>
+<td>KG</td>
+<td>Elementary</td>
+<td>As reported</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 65 columns</p>
+</div>
+</div>
+</div>
+<p>So why the need for a special yaml config file?</p>
+<p>Well, in this singular case it’s not necessary at all. If this was the one file we needed for analysis, then yes we could stop here. But, imagine that instead you had hundreds if not thousands of similar files with different file types (csv, excel, txt, etc) each with its own unique set of challenges such as footers or headers to skip, tabs to combine. At which point, writing a separate python script for each file and running them as needed would be become unwieldy rather quickly.</p>
+</section>
+<section id="introducing-yaml-jsons-cuter-cousin" class="level2">
+<h2 class="anchored" data-anchor-id="introducing-yaml-jsons-cuter-cousin">Introducing Yaml: Json’s cuter cousin</h2>
+<p>Our <code>column_map</code> dictionary looks a lot like a json object and likely we could specify our configurations as a series of json files or even python files with dictionaries. But this syntax is full of unnecessary punctuation.</p>
+<p>Compare this list in python/json with a similar one in yaml:</p>
+<p><strong>Python or Json</strong>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>columns <span class="op">=</span> [</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"school_year"</span>, </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"state_fips_code"</span>, </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"state_name"</span>, </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"state_abbrev"</span>, </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"school_name"</span>, </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"lea_name"</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"state_agency_id"</span>, </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"supervisory_union_id"</span>, </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"state_lea_id"</span>, </span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"nces_lea_id"</span>, </span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"state_school_id"</span>, </span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"nces_school_id"</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"school_id"</span>, </span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Yaml</strong>:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">columns</span><span class="kw">:</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> school_year </span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> state_fips_code </span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> state_name </span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> state_abbrev </span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> school_name </span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> lea_name</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> state_agency_id </span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> supervisory_union_id </span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> state_lea_id </span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> nces_lea_id </span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> state_school_id </span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> nces_school_id</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> school_id</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Admittedly, not a HUGE difference but one is clearly a bit more human readable. The more complex the configuration gets the more this becomes obvious. The trade off is that a native python dictionary or even a json string could be parsed using only the python standard lib. However, yaml support is not baked into python. Thankfully, there is a simple package that can be used: <a href="https://pypi.org/project/PyYAML/">pyyaml</a>.</p>
+<p>We’ll install that with:</p>
+<pre><code>pip install pyyaml</code></pre>
+<p>or if you’re like me and prefer <a href="https://pipenv.pypa.io/en/latest/">pipenv</a>:</p>
+<pre><code>pipenv install pyyaml</code></pre>
+<p>Then let’s create a yaml config file for our nces directory file.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> nces_school_directory_2022</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filepath_or_buffer</span><span class="kw">:</span><span class="at"> ccd_sch_029_2122_w_1a_071722.csv</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">file_type</span><span class="kw">:</span><span class="at"> csv</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dtype</span><span class="kw">:</span><span class="at"> str</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">columns</span><span class="kw">:</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> school_year </span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> state_fips_code </span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> state_name </span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> state_abbrev </span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> school_name </span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> lea_name</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> state_agency_id </span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> supervisory_union_id </span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> state_lea_id </span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> nces_lea_id </span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> state_school_id </span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> nces_school_id</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> school_id </span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> street1_mailing_address </span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> street2_mailing_address </span></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> street3_mailing_address </span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> city_mailing_address </span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> state_mailing_address </span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> zipcode_mailing_address</span></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> secondary_zipcode_mailing_address </span></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> street1_location </span></span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> street2_location </span></span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> street3_location </span></span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> city_location </span></span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> state_location </span></span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> zipcode_location</span></span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> secondary_zipcode_location </span></span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> phone_number </span></span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> website_url </span></span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> start_of_year_status_code </span></span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> start_of_year_status_description</span></span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> updated_status_code </span></span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> updated_status_description </span></span>
+<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> updated_status_effective_date</span></span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> school_type_description </span></span>
+<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> school_type_code</span></span>
+<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> is_reconstituted </span></span>
+<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> is_out_of_state_location</span></span>
+<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> is_charter_school </span></span>
+<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> charter_authorizer_id1 </span></span>
+<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> charter_authorizer_name1 </span></span>
+<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> charter_authorizer_id2</span></span>
+<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> charter_authorizer_name2 </span></span>
+<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> no_grades_offered </span></span>
+<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> grade_pk_offered </span></span>
+<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> grade_k_offered</span></span>
+<span id="cb17-52"><a href="#cb17-52" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> grade_1_offered </span></span>
+<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> grade_2_offered </span></span>
+<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> grade_3_offered </span></span>
+<span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> grade_4_offered</span></span>
+<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> grade_5_offered </span></span>
+<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> grade_6_offered </span></span>
+<span id="cb17-58"><a href="#cb17-58" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> grade_7_offered </span></span>
+<span id="cb17-59"><a href="#cb17-59" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> grade_8_offered</span></span>
+<span id="cb17-60"><a href="#cb17-60" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> grade_9_offered </span></span>
+<span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> grade_10_offered </span></span>
+<span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> grade_11_offered </span></span>
+<span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> grade_12_offered</span></span>
+<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> grade_13_offered </span></span>
+<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> ungraded_offered </span></span>
+<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> adult_education_offered </span></span>
+<span id="cb17-67"><a href="#cb17-67" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> lowest_grade_offered </span></span>
+<span id="cb17-68"><a href="#cb17-68" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> highest_grade_offered </span></span>
+<span id="cb17-69"><a href="#cb17-69" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> school_level</span></span>
+<span id="cb17-70"><a href="#cb17-70" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> any_grades_offered_field_adjusted</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="reading-yaml" class="level2">
+<h2 class="anchored" data-anchor-id="reading-yaml">Reading Yaml</h2>
+<p>To start, we’ll need to load the data from this yaml file into something Python can work with:</p>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> yaml <span class="im">import</span> safe_load</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"nces_school_directory_2022.yml"</span>) <span class="im">as</span> f:</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    config <span class="op">=</span> safe_load(f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can see that this has converted it to a native python dictionary. Less for us to write, easier to read, but still as functional as writing it as a dictionary to begin with.</p>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>{'name': 'nces_school_directory_2022',
+ 'filepath_or_buffer': 'ccd_sch_029_2122_w_1a_071722.csv',
+ 'file_type': 'csv',
+ 'dtype': 'str',
+ 'columns': ['school_year',
+  'state_fips_code',
+  'state_name',
+  'state_abbrev',
+  'school_name',
+  'lea_name',
+  'state_agency_id',
+  'supervisory_union_id',
+  'state_lea_id',
+  'nces_lea_id',
+  'state_school_id',
+  'nces_school_id',
+  'school_id',
+  'street1_mailing_address',
+  'street2_mailing_address',
+  'street3_mailing_address',
+  'city_mailing_address',
+  'state_mailing_address',
+  'zipcode_mailing_address',
+  'secondary_zipcode_mailing_address',
+  'street1_location',
+  'street2_location',
+  'street3_location',
+  'city_location',
+  'state_location',
+  'zipcode_location',
+  'secondary_zipcode_location',
+  'phone_number',
+  'website_url',
+  'start_of_year_status_code',
+  'start_of_year_status_description',
+  'updated_status_code',
+  'updated_status_description',
+  'updated_status_effective_date',
+  'school_type_description',
+  'school_type_code',
+  'is_reconstituted',
+  'is_out_of_state_location',
+  'is_charter_school',
+  'charter_authorizer_id1',
+  'charter_authorizer_name1',
+  'charter_authorizer_id2',
+  'charter_authorizer_name2',
+  'no_grades_offered',
+  'grade_pk_offered',
+  'grade_k_offered',
+  'grade_1_offered',
+  'grade_2_offered',
+  'grade_3_offered',
+  'grade_4_offered',
+  'grade_5_offered',
+  'grade_6_offered',
+  'grade_7_offered',
+  'grade_8_offered',
+  'grade_9_offered',
+  'grade_10_offered',
+  'grade_11_offered',
+  'grade_12_offered',
+  'grade_13_offered',
+  'ungraded_offered',
+  'adult_education_offered',
+  'lowest_grade_offered',
+  'highest_grade_offered',
+  'school_level',
+  'any_grades_offered_field_adjusted']}</code></pre>
+</div>
+</div>
+<p>To use this dictionary as the parameters for the pandas <code>read_csv</code> function, we can take advantage of the unpacking operator <code>**</code> to convert our dictionary into a set of keyword arguments (often referred to as <code>kwargs</code>).</p>
+<p>You can learn more about args and kwargs from <a href="https://realpython.com/python-kwargs-and-args/">this helpful Real Python article</a>.</p>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="op">**</span>config)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>TypeError: read_csv() got an unexpected keyword argument 'name'</code></pre>
+</div>
+</div>
+</section>
+<section id="but-wait-theres-more" class="level2">
+<h2 class="anchored" data-anchor-id="but-wait-theres-more">But wait, there’s more</h2>
+<p>Wait! What’s this? One of the values in our yaml config isn’t an actual parameter/keyword for the <code>read_csv</code> function. While this adds some additional overhead to our usage of yaml, it provides some useful functionality. We can specify additional variables in the config that can drive behavior in our script beyond just the function parameters.</p>
+<p>For instance, the <code>file_type</code> variable could be used to swap between use of <code>read_csv</code> when <code>file_type: csv</code> is specified or <code>read_excel</code> when <code>file_type: excel</code> is provided instead. Or the <code>name</code> variable could be used to determine the table name in our database where this data will be loaded.</p>
+<p>In order to distinguish these extra variables from our function parameters, we need to be aware of which keywords are specific to the function. We could specify these explicitly OR we could infer them from the function signature.</p>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> inspect</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> inspect.signature(pd.read_csv).parameters.keys()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>params</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<pre><code>odict_keys(['filepath_or_buffer', 'sep', 'delimiter', 'header', 'names', 'index_col', 'usecols', 'dtype', 'engine', 'converters', 'true_values', 'false_values', 'skipinitialspace', 'skiprows', 'skipfooter', 'nrows', 'na_values', 'keep_default_na', 'na_filter', 'verbose', 'skip_blank_lines', 'parse_dates', 'infer_datetime_format', 'keep_date_col', 'date_parser', 'date_format', 'dayfirst', 'cache_dates', 'iterator', 'chunksize', 'compression', 'thousands', 'decimal', 'lineterminator', 'quotechar', 'quoting', 'doublequote', 'escapechar', 'comment', 'encoding', 'encoding_errors', 'dialect', 'on_bad_lines', 'delim_whitespace', 'low_memory', 'memory_map', 'float_precision', 'storage_options', 'dtype_backend'])</code></pre>
+</div>
+</div>
+<p>Now we can compare the key/value pairs in our yaml config with any that match the function signature of <code>pd.read_csv</code>.</p>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_kwargs(config):</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> inspect.signature(pd.read_csv).parameters.keys()</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {k: v <span class="cf">for</span> k, v <span class="kw">in</span> config.items() <span class="cf">if</span> k <span class="kw">in</span> params}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This will create a new dictionary with just the key/value pairs (<code>k: v</code>) that match the function signature. At this point, we can now pass those into our input function.</p>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="op">**</span>get_kwargs(config))</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">SCHOOL_YEAR</th>
+<th data-quarto-table-cell-role="th">FIPST</th>
+<th data-quarto-table-cell-role="th">STATENAME</th>
+<th data-quarto-table-cell-role="th">ST</th>
+<th data-quarto-table-cell-role="th">SCH_NAME</th>
+<th data-quarto-table-cell-role="th">LEA_NAME</th>
+<th data-quarto-table-cell-role="th">STATE_AGENCY_NO</th>
+<th data-quarto-table-cell-role="th">UNION</th>
+<th data-quarto-table-cell-role="th">ST_LEAID</th>
+<th data-quarto-table-cell-role="th">LEAID</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">G_10_OFFERED</th>
+<th data-quarto-table-cell-role="th">G_11_OFFERED</th>
+<th data-quarto-table-cell-role="th">G_12_OFFERED</th>
+<th data-quarto-table-cell-role="th">G_13_OFFERED</th>
+<th data-quarto-table-cell-role="th">G_UG_OFFERED</th>
+<th data-quarto-table-cell-role="th">G_AE_OFFERED</th>
+<th data-quarto-table-cell-role="th">GSLO</th>
+<th data-quarto-table-cell-role="th">GSHI</th>
+<th data-quarto-table-cell-role="th">LEVEL</th>
+<th data-quarto-table-cell-role="th">IGOFFERED</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Middle School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>07</td>
+<td>08</td>
+<td>Middle</td>
+<td>As reported</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville High School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>09</td>
+<td>12</td>
+<td>High</td>
+<td>As reported</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Intermediate School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>05</td>
+<td>06</td>
+<td>Middle</td>
+<td>As reported</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Elementary School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>03</td>
+<td>04</td>
+<td>Elementary</td>
+<td>As reported</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Kindergarten and PreK</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>PK</td>
+<td>KG</td>
+<td>Elementary</td>
+<td>As reported</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 65 columns</p>
+</div>
+</div>
+</div>
+<p>Very close. This hasn’t handled the column renaming. That’s because in <code>pd.read_csv</code> the column name values is set with the <code>names</code> param. We could just call our columns list that in the config or we could pass it explicitly instead (in the event, we need to name it <code>columns</code> for some other functionality in our script).</p>
+<div class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="op">**</span>get_kwargs(config), names<span class="op">=</span>config[<span class="st">"columns"</span>])</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="27">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">school_year</th>
+<th data-quarto-table-cell-role="th">state_fips_code</th>
+<th data-quarto-table-cell-role="th">state_name</th>
+<th data-quarto-table-cell-role="th">state_abbrev</th>
+<th data-quarto-table-cell-role="th">school_name</th>
+<th data-quarto-table-cell-role="th">lea_name</th>
+<th data-quarto-table-cell-role="th">state_agency_id</th>
+<th data-quarto-table-cell-role="th">supervisory_union_id</th>
+<th data-quarto-table-cell-role="th">state_lea_id</th>
+<th data-quarto-table-cell-role="th">nces_lea_id</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">grade_10_offered</th>
+<th data-quarto-table-cell-role="th">grade_11_offered</th>
+<th data-quarto-table-cell-role="th">grade_12_offered</th>
+<th data-quarto-table-cell-role="th">grade_13_offered</th>
+<th data-quarto-table-cell-role="th">ungraded_offered</th>
+<th data-quarto-table-cell-role="th">adult_education_offered</th>
+<th data-quarto-table-cell-role="th">lowest_grade_offered</th>
+<th data-quarto-table-cell-role="th">highest_grade_offered</th>
+<th data-quarto-table-cell-role="th">school_level</th>
+<th data-quarto-table-cell-role="th">any_grades_offered_field_adjusted</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>SCHOOL_YEAR</td>
+<td>FIPST</td>
+<td>STATENAME</td>
+<td>ST</td>
+<td>SCH_NAME</td>
+<td>LEA_NAME</td>
+<td>STATE_AGENCY_NO</td>
+<td>UNION</td>
+<td>ST_LEAID</td>
+<td>LEAID</td>
+<td>...</td>
+<td>G_10_OFFERED</td>
+<td>G_11_OFFERED</td>
+<td>G_12_OFFERED</td>
+<td>G_13_OFFERED</td>
+<td>G_UG_OFFERED</td>
+<td>G_AE_OFFERED</td>
+<td>GSLO</td>
+<td>GSHI</td>
+<td>LEVEL</td>
+<td>IGOFFERED</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Middle School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>07</td>
+<td>08</td>
+<td>Middle</td>
+<td>As reported</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville High School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>09</td>
+<td>12</td>
+<td>High</td>
+<td>As reported</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Intermediate School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>05</td>
+<td>06</td>
+<td>Middle</td>
+<td>As reported</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Elementary School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>03</td>
+<td>04</td>
+<td>Elementary</td>
+<td>As reported</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 65 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="icing-on-the-cake" class="level2">
+<h2 class="anchored" data-anchor-id="icing-on-the-cake">Icing on the cake</h2>
+<p>I like to simplify all of this by creating a custom configuration class to handle this. That enables to use of class attributes for accessing the key/values and can wrap in the yaml reading as well.</p>
+<div class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Config:</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, yaml_file_path):</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co">        Extract configuration from yaml file and set the values as </span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co">        class attributes or kwargs based on the specified function</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co">        signature.</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(yaml_file_path) <span class="im">as</span> f:</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.yaml <span class="op">=</span> safe_load(f)</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.set_attrs()</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> set_attrs(<span class="va">self</span>):</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="co">        Create attribute called kwargs that returns dictionary of all key/value</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="co">        pairs that match the given function signature params.</span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="co">        Set any non-matching key as a class attribute.</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>        params <span class="op">=</span> <span class="va">self</span>.get_signature()</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> k, v <span class="kw">in</span> <span class="va">self</span>.yaml.items():</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> k <span class="kw">not</span> <span class="kw">in</span> params:</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>                <span class="bu">setattr</span>(<span class="va">self</span>, k, v)</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.kwargs <span class="op">=</span> {k: v <span class="cf">for</span> k, v <span class="kw">in</span> <span class="va">self</span>.yaml.items() <span class="cf">if</span> k <span class="kw">in</span> params}</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_signature(<span class="va">self</span>):</span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a><span class="co">        Select the corresponding function signature based on the specified</span></span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a><span class="co">        file_type of either csv or excel.</span></span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a><span class="co">        Note: this could be expanded to handle more file_types, such as:</span></span>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a><span class="co">          - SPSS</span></span>
+<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a><span class="co">          - JSON</span></span>
+<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a><span class="co">          - Parquet</span></span>
+<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a><span class="co">          - XML</span></span>
+<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a>        signatures <span class="op">=</span> {</span>
+<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a>            <span class="st">"csv"</span>: inspect.signature(pd.read_csv).parameters.keys(),</span>
+<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a>            <span class="st">"excel"</span>: inspect.signature(pd.read_csv).parameters.keys(),</span>
+<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> signatures.get(<span class="va">self</span>.yaml[<span class="st">"file_type"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>With this class we can now create a <code>Config</code> object from a yaml file and pass that to our pandas functions. It also now handles for whether the <code>file_type</code> expects to use <code>read_csv</code> or <code>read_excel</code>.</p>
+<div class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> Config(<span class="st">"nces_school_directory_2022.yml"</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="op">**</span>config.kwargs, names<span class="op">=</span>config.columns)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="33">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">school_year</th>
+<th data-quarto-table-cell-role="th">state_fips_code</th>
+<th data-quarto-table-cell-role="th">state_name</th>
+<th data-quarto-table-cell-role="th">state_abbrev</th>
+<th data-quarto-table-cell-role="th">school_name</th>
+<th data-quarto-table-cell-role="th">lea_name</th>
+<th data-quarto-table-cell-role="th">state_agency_id</th>
+<th data-quarto-table-cell-role="th">supervisory_union_id</th>
+<th data-quarto-table-cell-role="th">state_lea_id</th>
+<th data-quarto-table-cell-role="th">nces_lea_id</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">grade_10_offered</th>
+<th data-quarto-table-cell-role="th">grade_11_offered</th>
+<th data-quarto-table-cell-role="th">grade_12_offered</th>
+<th data-quarto-table-cell-role="th">grade_13_offered</th>
+<th data-quarto-table-cell-role="th">ungraded_offered</th>
+<th data-quarto-table-cell-role="th">adult_education_offered</th>
+<th data-quarto-table-cell-role="th">lowest_grade_offered</th>
+<th data-quarto-table-cell-role="th">highest_grade_offered</th>
+<th data-quarto-table-cell-role="th">school_level</th>
+<th data-quarto-table-cell-role="th">any_grades_offered_field_adjusted</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>SCHOOL_YEAR</td>
+<td>FIPST</td>
+<td>STATENAME</td>
+<td>ST</td>
+<td>SCH_NAME</td>
+<td>LEA_NAME</td>
+<td>STATE_AGENCY_NO</td>
+<td>UNION</td>
+<td>ST_LEAID</td>
+<td>LEAID</td>
+<td>...</td>
+<td>G_10_OFFERED</td>
+<td>G_11_OFFERED</td>
+<td>G_12_OFFERED</td>
+<td>G_13_OFFERED</td>
+<td>G_UG_OFFERED</td>
+<td>G_AE_OFFERED</td>
+<td>GSLO</td>
+<td>GSHI</td>
+<td>LEVEL</td>
+<td>IGOFFERED</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Middle School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>07</td>
+<td>08</td>
+<td>Middle</td>
+<td>As reported</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville High School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>09</td>
+<td>12</td>
+<td>High</td>
+<td>As reported</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Intermediate School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>05</td>
+<td>06</td>
+<td>Middle</td>
+<td>As reported</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2021-2022</td>
+<td>01</td>
+<td>ALABAMA</td>
+<td>AL</td>
+<td>Albertville Elementary School</td>
+<td>Albertville City</td>
+<td>01</td>
+<td>NaN</td>
+<td>AL-101</td>
+<td>0100005</td>
+<td>...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>03</td>
+<td>04</td>
+<td>Elementary</td>
+<td>As reported</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 65 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>There is a lot more parsing functionality that could be extended from this basic example using more configuration variables and/or expanding to different file types.</p>
+<p>We’ve used a variation of this approach to great effect to parse hundreds of research files from most of the states in the U.S. as well as a variety of other public research data like NCES. This has even been used to parse Google Spreadsheet data directly in memory.</p>
+<p>With this data now transformed into a pandas dataframe, it can be easily loaded into a data warehouse and analyzed in memory.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
