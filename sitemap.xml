@@ -1,79 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://dchess.org/about.html</loc>
-    <lastmod>2023-08-20T22:04:52.162Z</lastmod>
-  </url>
-  <url>
     <loc>https://dchess.org/posts/word-cloud/word-cloud.html</loc>
-    <lastmod>2023-08-20T22:04:51.398Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/pandas-yaml-config/index.html</loc>
-    <lastmod>2023-08-20T22:04:42.538Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/google-classroom-connector/index.html</loc>
-    <lastmod>2023-08-20T22:04:40.322Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/powerschool-api.md/index.html</loc>
-    <lastmod>2023-08-20T22:04:39.494Z</lastmod>
+    <lastmod>2023-08-20T22:57:30.456Z</lastmod>
   </url>
   <url>
     <loc>https://dchess.org/posts/manager-readme/index.html</loc>
-    <lastmod>2023-08-20T22:04:38.730Z</lastmod>
+    <lastmod>2023-08-20T22:57:29.344Z</lastmod>
   </url>
   <url>
     <loc>https://dchess.org/posts/parsing-texas-assessment-data/parsing-texas-assessment-data.html</loc>
-    <lastmod>2023-08-20T22:04:37.418Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/json-normalize/json-normalize.html</loc>
-    <lastmod>2023-08-20T22:04:34.041Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/python-training/index.html</loc>
-    <lastmod>2023-08-20T22:04:32.265Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/index.html</loc>
-    <lastmod>2023-08-20T22:04:31.089Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/dev-env-setup/index.html</loc>
-    <lastmod>2023-08-20T22:04:31.905Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/student-support-spotlight/index.html</loc>
-    <lastmod>2023-08-20T22:04:32.589Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/new-years-resolutions/index.html</loc>
-    <lastmod>2023-08-20T22:04:34.345Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/how-memes-inform-my-work/index.html</loc>
-    <lastmod>2023-08-20T22:04:37.962Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/mermaid-diagrams/index.html</loc>
-    <lastmod>2023-08-20T22:04:39.082Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/how-i-teach-git/index.html</loc>
-    <lastmod>2023-08-20T22:04:40.002Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/quarto-blog/index.html</loc>
-    <lastmod>2023-08-20T22:04:40.722Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/sql-basics-with-duckdb/sql_basics.html</loc>
-    <lastmod>2023-08-20T22:04:50.874Z</lastmod>
+    <lastmod>2023-08-20T22:57:27.708Z</lastmod>
   </url>
   <url>
     <loc>https://dchess.org/posts/simple-api/index.html</loc>
-    <lastmod>2023-08-20T22:04:51.818Z</lastmod>
+    <lastmod>2023-08-20T22:57:23.136Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/sql-basics-with-duckdb/sql_basics.html</loc>
+    <lastmod>2023-08-20T22:57:20.688Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/new-years-resolutions/index.html</loc>
+    <lastmod>2023-08-20T22:57:08.844Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/mermaid-diagrams/index.html</loc>
+    <lastmod>2023-08-20T22:57:07.960Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/dev-env-setup/index.html</loc>
+    <lastmod>2023-08-20T22:57:07.136Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/google-classroom-connector/index.html</loc>
+    <lastmod>2023-08-20T22:57:04.140Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/index.html</loc>
+    <lastmod>2023-08-20T22:57:02.772Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/about.html</loc>
+    <lastmod>2023-08-20T22:57:03.724Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/pandas-yaml-config/index.html</loc>
+    <lastmod>2023-08-20T22:57:06.520Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/python-training/index.html</loc>
+    <lastmod>2023-08-20T22:57:07.564Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/powerschool-api.md/index.html</loc>
+    <lastmod>2023-08-20T22:57:08.456Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/quarto-blog/index.html</loc>
+    <lastmod>2023-08-20T22:57:09.344Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/json-normalize/json-normalize.html</loc>
+    <lastmod>2023-08-20T22:57:22.600Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/how-i-teach-git/index.html</loc>
+    <lastmod>2023-08-20T22:57:23.780Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/how-memes-inform-my-work/index.html</loc>
+    <lastmod>2023-08-20T22:57:28.348Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/student-support-spotlight/index.html</loc>
+    <lastmod>2023-08-20T22:57:29.800Z</lastmod>
   </url>
 </urlset>

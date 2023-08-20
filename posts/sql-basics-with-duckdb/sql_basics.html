@@ -189,15 +189,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># directory = pd.read_csv("../pandas-yaml-config/ccd_sch_029_2122_w_1a_071722.csv", dtype=str)</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>directory <span class="op">=</span> pd.read_csv(<span class="st">"ccd_sch_029_2122_w_1a_071722.csv"</span>, dtype<span class="op">=</span><span class="bu">str</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>directory <span class="op">=</span> pd.read_csv(<span class="st">"ccd_sch_029_2122_w_1a_071722.csv"</span>, dtype<span class="op">=</span><span class="bu">str</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># convert column names to lowercase, </span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># because I'm not a fan of my column names screaming at me in ALL CAPS</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>directory.columns <span class="op">=</span> [c.lower() <span class="cf">for</span> c <span class="kw">in</span> df.columns] </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>directory.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># convert column names to lowercase, </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># because I'm not a fan of my column names screaming at me in ALL CAPS</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>directory.columns <span class="op">=</span> [c.lower() <span class="cf">for</span> c <span class="kw">in</span> directory.columns] </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>directory.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="27">
 <div>
 
@@ -450,12 +449,20 @@ dtypes: object(65)
 memory usage: 50.6+ MB</code></pre>
 </div>
 </div>
-<p>This shows us a number of things: - all the column names - their data types (recall we have set all of them to strings, which pandas lists as <code>object</code>) - the number of non-null values in each column - the number of columns: 65 - the number of rows: 102,130 - it even shows the amount of memory used to hold this data: 50.6 MB</p>
+<p>This shows us a number of things:</p>
+<ul>
+<li>all the column names</li>
+<li>their data types (recall we have set all of them to strings, which pandas lists as <code>object</code>)</li>
+<li>the number of non-null values in each column</li>
+<li>the number of columns: 65</li>
+<li>the number of rows: 102,130</li>
+<li>it even shows the amount of memory used to hold this data: 50.6 MB</li>
+</ul>
 </section>
 <section id="a-note-about-null" class="level3">
 <h3 class="anchored" data-anchor-id="a-note-about-null">A note about null</h3>
 <p>In SQL and databases, <code>null</code> represents the absence of a value or unknown data for a specific field in a table. It’s not the same as zero or an empty string and requires special handling in SQL queries. The <code>null</code> value can be used in any data type, whether it’s a string, numeric, date, or any other data type.</p>
-<p>Dealing with null values in SQL queries can be tricky, and several common mistakes can lead to unexpected or incorrect results.</p>
+<p>Dealing with null values in SQL queries can be tricky, and can lead to unexpected or incorrect results.</p>
 </section>
 </section>
 <section id="getting-started" class="level2">
@@ -903,7 +910,7 @@ memory usage: 50.6+ MB</code></pre>
 <div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span> sch_name <span class="co">-- return only the school name column</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">from</span> <span class="kw">directory</span> <span class="co">-- from the data in our dataframe</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">where</span> statename <span class="op">=</span> <span class="st">'DELAWARE'</span> <span class="co">-- where the state name is DELAWARE (state names are all caps in the dataset)</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">and</span> g_12_offered <span class="op">=</span> <span class="st">'Yes'</span> <span class="co">-- and where grade 12 is offered</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">and</span> g_12_offered <span class="op">=</span> <span class="st">'Yes'</span> <span class="co">-- and where grade 12 is offered</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">order</span> <span class="kw">by</span> sch_name <span class="co">-- sort the resulting data alphabetically by the school name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Next, let’s refine this query to identify which of those schools are charter schools or not.</p>
 <div class="cell" data-execution_count="31">
@@ -2323,7 +2330,12 @@ memory usage: 50.6+ MB</code></pre>
 </div>
 </div>
 </div>
-<p>Not bad, but I find that decimal representation of the percentage a bit harder to read. Let’s transform that to look like <code>12.5%</code> by: - multiplying the decimal by 100 to get a whole number - rounding to a single decimal digit - converting it to a string and adding the <code>%</code> sign</p>
+<p>Not bad, but I find that decimal representation of the percentage a bit harder to read. Let’s transform that to look like <code>12.5%</code> by:</p>
+<ul>
+<li>multiplying the decimal by 100 to get a whole number</li>
+<li>rounding to a single decimal digit</li>
+<li>converting it to a string and adding the <code>%</code> sign</li>
+</ul>
 <div class="cell" data-execution_count="38">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="st">  select </span></span>
@@ -2762,7 +2774,12 @@ memory usage: 50.6+ MB</code></pre>
 <section id="cleaning-this-up-for-readability" class="level2">
 <h2 class="anchored" data-anchor-id="cleaning-this-up-for-readability">Cleaning this up for readability</h2>
 <p>At this point we have a working query, but the syntax is getting a bit dense and hard to read. I’d like to break this up a bit to make it more clear what is happening.</p>
-<p>Our code has three main steps: 1. calculate the counts of charter schools and all schools for each state 2. divide the counts to calculate a percentage value as decimal 3. transform the decimal value to a string representation of the percentage</p>
+<p>Our code has three main steps:</p>
+<ol type="1">
+<li>calculate the counts of charter schools and all schools for each state</li>
+<li>divide the counts to calculate a percentage value as decimal</li>
+<li>transform the decimal value to a string representation of the percentage</li>
+</ol>
 <p>We can use nested subqueries to do this, but I consider that an anti-pattern in SQL and prefer the use of CTEs (common table expressions). They allow us to designate a query to be an intermediate result that can be further queried.</p>
 <section id="new-vocabulary" class="level3">
 <h3 class="anchored" data-anchor-id="new-vocabulary">New Vocabulary</h3>
@@ -3688,7 +3705,7 @@ memory usage: 50.6+ MB</code></pre>
 </div>
 <p>Oh no!!!</p>
 <p>Our conversion of the percentage into a string has ruined our ability to sort the values. This is why it is so vital to understand data types. Strings are sorted alphabetically but numbers are sorted numerically. What that means in this context is that when sorting descending (reverse), the string <code>"8"</code> is larger than the string <code>"50"</code> because 8 comes after 5. If the value were still numbers that would not be the case.</p>
-<p>To resolve this we need to either: preserve the original decimal column for sorting rather than replace it entirely, or do our sorting before the conversion.</p>
+<p>To resolve this we can preserve the original decimal column for sorting rather than replace it entirely.</p>
 <div class="cell" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="st">  with school_counts as (</span></span>
@@ -4446,7 +4463,7 @@ memory usage: 50.6+ MB</code></pre>
 </div>
 </div>
 <p>We can see that there are two values that might work here: - Education Unit Total - Derived - Education Unit Total minus Adult Education Count</p>
-<p>We can use the first as it seems more straight-forward but compare the enrollment number if we use the other one to better understand the differences.</p>
+<p>We can use the first as it seems more straight-forward and includes the full number of students (including adult ed).</p>
 <p>Before we do that, let’s pull out the relevant data from the dataset that we want to join to our directory data.</p>
 <div class="cell" data-execution_count="44">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="st">"""</span></span>
@@ -4930,7 +4947,7 @@ memory usage: 50.6+ MB</code></pre>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">on</span> d.school_year <span class="op">=</span> e.school_year</span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">and</span> d.st <span class="op">=</span> e.st</span>
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">and</span> d.ncessch <span class="op">=</span> e.ncessch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Notice the use of table table aliases (<code>d</code> and <code>e</code> resprectively) to help distinsguish between columns in either dataset. Another way to write that join without the aliases would be:</p>
+<p>Notice the use of table aliases (<code>d</code> and <code>e</code> resprectively) to help distinguish between columns in either dataset. Another way to write that join without the aliases would be:</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">from</span> directory_info</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">inner</span> <span class="kw">join</span> total_enrollment</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">on</span> directory_info.school_year <span class="op">=</span> total_enrollment.school_year</span>
@@ -5505,7 +5522,7 @@ memory usage: 50.6+ MB</code></pre>
 </div>
 </div>
 </div>
-<p>You’ll notice some similar syntax as our previous aggregate query, but I have ommited the step convertin the percent to a string here to aid in future analysis.</p>
+<p>You’ll notice some similar syntax as our previous aggregate query, but I have omitted the step converting the percent to a string here to aid in future analysis.</p>
 </section>
 <section id="wrapping-up-with-some-rankings" class="level2">
 <h2 class="anchored" data-anchor-id="wrapping-up-with-some-rankings">Wrapping up with some rankings</h2>
@@ -6254,8 +6271,8 @@ memory usage: 50.6+ MB</code></pre>
 </div>
 <section id="combining-rankings" class="level3">
 <h3 class="anchored" data-anchor-id="combining-rankings">Combining Rankings</h3>
-<p>These rankings are useful and can certainly make it easier to sort, but the haven’t provided us with any more definitive of an answer. To do that, let’s combine the rankings across metrics and find which state has the lowest value (ie. closest to #1 across all combined metrics).</p>
-<p>We’ll once again use the rank function but across the sum of the other ranks.</p>
+<p>These rankings are useful and can certainly make it easier to sort, but they haven’t provided us with any more definitive of an answer. To do that, let’s combine the rankings across metrics and find which state has the lowest value (ie. closest to #1 across all combined metrics).</p>
+<p>We’ll once again use the <code>rank</code> function but across the sum of the other ranks.</p>
 <div class="cell" data-execution_count="99">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="st">  select *,</span></span>
@@ -7050,7 +7067,7 @@ memory usage: 50.6+ MB</code></pre>
 <section id="summary" class="level3">
 <h3 class="anchored" data-anchor-id="summary">Summary</h3>
 <p>In this tutorial we learned: 1. some basic SQL vocabulary 2. how to read data from files into dataframes for querying 3. how to explore the structure of a new dataset 4. how to select data from a dataframe using duckdb and sql syntax 5. how to filter and limit data 6. how to translate questions into queries 7. how to do some basic aggregations like <code>count</code> and <code>sum</code> 8. how to better organize complex queries with CTEs 9. a valuable lesson about data types 10. how to join data from multiple datasets 11. how to leverage a basic window function <code>rank</code> to come to a more definitive answer 12. how to store the output of our analysis for future use</p>
-<p>I hope this was helpful and gave you a taste of how to iterate on a set of questions using SQL to find an answer in structured way (even without access to a database).</p>
+<p>I hope this was helpful and gave you a taste of how to iterate on a set of questions using SQL to find an answer in a structured way (even without access to a database).</p>
 
 
 </section>
