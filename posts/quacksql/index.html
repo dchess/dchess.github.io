@@ -6,9 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2020-11-19">
+<meta name="author" content="Dan Hess">
+<meta name="dcterms.date" content="2026-03-08">
 
-<title>InnovateEDU Webinar - 19 November 2020 – dchess.org</title>
+<title>QuackSQL – dchess.org</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -120,9 +156,9 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">InnovateEDU Webinar - 19 November 2020</h1>
+      <h1 class="title">QuackSQL</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">projects</div>
+                <div class="quarto-category">project</div>
               </div>
                   </div>
   </div>
@@ -130,11 +166,17 @@ ul.task-list li input[type="checkbox"] {
   
   <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Dan Hess </p>
+            </div>
+    </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 19, 2020</p>
+        <p class="date">March 8, 2026</p>
       </div>
     </div>
     
@@ -153,22 +195,156 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="google-classroom-connector" class="level2">
-<h2 class="anchored" data-anchor-id="google-classroom-connector">Google Classroom Connector</h2>
-<p>In the wake of COVID19, we needed to provide <a href="www.kippnorcal.org">our schools</a> with visibility into student engagement with distance learning. The majority of our schools were using Google Classroom as their LMS (Learning Management System) and we knew that pulling this data down into our data warehouse ASAP would be a vital piece of that puzzle.</p>
-<p>We initially built a data pipeline or “connector” using the Google Classroom API and published it to a <a href="https://github.com/kippnorcal/google_classroom">public repo</a> for others to use. I partnered closely with <a href="https://www.linkedin.com/in/zachkagin">Zach Kagin</a> who had volunteered his time pro-bono to the project to support us in this vital time. Shout out to his incredible work on batching the API calls which substantially improved the performance of the codebase.</p>
-<p>Soon after, <a href="https://www.linkedin.com/in/erinmote">Erin Mote</a> from <a href="https://www.innovateedunyc.org/">InnovateEDU</a> reached out about a possible partnership to <a href="https://github.com/InnovateEDU-NYC/google_classroom">fork the repo</a> and produce a version that could load the data to BigQuery rather than SQL Server so it could be run on a free instance of Google Cloud Platform with minimal effort. I partnered with <a href="https://www.linkedin.com/in/marcos-alcozer">Marcos Alcozer</a> to translate our inital work into something that would be easily deployable on Google Cloud Shell. His team then put together <a href="https://innovateedu-nyc.github.io/google_classroom/index.html#0">beautiful and simple documentation</a> to make it even more effortless to spin up this solution for Districts and CMOs around the country.</p>
+<section id="quacksql-organizing-duckdb-queries" class="level1">
+<h1>QuackSQL: Organizing DuckDB Queries</h1>
+<p><a href="https://duckdb.org/">DuckDB</a> has quietly become my go-to tool for analytical work in Python. It runs locally, reads Parquet files directly, and handles large analytical queries efficiently. For research projects where the database is part of the analysis rather than a persistent service, DuckDB fits naturally.</p>
+<p>Once projects grow beyond a few exploratory queries, a familiar problem appears: where should the SQL live?</p>
+<section id="common-pattern-in-python-projects" class="level2">
+<h2 class="anchored" data-anchor-id="common-pattern-in-python-projects">Common Pattern in Python Projects</h2>
+<p>Many projects start with queries embedded in Python strings:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> duckdb</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>conn <span class="op">=</span> duckdb.<span class="ex">connect</span>()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">    select</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">        district_id,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">        avg(math_score) AS avg_math</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">    from parquet_scan('state_assessment.parquet')</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">    group by district_id</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>district_scores <span class="op">=</span> conn.execute(query).df()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This works for small analyses, but as queries grow, logic is reused, and scripts become longer, sql strings scattered across files become hard to maintain, reuse, and test.</p>
+<p>In the Postgres ecosystem, PugSQL solves this problem:</p>
+<ul>
+<li>Store SQL in .sql files</li>
+<li>Give each query a name</li>
+<li>Load queries as callable Python functions</li>
+</ul>
+<p>I wanted the same workflow for DuckDB. That led to <a href="https://pypi.org/project/quacksql/">QuackSQL</a>.</p>
 </section>
-<section id="webinar" class="level2">
-<h2 class="anchored" data-anchor-id="webinar">Webinar</h2>
-<p>You can see Erin and I presenting a tutorial on how to deploy this solution below.</p>
-<p style="text-align:center;">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/YeJnHmKBClk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" align="middle">
-</iframe>
-</p>
-<p>I’m incredibly proud of this work and the impact it was able to have in such a critical time. It was instrumental in my team’s ability to produce meaningful insights on distance learning engagement and even helped support tracking asynchronous attendance with a level of fidelity other orgs struggled to produce without massive manual overhead.</p>
+<section id="what-quacksql-does" class="level2">
+<h2 class="anchored" data-anchor-id="what-quacksql-does">What QuackSQL Does</h2>
+<p>QuackSQL is a minimal Python wrapper around DuckDB. It lets you organize queries in SQL files and call them from Python.</p>
+<p>A typical project might look like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">queries/</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">district_math_averages.sql</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">school_growth.sql</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">district_enrollment.sql</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">proficiency_rate.sql</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Inside assessments.sql:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- district_math_averages.sql</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    district_id,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">avg</span>(math_score) <span class="kw">as</span> avg_math_score</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">from</span> parquet_scan($path)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">group</span> <span class="kw">by</span> district_id</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">order</span> <span class="kw">by</span> avg_math_score <span class="kw">desc</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- school_growth.sql</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    school_year,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    school_id,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">avg</span>(math_score) <span class="op">-</span> <span class="fu">lag</span>(<span class="fu">avg</span>(math_score)) <span class="kw">over</span> (</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">partition</span> <span class="kw">by</span> school_id <span class="kw">order</span> <span class="kw">by</span> school_year</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="kw">as</span> growth</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">from</span> assessments</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Each named query becomes a callable function in Python:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> quacksql</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>db <span class="op">=</span> quacksql.<span class="ex">connect</span>()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>quacksql.module(<span class="st">'./queries'</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>districts <span class="op">=</span> db.district_math_averages(path<span class="op">=</span><span class="st">"state_assessment.parquet"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>growth <span class="op">=</span> db.school_growth()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>There is no ORM or query builder. <strong>SQL stays SQL</strong>.</p>
+</section>
+<section id="why-this-works-with-duckdb" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-works-with-duckdb">Why This Works with DuckDB</h2>
+<p>DuckDB runs inside your process. Analytical workflows often include:</p>
+<ul>
+<li>Reading several Parquet datasets</li>
+<li>Joining them locally</li>
+<li>Computing aggregates</li>
+<li>Exporting results or visualizations</li>
+</ul>
+<p>DuckDB is not a separate dependency. It is part of the analysis. This makes it natural to structure queries as reusable modules with QuackSQL.</p>
+<section id="example-cross-state-education-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="example-cross-state-education-analysis">Example: Cross-State Education Analysis</h3>
+<p>Education research often involves combining datasets from multiple states. Each state may publish:</p>
+<ul>
+<li>Enrollment counts</li>
+<li>Assessment results</li>
+<li>District demographics</li>
+</ul>
+<p>Suppose you normalize these datasets into Parquet files and want to compute district-level indicators and proficiency trends.</p>
+<p>Your SQL files might look like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- district_enrollment.sql</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    district_id,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(enrollment) <span class="kw">as</span> total_enrollment</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">from</span> parquet_scan($enrollment_file)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">group</span> <span class="kw">by</span> district_id;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- proficiency_rate.sql</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    district_id,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">avg</span>(<span class="cf">case</span> <span class="cf">when</span> proficient <span class="op">=</span> <span class="dv">1</span> <span class="cf">then</span> <span class="dv">1</span> <span class="cf">else</span> <span class="dv">0</span> <span class="cf">end</span>) <span class="kw">as</span> proficiency_rate</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">from</span> parquet_scan($assessment_file)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">group</span> <span class="kw">by</span> district_id;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Python scripts remain clean and readable:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>db <span class="op">=</span> quacksql.<span class="ex">connect</span>(<span class="st">"education.duckdb"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>enrollment <span class="op">=</span> db.district_enrollment(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    enrollment_file<span class="op">=</span><span class="st">"enrollment.parquet"</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>proficiency <span class="op">=</span> db.proficiency_rate(</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    assessment_file<span class="op">=</span><span class="st">"assessments.parquet"</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This structure allows you to reuse queries across analyses, notebooks, and reports.</p>
+</section>
+</section>
+<section id="why-not-an-orm" class="level2">
+<h2 class="anchored" data-anchor-id="why-not-an-orm">Why Not an ORM</h2>
+<p>ORMS map relational data to objects. They work for transactional applications but make analytical queries harder to read, especially when data involves:</p>
+<ul>
+<li>Large aggregations</li>
+<li>Window functions</li>
+<li>Cross-file joins</li>
+</ul>
+<p>SQL expresses these operations naturally. QuackSQL leaves SQL intact and focuses on organization.</p>
+</section>
+<section id="design-philosophy" class="level2">
+<h2 class="anchored" data-anchor-id="design-philosophy">Design Philosophy</h2>
+<p>QuackSQL follows four simple principles:</p>
+<ol type="1">
+<li>SQL should stay SQL. No DSLs, no query builders.</li>
+<li>Files are the module system. A directory of SQL files becomes a collection of queries.</li>
+<li>The database does the work. DuckDB provides the analytics engine. The library structures access.</li>
+<li>Keep the abstraction small. If QuackSQL disappeared tomorrow, the queries would still work as SQL files.</li>
+</ol>
+</section>
+<section id="why-the-name" class="level2">
+<h2 class="anchored" data-anchor-id="why-the-name">Why the Name</h2>
+<p>DuckDB + SQL suggested the obvious theme. <a href="https://dbquacks.com/">The database quacks</a>! The library organizes SQL. Hence the name QuackSQL.</p>
+</section>
+<section id="where-this-fits" class="level2">
+<h2 class="anchored" data-anchor-id="where-this-fits">Where This Fits</h2>
+<p>QuackSQL is useful for projects between ad hoc analyses and fully engineered pipelines, including:</p>
+<ul>
+<li>Research analyses</li>
+<li>Policy evaluation</li>
+<li>Local ETL pipelines</li>
+<li>Reproducible data notebooks</li>
+<li>Lightweight analytical applications</li>
+</ul>
+<p>The goal is keeping analytical work organized and reproducible, not building infrastructure.</p>
+<hr>
+<p>QuackSQL is a small tool, but it makes working with DuckDB projects cleaner and more maintainable, especially in data analysis. By keeping SQL separate from Python orchestration, it supports reproducible workflows and simplifies complex cross-state comparisons. It also makes code review much easier when SQL logic is in dedicated files rather than embedded in Python strings. If you work with DuckDB and want a simple way to organize your queries, give QuackSQL a try!</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

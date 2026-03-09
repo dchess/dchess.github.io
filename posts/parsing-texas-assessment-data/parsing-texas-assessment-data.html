@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2022-01-29">
 
-<title>dchess.org - Parsing Texas Assessment Data</title>
+<title>Parsing Texas Assessment Data – dchess.org</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +22,7 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -58,29 +59,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-85b627666defc5f361221c02dc00cb03.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -89,58 +98,59 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">dchess.org</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://drive.google.com/file/d/1O0-Le26SdL-DhDo2LsOQVWR5BAV4I17F/view" rel="" target="">
- <span class="menu-text">Resume</span></a>
+    <a class="nav-link" href="https://drive.google.com/file/d/1O0-Le26SdL-DhDo2LsOQVWR5BAV4I17F/view"> 
+<span class="menu-text">Resume</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/dchess" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/dchess"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://linkedin.com/in/dchess" rel="" target=""><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://linkedin.com/in/dchess"> <i class="bi bi-linkedin" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
+          </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -180,6 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+
 <section id="data-transformation-of-the-texas-staar-aggregate-data-for-2020-2021" class="level1">
 <h1>Data Transformation of the Texas STAAR Aggregate Data for 2020-2021</h1>
 <p>Data files available <a href="https://tea.texas.gov/student-assessment/testing/staar/staar-aggregate-data-for-2020-2021">here on the TEA website</a>.</p>
@@ -199,8 +210,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="getting-the-lay-of-the-land" class="level2">
 <h2 class="anchored" data-anchor-id="getting-the-lay-of-the-land">Getting the Lay of the Land</h2>
 <p>Before determining a solution and final schema, I wanted to understand the structure of these files. This can be accomplished by looping over the linked dat files and getting their shapes.</p>
-<div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div id="cell-3" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xlrd</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -208,17 +219,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Display options for pandas data frames</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_columns'</span>, <span class="va">None</span>)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'max_colwidth'</span>, <span class="va">None</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'max_seq_item'</span>, <span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'max_seq_item'</span>, <span class="va">None</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="cell" data-execution_count="47">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>base_url <span class="op">=</span> <span class="st">"https://tea.texas.gov/sites/default/files/"</span></span>
+<div id="cell-4" class="cell" data-execution_count="47">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>base_url <span class="op">=</span> <span class="st">"https://tea.texas.gov/sites/default/files/"</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dat_files <span class="op">=</span> [<span class="st">"cfy21e3.dat"</span>, <span class="st">"cfy21e4.dat"</span>, <span class="st">"cfy21e5.dat"</span>, <span class="st">"cfy21e6.dat"</span>, <span class="st">"cfy21e7.dat"</span>, <span class="st">"cfy21e8.dat"</span>]</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dat_file <span class="kw">in</span> dat_files:</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>base_url<span class="sc">}{</span>dat_file<span class="sc">}</span><span class="ss">"</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> Path(url).stem</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(url)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(content, df.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(content, df.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>cfy21e3 (4643, 2093)
 cfy21e4 (4622, 3075)
@@ -245,11 +256,11 @@ cfy21e8 (2370, 4301)</code></pre>
 <h2 class="anchored" data-anchor-id="a-first-attempt">A First Attempt</h2>
 <p>My initial thought was to split these variable names using the the <code>_</code> as a delimiter, but this was met with limited success, again due to inconsistent usage.</p>
 <p><strong>Note:</strong> You will see the following warning in places <code>WARNING *** OLE2 inconsistency: SSCS size is 0 but SSAT size is non-zero</code>. This is due to an encoding issue with the TEA provided files and can be ignored as it does not impact our ability to parse the files.</p>
-<div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>grade3_vars <span class="op">=</span> <span class="st">'https://tea.texas.gov/sites/default/files/fy21_varlist_g03.xls'</span></span>
+<div id="cell-6" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>grade3_vars <span class="op">=</span> <span class="st">'https://tea.texas.gov/sites/default/files/fy21_varlist_g03.xls'</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_excel(grade3_vars)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>WARNING *** OLE2 inconsistency: SSCS size is 0 but SSAT size is non-zero</code></pre>
 </div>
@@ -257,7 +268,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -268,121 +279,121 @@ cfy21e8 (2370, 4301)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
+<th data-quarto-table-cell-role="th">0</th>
 <td>campus</td>
 <td>Character</td>
 <td>Campus Number</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
+<th data-quarto-table-cell-role="th">1</th>
 <td>year</td>
 <td>Character</td>
 <td>Test Administration Year</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
+<th data-quarto-table-cell-role="th">2</th>
 <td>region</td>
 <td>Character</td>
 <td>Education Service Center (Region) Number</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
+<th data-quarto-table-cell-role="th">3</th>
 <td>district</td>
 <td>Character</td>
 <td>District Number</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
+<th data-quarto-table-cell-role="th">4</th>
 <td>dname</td>
 <td>Character</td>
 <td>District Name</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
+<th data-quarto-table-cell-role="th">5</th>
 <td>cname</td>
 <td>Character</td>
 <td>Campus Name</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
+<th data-quarto-table-cell-role="th">6</th>
 <td>grade</td>
 <td>Character</td>
 <td>Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
+<th data-quarto-table-cell-role="th">7</th>
 <td>r_all_docs_n</td>
 <td>Numeric</td>
 <td># Answer Documents Submitted -- Reading -- All Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
+<th data-quarto-table-cell-role="th">8</th>
 <td>r_all_abs_n</td>
 <td>Numeric</td>
 <td># Absent - Not Tested -- Reading -- All Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
+<th data-quarto-table-cell-role="th">9</th>
 <td>r_all_oth_n</td>
 <td>Numeric</td>
 <td># Other - Not Tested -- Reading -- All Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">10</td>
+<th data-quarto-table-cell-role="th">10</th>
 <td>m_all_docs_n</td>
 <td>Numeric</td>
 <td># Answer Documents Submitted -- Mathematics -- All Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">11</td>
+<th data-quarto-table-cell-role="th">11</th>
 <td>m_all_abs_n</td>
 <td>Numeric</td>
 <td># Absent - Not Tested -- Mathematics -- All Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
+<th data-quarto-table-cell-role="th">12</th>
 <td>m_all_oth_n</td>
 <td>Numeric</td>
 <td># Other - Not Tested -- Mathematics -- All Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">13</td>
+<th data-quarto-table-cell-role="th">13</th>
 <td>r_all_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- All Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">14</td>
+<th data-quarto-table-cell-role="th">14</th>
 <td>r_sexm_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- Male Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">15</td>
+<th data-quarto-table-cell-role="th">15</th>
 <td>r_sexf_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- Female Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">16</td>
+<th data-quarto-table-cell-role="th">16</th>
 <td>r_sexv_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- No Sex Info Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">17</td>
+<th data-quarto-table-cell-role="th">17</th>
 <td>r_ethh_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- Hispanic/Latino Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">18</td>
+<th data-quarto-table-cell-role="th">18</th>
 <td>r_ethi_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- American Indian or Alaska Native Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">19</td>
+<th data-quarto-table-cell-role="th">19</th>
 <td>r_etha_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- Asian Students</td>
@@ -394,13 +405,13 @@ cfy21e8 (2370, 4301)</code></pre>
 </div>
 </div>
 <p>It appears at first glance, that the pattern is subject, student demographic group, variable type. However, we can see this doesn’t remain consistent.</p>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df.tail(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-8" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df.tail(<span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -411,91 +422,91 @@ cfy21e8 (2370, 4301)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2078</td>
+<th data-quarto-table-cell-role="th">2078</th>
 <td>m_spen_pct_cat4</td>
 <td>Numeric</td>
 <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Not Special Ed Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2079</td>
+<th data-quarto-table-cell-role="th">2079</th>
 <td>m_spev_avg_cat4</td>
 <td>Numeric</td>
 <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info Special Ed Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2080</td>
+<th data-quarto-table-cell-role="th">2080</th>
 <td>m_spev_pct_cat4</td>
 <td>Numeric</td>
 <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info Special Ed Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2081</td>
+<th data-quarto-table-cell-role="th">2081</th>
 <td>m_gify_avg_cat4</td>
 <td>Numeric</td>
 <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- Gifted/Talented Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2082</td>
+<th data-quarto-table-cell-role="th">2082</th>
 <td>m_gify_pct_cat4</td>
 <td>Numeric</td>
 <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Gifted/Talented Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2083</td>
+<th data-quarto-table-cell-role="th">2083</th>
 <td>m_gifn_avg_cat4</td>
 <td>Numeric</td>
 <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- Not Gifted/Talented Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2084</td>
+<th data-quarto-table-cell-role="th">2084</th>
 <td>m_gifn_pct_cat4</td>
 <td>Numeric</td>
 <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Not Gifted/Talented Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2085</td>
+<th data-quarto-table-cell-role="th">2085</th>
 <td>m_gifv_avg_cat4</td>
 <td>Numeric</td>
 <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info Gifted/Talented Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2086</td>
+<th data-quarto-table-cell-role="th">2086</th>
 <td>m_gifv_pct_cat4</td>
 <td>Numeric</td>
 <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info Gifted/Talented Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2087</td>
+<th data-quarto-table-cell-role="th">2087</th>
 <td>m_atry_avg_cat4</td>
 <td>Numeric</td>
 <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- At-Risk Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2088</td>
+<th data-quarto-table-cell-role="th">2088</th>
 <td>m_atry_pct_cat4</td>
 <td>Numeric</td>
 <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- At-Risk Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2089</td>
+<th data-quarto-table-cell-role="th">2089</th>
 <td>m_atrn_avg_cat4</td>
 <td>Numeric</td>
 <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- Not At-Risk Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2090</td>
+<th data-quarto-table-cell-role="th">2090</th>
 <td>m_atrn_pct_cat4</td>
 <td>Numeric</td>
 <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Not At-Risk Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2091</td>
+<th data-quarto-table-cell-role="th">2091</th>
 <td>m_atrv_avg_cat4</td>
 <td>Numeric</td>
 <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info At-Risk Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2092</td>
+<th data-quarto-table-cell-role="th">2092</th>
 <td>m_atrv_pct_cat4</td>
 <td>Numeric</td>
 <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info At-Risk Students</td>
@@ -507,13 +518,13 @@ cfy21e8 (2370, 4301)</code></pre>
 </div>
 </div>
 <p>In these latter cases, there is a 4th variable reporting category that comes before the subject and student group.</p>
-<div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df[<span class="dv">195</span>:<span class="dv">215</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-10" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df[<span class="dv">195</span>:<span class="dv">215</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -524,121 +535,121 @@ cfy21e8 (2370, 4301)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">195</td>
+<th data-quarto-table-cell-role="th">195</th>
 <td>r_atrv_unsatgl_nm</td>
 <td>Numeric</td>
 <td># Did Not Meet Grade Level Performance -- Reading -- No Info At-Risk Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">196</td>
+<th data-quarto-table-cell-role="th">196</th>
 <td>r_all_approgl_nm</td>
 <td>Numeric</td>
 <td># Approaches Grade Level Performance -- Reading -- All Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">197</td>
+<th data-quarto-table-cell-role="th">197</th>
 <td>r_sexm_approgl_nm</td>
 <td>Numeric</td>
 <td># Approaches Grade Level Performance -- Reading -- Male Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">198</td>
+<th data-quarto-table-cell-role="th">198</th>
 <td>r_sexf_approgl_nm</td>
 <td>Numeric</td>
 <td># Approaches Grade Level Performance -- Reading -- Female Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">199</td>
+<th data-quarto-table-cell-role="th">199</th>
 <td>r_sexv_approgl_nm</td>
 <td>Numeric</td>
 <td># Approaches Grade Level Performance -- Reading -- No Sex Info Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">200</td>
+<th data-quarto-table-cell-role="th">200</th>
 <td>r_ethh_approgl_nm</td>
 <td>Numeric</td>
 <td># Approaches Grade Level Performance -- Reading -- Hispanic/Latino Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">201</td>
+<th data-quarto-table-cell-role="th">201</th>
 <td>r_ethi_approgl_nm</td>
 <td>Numeric</td>
 <td># Approaches Grade Level Performance -- Reading -- American Indian or Alaska Native Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">202</td>
+<th data-quarto-table-cell-role="th">202</th>
 <td>r_etha_approgl_nm</td>
 <td>Numeric</td>
 <td># Approaches Grade Level Performance -- Reading -- Asian Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">203</td>
+<th data-quarto-table-cell-role="th">203</th>
 <td>r_ethb_approgl_nm</td>
 <td>Numeric</td>
 <td># Approaches Grade Level Performance -- Reading -- Black or African American Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">204</td>
+<th data-quarto-table-cell-role="th">204</th>
 <td>r_ethp_approgl_nm</td>
 <td>Numeric</td>
 <td># Approaches Grade Level Performance -- Reading -- Native Hawaiian or Other Pacific Islander Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">205</td>
+<th data-quarto-table-cell-role="th">205</th>
 <td>r_ethw_approgl_nm</td>
 <td>Numeric</td>
 <td># Approaches Grade Level Performance -- Reading -- White Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">206</td>
+<th data-quarto-table-cell-role="th">206</th>
 <td>r_eth2_approgl_nm</td>
 <td>Numeric</td>
 <td># Approaches Grade Level Performance -- Reading -- Two or More Races Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">207</td>
+<th data-quarto-table-cell-role="th">207</th>
 <td>r_ethv_approgl_nm</td>
 <td>Numeric</td>
 <td># Approaches Grade Level Performance -- Reading -- No Ethnicity Info Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">208</td>
+<th data-quarto-table-cell-role="th">208</th>
 <td>r_ecoy_approgl_nm</td>
 <td>Numeric</td>
 <td># Approaches Grade Level Performance -- Reading -- Econ Disadv Students Codes: 1 2 9</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">209</td>
+<th data-quarto-table-cell-role="th">209</th>
 <td>r_econ_approgl_nm</td>
 <td>Numeric</td>
 <td># Approaches Grade Level Performance -- Reading -- Not Econ Disadv Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">210</td>
+<th data-quarto-table-cell-role="th">210</th>
 <td>r_eco1_approgl_nm</td>
 <td>Numeric</td>
 <td># Approaches Grade Level Performance -- Reading -- Free Meals Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">211</td>
+<th data-quarto-table-cell-role="th">211</th>
 <td>r_eco2_approgl_nm</td>
 <td>Numeric</td>
 <td># Approaches Grade Level Performance -- Reading -- Reduced-Price Meals Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">212</td>
+<th data-quarto-table-cell-role="th">212</th>
 <td>r_eco9_approgl_nm</td>
 <td>Numeric</td>
 <td># Approaches Grade Level Performance -- Reading -- Other Econ Disadvantaged Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">213</td>
+<th data-quarto-table-cell-role="th">213</th>
 <td>r_ecov_approgl_nm</td>
 <td>Numeric</td>
 <td># Approaches Grade Level Performance -- Reading -- No Info Econ Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">214</td>
+<th data-quarto-table-cell-role="th">214</th>
 <td>r_ti1y_approgl_nm</td>
 <td>Numeric</td>
 <td># Approaches Grade Level Performance -- Reading -- Title-I Participant Students Codes: 6 7 9</td>
@@ -655,8 +666,8 @@ cfy21e8 (2370, 4301)</code></pre>
 <section id="a-different-solution" class="level2">
 <h2 class="anchored" data-anchor-id="a-different-solution">A Different Solution</h2>
 <p>However, we can simply ignore the variables. We have a description column that also has it’s own delimiter: <code>--</code>.</p>
-<div class="cell" data-execution_count="52">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>descriptions <span class="op">=</span> df.Description.values.tolist()</span>
+<div id="cell-12" class="cell" data-execution_count="52">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>descriptions <span class="op">=</span> df.Description.values.tolist()</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> description <span class="kw">in</span> descriptions[:<span class="dv">20</span>]:</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    parts <span class="op">=</span> description.split(<span class="st">'--'</span>)</span>
@@ -666,7 +677,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> description <span class="kw">in</span> descriptions[<span class="op">-</span><span class="dv">5</span>:]:</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    parts <span class="op">=</span> description.split(<span class="st">'--'</span>)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(parts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(parts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>['Campus Number']
 ['Test Administration Year']
@@ -701,13 +712,13 @@ cfy21e8 (2370, 4301)</code></pre>
 <p>This mostly works. We have three different types of descriptions/variables: - 1 part variables like <code>['Campus Number']</code> - 3 part variables like <code>['# Tested ', ' Reading ', ' All Students']</code> - 4 part variables like <code>['% Avg Items Correct', 'Reporting Category 4 ', ' Mathematics ', ' At-Risk Students']</code></p>
 <p>That means we can use the list length to determine the order of the variable values: variable name, test subject, and student group. The fourth part reporting category is basically a modifier for the variable name so we can combine those.</p>
 <p>By examining a single variable name, we can see that <code># Tested</code>, for example, isn’t actually 122 different variables but rather a single variable with 122 permutations of test subject and student group: <strong>61 student groups * 2 test subjects</strong></p>
-<div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df[df.Description.<span class="bu">str</span>.contains(<span class="st">'# Tested'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-14" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df[df.Description.<span class="bu">str</span>.contains(<span class="st">'# Tested'</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -718,67 +729,67 @@ cfy21e8 (2370, 4301)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">13</td>
+<th data-quarto-table-cell-role="th">13</th>
 <td>r_all_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- All Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">14</td>
+<th data-quarto-table-cell-role="th">14</th>
 <td>r_sexm_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- Male Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">15</td>
+<th data-quarto-table-cell-role="th">15</th>
 <td>r_sexf_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- Female Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">16</td>
+<th data-quarto-table-cell-role="th">16</th>
 <td>r_sexv_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- No Sex Info Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">17</td>
+<th data-quarto-table-cell-role="th">17</th>
 <td>r_ethh_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- Hispanic/Latino Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">...</td>
+<th data-quarto-table-cell-role="th">...</th>
 <td>...</td>
 <td>...</td>
 <td>...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">130</td>
+<th data-quarto-table-cell-role="th">130</th>
 <td>m_gifn_d</td>
 <td>Numeric</td>
 <td># Tested -- Mathematics -- Not Gifted/Talented Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">131</td>
+<th data-quarto-table-cell-role="th">131</th>
 <td>m_gifv_d</td>
 <td>Numeric</td>
 <td># Tested -- Mathematics -- No Info Gifted/Talented Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">132</td>
+<th data-quarto-table-cell-role="th">132</th>
 <td>m_atry_d</td>
 <td>Numeric</td>
 <td># Tested -- Mathematics -- At-Risk Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">133</td>
+<th data-quarto-table-cell-role="th">133</th>
 <td>m_atrn_d</td>
 <td>Numeric</td>
 <td># Tested -- Mathematics -- Not At-Risk Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">134</td>
+<th data-quarto-table-cell-role="th">134</th>
 <td>m_atrv_d</td>
 <td>Numeric</td>
 <td># Tested -- Mathematics -- No Info At-Risk Students</td>
@@ -799,16 +810,16 @@ cfy21e8 (2370, 4301)</code></pre>
 <section id="splitting-the-description" class="level3">
 <h3 class="anchored" data-anchor-id="splitting-the-description">Splitting the Description</h3>
 <p>To start let’s add a new column to the dataframe that has the array of descriptors. We can also remove any leading or trailing whitespace from both the variable and description to prevent mismatch issues later.</p>
-<div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Variable"</span>] <span class="op">=</span> df[<span class="st">"Variable"</span>].<span class="bu">str</span>.strip()</span>
+<div id="cell-16" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Variable"</span>] <span class="op">=</span> df[<span class="st">"Variable"</span>].<span class="bu">str</span>.strip()</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Description"</span>] <span class="op">=</span> df[<span class="st">"Description"</span>].<span class="bu">str</span>.strip()</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"desc_list"</span>] <span class="op">=</span> df[<span class="st">"Description"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: x.split(<span class="st">"--"</span>))</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -820,77 +831,77 @@ cfy21e8 (2370, 4301)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
+<th data-quarto-table-cell-role="th">0</th>
 <td>campus</td>
 <td>Character</td>
 <td>Campus Number</td>
 <td>[Campus Number]</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
+<th data-quarto-table-cell-role="th">1</th>
 <td>year</td>
 <td>Character</td>
 <td>Test Administration Year</td>
 <td>[Test Administration Year]</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
+<th data-quarto-table-cell-role="th">2</th>
 <td>region</td>
 <td>Character</td>
 <td>Education Service Center (Region) Number</td>
 <td>[Education Service Center (Region) Number]</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
+<th data-quarto-table-cell-role="th">3</th>
 <td>district</td>
 <td>Character</td>
 <td>District Number</td>
 <td>[District Number]</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
+<th data-quarto-table-cell-role="th">4</th>
 <td>dname</td>
 <td>Character</td>
 <td>District Name</td>
 <td>[District Name]</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">...</td>
+<th data-quarto-table-cell-role="th">...</th>
 <td>...</td>
 <td>...</td>
 <td>...</td>
 <td>...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2088</td>
+<th data-quarto-table-cell-role="th">2088</th>
 <td>m_atry_pct_cat4</td>
 <td>Numeric</td>
 <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- At-Risk Students</td>
 <td>[% Avg Items Correct, Reporting Category 4 , Mathematics , At-Risk Students]</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2089</td>
+<th data-quarto-table-cell-role="th">2089</th>
 <td>m_atrn_avg_cat4</td>
 <td>Numeric</td>
 <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- Not At-Risk Students</td>
 <td>[# Avg Items Correct, Reporting Category 4 , Mathematics , Not At-Risk Students]</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2090</td>
+<th data-quarto-table-cell-role="th">2090</th>
 <td>m_atrn_pct_cat4</td>
 <td>Numeric</td>
 <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- Not At-Risk Students</td>
 <td>[% Avg Items Correct, Reporting Category 4 , Mathematics , Not At-Risk Students]</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2091</td>
+<th data-quarto-table-cell-role="th">2091</th>
 <td>m_atrv_avg_cat4</td>
 <td>Numeric</td>
 <td># Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info At-Risk Students</td>
 <td>[# Avg Items Correct, Reporting Category 4 , Mathematics , No Info At-Risk Students]</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2092</td>
+<th data-quarto-table-cell-role="th">2092</th>
 <td>m_atrv_pct_cat4</td>
 <td>Numeric</td>
 <td>% Avg Items Correct--Reporting Category 4 -- Mathematics -- No Info At-Risk Students</td>
@@ -907,8 +918,8 @@ cfy21e8 (2370, 4301)</code></pre>
 <section id="extracting-test-subject" class="level3">
 <h3 class="anchored" data-anchor-id="extracting-test-subject">Extracting Test Subject</h3>
 <p>In most cases the test subject is the 2nd part of the variable description with two exceptions: if the variable is one of the campus/grade variables that only has a single part or for the four part variables that include reporting category.</p>
-<div class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_subject(desc_list):</span>
+<div id="cell-18" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_subject(desc_list):</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Return the 2nd part of 3 part descriptors, the 3rd part of 4 part descriptors, or None.</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -918,16 +929,16 @@ cfy21e8 (2370, 4301)</code></pre>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> length <span class="op">==</span> <span class="dv">4</span>:</span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> desc_list[<span class="dv">2</span>]</span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> length <span class="op">&gt;</span> <span class="dv">1</span>:</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> desc_list[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> desc_list[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"subject"</span>] <span class="op">=</span> df[<span class="st">"desc_list"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: get_subject(x))</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-19" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"subject"</span>] <span class="op">=</span> df[<span class="st">"desc_list"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: get_subject(x))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -940,7 +951,7 @@ cfy21e8 (2370, 4301)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
+<th data-quarto-table-cell-role="th">0</th>
 <td>campus</td>
 <td>Character</td>
 <td>Campus Number</td>
@@ -948,7 +959,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>None</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
+<th data-quarto-table-cell-role="th">1</th>
 <td>year</td>
 <td>Character</td>
 <td>Test Administration Year</td>
@@ -956,7 +967,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>None</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
+<th data-quarto-table-cell-role="th">2</th>
 <td>region</td>
 <td>Character</td>
 <td>Education Service Center (Region) Number</td>
@@ -964,7 +975,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>None</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
+<th data-quarto-table-cell-role="th">3</th>
 <td>district</td>
 <td>Character</td>
 <td>District Number</td>
@@ -972,7 +983,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>None</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
+<th data-quarto-table-cell-role="th">4</th>
 <td>dname</td>
 <td>Character</td>
 <td>District Name</td>
@@ -980,7 +991,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>None</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
+<th data-quarto-table-cell-role="th">5</th>
 <td>cname</td>
 <td>Character</td>
 <td>Campus Name</td>
@@ -988,7 +999,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>None</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
+<th data-quarto-table-cell-role="th">6</th>
 <td>grade</td>
 <td>Character</td>
 <td>Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)</td>
@@ -996,7 +1007,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>None</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
+<th data-quarto-table-cell-role="th">7</th>
 <td>r_all_docs_n</td>
 <td>Numeric</td>
 <td># Answer Documents Submitted -- Reading -- All Students</td>
@@ -1004,7 +1015,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>Reading</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
+<th data-quarto-table-cell-role="th">8</th>
 <td>r_all_abs_n</td>
 <td>Numeric</td>
 <td># Absent - Not Tested -- Reading -- All Students</td>
@@ -1012,7 +1023,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>Reading</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
+<th data-quarto-table-cell-role="th">9</th>
 <td>r_all_oth_n</td>
 <td>Numeric</td>
 <td># Other - Not Tested -- Reading -- All Students</td>
@@ -1020,7 +1031,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>Reading</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">10</td>
+<th data-quarto-table-cell-role="th">10</th>
 <td>m_all_docs_n</td>
 <td>Numeric</td>
 <td># Answer Documents Submitted -- Mathematics -- All Students</td>
@@ -1028,7 +1039,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>Mathematics</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">11</td>
+<th data-quarto-table-cell-role="th">11</th>
 <td>m_all_abs_n</td>
 <td>Numeric</td>
 <td># Absent - Not Tested -- Mathematics -- All Students</td>
@@ -1036,7 +1047,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>Mathematics</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
+<th data-quarto-table-cell-role="th">12</th>
 <td>m_all_oth_n</td>
 <td>Numeric</td>
 <td># Other - Not Tested -- Mathematics -- All Students</td>
@@ -1044,7 +1055,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>Mathematics</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">13</td>
+<th data-quarto-table-cell-role="th">13</th>
 <td>r_all_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- All Students</td>
@@ -1052,7 +1063,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>Reading</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">14</td>
+<th data-quarto-table-cell-role="th">14</th>
 <td>r_sexm_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- Male Students</td>
@@ -1060,7 +1071,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>Reading</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">15</td>
+<th data-quarto-table-cell-role="th">15</th>
 <td>r_sexf_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- Female Students</td>
@@ -1068,7 +1079,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>Reading</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">16</td>
+<th data-quarto-table-cell-role="th">16</th>
 <td>r_sexv_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- No Sex Info Students</td>
@@ -1076,7 +1087,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>Reading</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">17</td>
+<th data-quarto-table-cell-role="th">17</th>
 <td>r_ethh_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- Hispanic/Latino Students</td>
@@ -1084,7 +1095,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>Reading</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">18</td>
+<th data-quarto-table-cell-role="th">18</th>
 <td>r_ethi_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- American Indian or Alaska Native Students</td>
@@ -1092,7 +1103,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>Reading</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">19</td>
+<th data-quarto-table-cell-role="th">19</th>
 <td>r_etha_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- Asian Students</td>
@@ -1110,22 +1121,22 @@ cfy21e8 (2370, 4301)</code></pre>
 <section id="extracting-student-group" class="level2">
 <h2 class="anchored" data-anchor-id="extracting-student-group">Extracting Student Group</h2>
 <p>In all cases (except the single descriptor variables) the student group is included at the end of the description.</p>
-<div class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_student_group(desc_list):</span>
+<div id="cell-21" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_student_group(desc_list):</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Unless the description has only one part, return the final part.</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(desc_list) <span class="op">&gt;</span> <span class="dv">1</span>:</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> desc_list[<span class="op">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> desc_list[<span class="op">-</span><span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"student_group"</span>] <span class="op">=</span> df[<span class="st">"desc_list"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: get_student_group(x))</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-22" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"student_group"</span>] <span class="op">=</span> df[<span class="st">"desc_list"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: get_student_group(x))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="20">
 <div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -1139,7 +1150,7 @@ cfy21e8 (2370, 4301)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
+<th data-quarto-table-cell-role="th">0</th>
 <td>campus</td>
 <td>Character</td>
 <td>Campus Number</td>
@@ -1148,7 +1159,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>None</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
+<th data-quarto-table-cell-role="th">1</th>
 <td>year</td>
 <td>Character</td>
 <td>Test Administration Year</td>
@@ -1157,7 +1168,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>None</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
+<th data-quarto-table-cell-role="th">2</th>
 <td>region</td>
 <td>Character</td>
 <td>Education Service Center (Region) Number</td>
@@ -1166,7 +1177,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>None</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
+<th data-quarto-table-cell-role="th">3</th>
 <td>district</td>
 <td>Character</td>
 <td>District Number</td>
@@ -1175,7 +1186,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>None</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
+<th data-quarto-table-cell-role="th">4</th>
 <td>dname</td>
 <td>Character</td>
 <td>District Name</td>
@@ -1184,7 +1195,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>None</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
+<th data-quarto-table-cell-role="th">5</th>
 <td>cname</td>
 <td>Character</td>
 <td>Campus Name</td>
@@ -1193,7 +1204,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>None</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
+<th data-quarto-table-cell-role="th">6</th>
 <td>grade</td>
 <td>Character</td>
 <td>Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)</td>
@@ -1202,7 +1213,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>None</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
+<th data-quarto-table-cell-role="th">7</th>
 <td>r_all_docs_n</td>
 <td>Numeric</td>
 <td># Answer Documents Submitted -- Reading -- All Students</td>
@@ -1211,7 +1222,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>All Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
+<th data-quarto-table-cell-role="th">8</th>
 <td>r_all_abs_n</td>
 <td>Numeric</td>
 <td># Absent - Not Tested -- Reading -- All Students</td>
@@ -1220,7 +1231,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>All Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
+<th data-quarto-table-cell-role="th">9</th>
 <td>r_all_oth_n</td>
 <td>Numeric</td>
 <td># Other - Not Tested -- Reading -- All Students</td>
@@ -1229,7 +1240,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>All Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">10</td>
+<th data-quarto-table-cell-role="th">10</th>
 <td>m_all_docs_n</td>
 <td>Numeric</td>
 <td># Answer Documents Submitted -- Mathematics -- All Students</td>
@@ -1238,7 +1249,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>All Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">11</td>
+<th data-quarto-table-cell-role="th">11</th>
 <td>m_all_abs_n</td>
 <td>Numeric</td>
 <td># Absent - Not Tested -- Mathematics -- All Students</td>
@@ -1247,7 +1258,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>All Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
+<th data-quarto-table-cell-role="th">12</th>
 <td>m_all_oth_n</td>
 <td>Numeric</td>
 <td># Other - Not Tested -- Mathematics -- All Students</td>
@@ -1256,7 +1267,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>All Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">13</td>
+<th data-quarto-table-cell-role="th">13</th>
 <td>r_all_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- All Students</td>
@@ -1265,7 +1276,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>All Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">14</td>
+<th data-quarto-table-cell-role="th">14</th>
 <td>r_sexm_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- Male Students</td>
@@ -1274,7 +1285,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>Male Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">15</td>
+<th data-quarto-table-cell-role="th">15</th>
 <td>r_sexf_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- Female Students</td>
@@ -1283,7 +1294,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>Female Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">16</td>
+<th data-quarto-table-cell-role="th">16</th>
 <td>r_sexv_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- No Sex Info Students</td>
@@ -1292,7 +1303,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>No Sex Info Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">17</td>
+<th data-quarto-table-cell-role="th">17</th>
 <td>r_ethh_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- Hispanic/Latino Students</td>
@@ -1301,7 +1312,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>Hispanic/Latino Students</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">18</td>
+<th data-quarto-table-cell-role="th">18</th>
 <td>r_ethi_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- American Indian or Alaska Native Students</td>
@@ -1310,7 +1321,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>American Indian or Alaska Native Students</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">19</td>
+<th data-quarto-table-cell-role="th">19</th>
 <td>r_etha_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- Asian Students</td>
@@ -1328,8 +1339,8 @@ cfy21e8 (2370, 4301)</code></pre>
 <section id="creating-a-new-variable-name" class="level2">
 <h2 class="anchored" data-anchor-id="creating-a-new-variable-name">Creating a New Variable Name</h2>
 <p>There are a few problematic characters like <code>#</code> and <code>%</code> in the names of the variables that should be replaced as well as replacing spaces and abbreviating some longer words in the names. This also uses some regex parsing to remove any text contained in parenthesis.</p>
-<div class="cell" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<div id="cell-24" class="cell" data-execution_count="29">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rename_variable(desc_list):</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
@@ -1348,18 +1359,18 @@ cfy21e8 (2370, 4301)</code></pre>
 <span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">'__'</span>: <span class="st">'_'</span>,</span>
 <span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> old, new <span class="kw">in</span> replacements.items():</span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>        variable_name <span class="op">=</span> re.sub(<span class="vs">r"\([^()]*\)"</span>, <span class="st">""</span>, variable_name).strip()</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>        variable_name <span class="op">=</span> re.sub(<span class="vs">r"</span><span class="ch">\(</span><span class="pp">[^()]</span><span class="op">*</span><span class="ch">\)</span><span class="vs">"</span>, <span class="st">""</span>, variable_name).strip()</span>
 <span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>        variable_name <span class="op">=</span> variable_name.replace(old, new)</span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> variable_name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> variable_name</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="cell" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"name"</span>] <span class="op">=</span> df[<span class="st">"desc_list"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: rename_variable(x))</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-25" class="cell" data-execution_count="30">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"name"</span>] <span class="op">=</span> df[<span class="st">"desc_list"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: rename_variable(x))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="30">
 <div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -1374,7 +1385,7 @@ cfy21e8 (2370, 4301)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
+<th data-quarto-table-cell-role="th">0</th>
 <td>campus</td>
 <td>Character</td>
 <td>Campus Number</td>
@@ -1384,7 +1395,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>campus_number</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
+<th data-quarto-table-cell-role="th">1</th>
 <td>year</td>
 <td>Character</td>
 <td>Test Administration Year</td>
@@ -1394,7 +1405,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>test_administration_year</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
+<th data-quarto-table-cell-role="th">2</th>
 <td>region</td>
 <td>Character</td>
 <td>Education Service Center (Region) Number</td>
@@ -1404,7 +1415,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>education_service_center_number</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
+<th data-quarto-table-cell-role="th">3</th>
 <td>district</td>
 <td>Character</td>
 <td>District Number</td>
@@ -1414,7 +1425,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>district_number</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
+<th data-quarto-table-cell-role="th">4</th>
 <td>dname</td>
 <td>Character</td>
 <td>District Name</td>
@@ -1424,7 +1435,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>district_name</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
+<th data-quarto-table-cell-role="th">5</th>
 <td>cname</td>
 <td>Character</td>
 <td>Campus Name</td>
@@ -1434,7 +1445,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>campus_name</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
+<th data-quarto-table-cell-role="th">6</th>
 <td>grade</td>
 <td>Character</td>
 <td>Tested Grade (Usually the Enrolled Grade Unless Student Tested Above Grade)</td>
@@ -1444,7 +1455,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>tested_grade</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
+<th data-quarto-table-cell-role="th">7</th>
 <td>r_all_docs_n</td>
 <td>Numeric</td>
 <td># Answer Documents Submitted -- Reading -- All Students</td>
@@ -1454,7 +1465,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>n_answer_documents_submitted</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
+<th data-quarto-table-cell-role="th">8</th>
 <td>r_all_abs_n</td>
 <td>Numeric</td>
 <td># Absent - Not Tested -- Reading -- All Students</td>
@@ -1464,7 +1475,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>n_absent_not_tested</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
+<th data-quarto-table-cell-role="th">9</th>
 <td>r_all_oth_n</td>
 <td>Numeric</td>
 <td># Other - Not Tested -- Reading -- All Students</td>
@@ -1474,7 +1485,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>n_other_not_tested</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">10</td>
+<th data-quarto-table-cell-role="th">10</th>
 <td>m_all_docs_n</td>
 <td>Numeric</td>
 <td># Answer Documents Submitted -- Mathematics -- All Students</td>
@@ -1484,7 +1495,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>n_answer_documents_submitted</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">11</td>
+<th data-quarto-table-cell-role="th">11</th>
 <td>m_all_abs_n</td>
 <td>Numeric</td>
 <td># Absent - Not Tested -- Mathematics -- All Students</td>
@@ -1494,7 +1505,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>n_absent_not_tested</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
+<th data-quarto-table-cell-role="th">12</th>
 <td>m_all_oth_n</td>
 <td>Numeric</td>
 <td># Other - Not Tested -- Mathematics -- All Students</td>
@@ -1504,7 +1515,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>n_other_not_tested</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">13</td>
+<th data-quarto-table-cell-role="th">13</th>
 <td>r_all_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- All Students</td>
@@ -1514,7 +1525,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>n_tested</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">14</td>
+<th data-quarto-table-cell-role="th">14</th>
 <td>r_sexm_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- Male Students</td>
@@ -1524,7 +1535,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>n_tested</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">15</td>
+<th data-quarto-table-cell-role="th">15</th>
 <td>r_sexf_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- Female Students</td>
@@ -1534,7 +1545,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>n_tested</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">16</td>
+<th data-quarto-table-cell-role="th">16</th>
 <td>r_sexv_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- No Sex Info Students</td>
@@ -1544,7 +1555,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>n_tested</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">17</td>
+<th data-quarto-table-cell-role="th">17</th>
 <td>r_ethh_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- Hispanic/Latino Students</td>
@@ -1554,7 +1565,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>n_tested</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">18</td>
+<th data-quarto-table-cell-role="th">18</th>
 <td>r_ethi_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- American Indian or Alaska Native Students</td>
@@ -1564,7 +1575,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <td>n_tested</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">19</td>
+<th data-quarto-table-cell-role="th">19</th>
 <td>r_etha_d</td>
 <td>Numeric</td>
 <td># Tested -- Reading -- Asian Students</td>
@@ -1583,8 +1594,8 @@ cfy21e8 (2370, 4301)</code></pre>
 <section id="bringing-it-all-together" class="level2">
 <h2 class="anchored" data-anchor-id="bringing-it-all-together">Bringing it All Together</h2>
 <p>Because we’re going to iterate over each variable list (there are six files: one for each grade between 3 and 8), we can simplify this by running all these change operations at once. We also want to remove unneeded columns and rename the original columns to standardize the naming conventions and make for an easy join condition later.</p>
-<div class="cell" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_descriptors(df):</span>
+<div id="cell-27" class="cell" data-execution_count="31">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_descriptors(df):</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"Variable"</span>] <span class="op">=</span> df[<span class="st">"Variable"</span>].<span class="bu">str</span>.strip()</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"Description"</span>] <span class="op">=</span> df[<span class="st">"Description"</span>].<span class="bu">str</span>.strip()</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"desc_list"</span>] <span class="op">=</span> df[<span class="st">"Description"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: x.split(<span class="st">'--'</span>))</span>
@@ -1593,15 +1604,15 @@ cfy21e8 (2370, 4301)</code></pre>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"student_group"</span>] <span class="op">=</span> df[<span class="st">"desc_list"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: get_student_group(x))</span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    df.drop(columns<span class="op">=</span>[<span class="st">"Description"</span>, <span class="st">"desc_list"</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    df.rename(columns<span class="op">=</span>{<span class="st">'Variable'</span>: <span class="st">'variable'</span>, <span class="st">'Format_Type'</span>: <span class="st">'format_type'</span>}, inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="a-path-forward" class="level2">
 <h2 class="anchored" data-anchor-id="a-path-forward">A Path Forward</h2>
 <p>That means it would be possible to pivot this data long for each distinct variable after extracting the subject and student group from the variable description. This information, though, is split across two different files: the test data in the <code>.dat</code> files and the variable descriptions in the <code>.xls</code> files.</p>
 <p><strong>My plan then is to:</strong> 1. Match the corresponding dat file to its variable list 2. Pivot the test data long so that each variable and value is a single row 3. Extract the test subject and student group data points from the variable description 4. Join the two datasets together using the variable name as a unique identifier 5. Once more pivot the combined data such that each distinct variable becomes its own column 6. Combine those standardized data structures for each grade into a single dataset 7. Write that new dataset out to a compressed csv file for importing into BigQuery</p>
-<div class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>base_url <span class="op">=</span> <span class="st">"https://tea.texas.gov/sites/default/files/"</span></span>
+<div id="cell-29" class="cell" data-execution_count="32">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>base_url <span class="op">=</span> <span class="st">"https://tea.texas.gov/sites/default/files/"</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>dat_files <span class="op">=</span> [<span class="st">"cfy21e3.dat"</span>, <span class="st">"cfy21e4.dat"</span>, <span class="st">"cfy21e5.dat"</span>, <span class="st">"cfy21e6.dat"</span>, <span class="st">"cfy21e7.dat"</span>, <span class="st">"cfy21e8.dat"</span>]</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>var_files <span class="op">=</span> [<span class="st">"fy21_varlist_g03.xls"</span>, <span class="st">"fy21_varlist_g04.xls"</span>, <span class="st">"fy21_varlist_g05.xls"</span>, <span class="st">"fy21_varlist_g06.xls"</span>, <span class="st">"fy21_varlist_g07.xls"</span>, <span class="st">"fy21_varlist_g08.xls"</span>]</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1646,7 +1657,7 @@ cfy21e8 (2370, 4301)</code></pre>
 <span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Final rows/cols:"</span>, df.shape)</span>
 <span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a><span class="co"># 7. write to compressed csv</span></span>
-<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">"TX_STAAR_3_8_2021.csv.gz"</span>, index<span class="op">=</span><span class="va">False</span>, compression<span class="op">=</span><span class="st">"gzip"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">"TX_STAAR_3_8_2021.csv.gz"</span>, index<span class="op">=</span><span class="va">False</span>, compression<span class="op">=</span><span class="st">"gzip"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>WARNING *** OLE2 inconsistency: SSCS size is 0 but SSAT size is non-zero
 Parsing: cfy21e3.dat rows/cols: (4643, 2093)
@@ -1681,13 +1692,13 @@ Combined: cfy21e8.dat + fy21_varlist_g08.xls rows/cols: (580650, 35)
 Final rows/cols: (3576655, 35)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="33">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-30" class="cell" data-execution_count="33">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="33">
 <div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th">name</th>
@@ -1730,7 +1741,7 @@ Final rows/cols: (3576655, 35)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
+<th data-quarto-table-cell-role="th">0</th>
 <td>001902103</td>
 <td>21</td>
 <td>07</td>
@@ -1768,7 +1779,7 @@ Final rows/cols: (3576655, 35)</code></pre>
 <td>NaN</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
+<th data-quarto-table-cell-role="th">1</th>
 <td>001902103</td>
 <td>21</td>
 <td>07</td>
@@ -1806,7 +1817,7 @@ Final rows/cols: (3576655, 35)</code></pre>
 <td>0</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
+<th data-quarto-table-cell-role="th">2</th>
 <td>001902103</td>
 <td>21</td>
 <td>07</td>
@@ -1844,7 +1855,7 @@ Final rows/cols: (3576655, 35)</code></pre>
 <td>NaN</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
+<th data-quarto-table-cell-role="th">3</th>
 <td>001902103</td>
 <td>21</td>
 <td>07</td>
@@ -1882,7 +1893,7 @@ Final rows/cols: (3576655, 35)</code></pre>
 <td>NaN</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
+<th data-quarto-table-cell-role="th">4</th>
 <td>001902103</td>
 <td>21</td>
 <td>07</td>
@@ -1920,7 +1931,7 @@ Final rows/cols: (3576655, 35)</code></pre>
 <td>NaN</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">...</td>
+<th data-quarto-table-cell-role="th">...</th>
 <td>...</td>
 <td>...</td>
 <td>...</td>
@@ -1958,7 +1969,7 @@ Final rows/cols: (3576655, 35)</code></pre>
 <td>...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">580645</td>
+<th data-quarto-table-cell-role="th">580645</th>
 <td>254902001</td>
 <td>21</td>
 <td>20</td>
@@ -1996,7 +2007,7 @@ Final rows/cols: (3576655, 35)</code></pre>
 <td>NaN</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">580646</td>
+<th data-quarto-table-cell-role="th">580646</th>
 <td>254902001</td>
 <td>21</td>
 <td>20</td>
@@ -2034,7 +2045,7 @@ Final rows/cols: (3576655, 35)</code></pre>
 <td>NaN</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">580647</td>
+<th data-quarto-table-cell-role="th">580647</th>
 <td>254902001</td>
 <td>21</td>
 <td>20</td>
@@ -2072,7 +2083,7 @@ Final rows/cols: (3576655, 35)</code></pre>
 <td>NaN</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">580648</td>
+<th data-quarto-table-cell-role="th">580648</th>
 <td>254902001</td>
 <td>21</td>
 <td>20</td>
@@ -2110,7 +2121,7 @@ Final rows/cols: (3576655, 35)</code></pre>
 <td>NaN</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">580649</td>
+<th data-quarto-table-cell-role="th">580649</th>
 <td>254902001</td>
 <td>21</td>
 <td>20</td>
@@ -2159,11 +2170,11 @@ Final rows/cols: (3576655, 35)</code></pre>
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>The resulting dataset/file ends up being ~3.5 million rows in length and a consistent 35 columns wide. You can download the reshaped dataset here: <a href="TX_STAAR_3_8_2021.csv.gz">TX STAAR 2021 - Grades 3-8</a></p>
 <p>We can now run simpler queries on the reshaped data such as:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> TX_STAAR_2021</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> subject <span class="op">=</span> <span class="st">'Reading'</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="kw">AND</span> student_group <span class="op">=</span> <span class="st">'All Students'</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="kw">AND</span> grade <span class="kw">IN</span> (<span class="st">'6'</span>, <span class="st">'7'</span>, <span class="st">'8'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="kw">AND</span> grade <span class="kw">IN</span> (<span class="st">'6'</span>, <span class="st">'7'</span>, <span class="st">'8'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A similar query using the original datasets would’ve required unioning three different datasets and a much more complicated set of column matching to filter down to the right subject and student group.</p>
 <p>In our production environment, the approach is similar but we initially load the raw dat and var files into Google Cloud Storage and as well as the resulting csv. That is then converted to avro for better query performance and an <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro">external table</a> is generated in BigQuery using their API.</p>
 
@@ -2173,43 +2184,58 @@ Final rows/cols: (3576655, 35)</code></pre>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
@@ -2217,195 +2243,348 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
       return codeEl.innerText;
     }
-  });
-  clipboard.on('success', function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  });
-  function tippyHover(el, contentFn) {
-    const config = {
-      allowHTML: true,
-      content: contentFn,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start'
-    };
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      return note.innerHTML;
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/dchess\.org");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
       });
     }
-  }
-});
-</script>
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 </div> <!-- /content -->
+
 
 
 
