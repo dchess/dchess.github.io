@@ -1,0 +1,193 @@
+---
+title: "QuackSQL"
+author: "Dan Hess"
+date: 2026-03-08
+format: html
+image: duckdb.webp
+categories: ["project"]
+---
+
+# QuackSQL: Organizing DuckDB Queries
+
+[DuckDB](https://duckdb.org/) has quietly become my go-to tool for analytical work in Python. It runs locally, reads Parquet files directly, and handles large analytical queries efficiently. For research projects where the database is part of the analysis rather than a persistent service, DuckDB fits naturally.
+
+Once projects grow beyond a few exploratory queries, a familiar problem appears: where should the SQL live?
+
+## Common Pattern in Python Projects
+
+Many projects start with queries embedded in Python strings:
+
+```python
+import duckdb
+
+conn = duckdb.connect()
+
+query = """
+    select
+        district_id,
+        avg(math_score) AS avg_math
+    from parquet_scan('state_assessment.parquet')
+    group by district_id
+"""
+
+district_scores = conn.execute(query).df()
+```
+
+This works for small analyses, but as queries grow, logic is reused, and scripts become longer, sql strings scattered across files become hard to maintain, reuse, and test.
+
+In the Postgres ecosystem, PugSQL solves this problem:
+
+- Store SQL in .sql files
+- Give each query a name
+- Load queries as callable Python functions
+
+I wanted the same workflow for DuckDB. That led to [QuackSQL](https://pypi.org/project/quacksql/).
+
+## What QuackSQL Does
+
+QuackSQL is a minimal Python wrapper around DuckDB. It lets you organize queries in SQL files and call them from Python.
+
+A typical project might look like this:
+
+```bash
+queries/
+    district_math_averages.sql
+    school_growth.sql
+    district_enrollment.sql
+    proficiency_rate.sql
+```
+
+Inside assessments.sql:
+
+```sql
+-- district_math_averages.sql
+select
+    district_id,
+    avg(math_score) as avg_math_score
+from parquet_scan($path)
+group by district_id
+order by avg_math_score desc
+```
+
+```sql
+-- school_growth.sql
+select
+    school_year,
+    school_id,
+    avg(math_score) - lag(avg(math_score)) over (
+        partition by school_id order by school_year
+    ) as growth
+from assessments
+```
+
+Each named query becomes a callable function in Python:
+
+```python
+import quacksql
+
+db = quacksql.connect()
+quacksql.module('./queries')
+
+districts = db.district_math_averages(path="state_assessment.parquet")
+
+growth = db.school_growth()
+```
+
+There is no ORM or query builder. **SQL stays SQL**.
+
+## Why This Works with DuckDB
+
+DuckDB runs inside your process. Analytical workflows often include:
+
+- Reading several Parquet datasets
+- Joining them locally
+- Computing aggregates
+- Exporting results or visualizations
+
+DuckDB is not a separate dependency. It is part of the analysis. This makes it natural to structure queries as reusable modules with QuackSQL.
+
+### Example: Cross-State Education Analysis
+
+Education research often involves combining datasets from multiple states. Each state may publish:
+
+- Enrollment counts
+- Assessment results
+- District demographics
+
+Suppose you normalize these datasets into Parquet files and want to compute district-level indicators and proficiency trends.
+
+Your SQL files might look like this:
+
+```sql
+-- district_enrollment.sql
+select
+    district_id,
+    sum(enrollment) as total_enrollment
+from parquet_scan($enrollment_file)
+group by district_id;
+```
+
+```sql
+-- proficiency_rate.sql
+select
+    district_id,
+    avg(case when proficient = 1 then 1 else 0 end) as proficiency_rate
+from parquet_scan($assessment_file)
+group by district_id;
+```
+
+Python scripts remain clean and readable:
+
+```python
+db = quacksql.connect("education.duckdb")
+
+enrollment = db.district_enrollment(
+    enrollment_file="enrollment.parquet"
+)
+
+proficiency = db.proficiency_rate(
+    assessment_file="assessments.parquet"
+)
+```
+
+This structure allows you to reuse queries across analyses, notebooks, and reports.
+
+## Why Not an ORM
+
+ORMS map relational data to objects. They work for transactional applications but make analytical queries harder to read, especially when data involves:
+
+- Large aggregations
+- Window functions
+- Cross-file joins
+
+
+SQL expresses these operations naturally. QuackSQL leaves SQL intact and focuses on organization.
+
+## Design Philosophy
+
+QuackSQL follows four simple principles:
+
+1. SQL should stay SQL. No DSLs, no query builders.
+2. Files are the module system. A directory of SQL files becomes a collection of queries.
+3. The database does the work. DuckDB provides the analytics engine. The library structures access.
+4. Keep the abstraction small. If QuackSQL disappeared tomorrow, the queries would still work as SQL files.
+
+## Why the Name
+
+DuckDB + SQL suggested the obvious theme. [The database quacks](https://dbquacks.com/)! The library organizes SQL. Hence the name QuackSQL.
+
+## Where This Fits
+
+QuackSQL is useful for projects between ad hoc analyses and fully engineered pipelines, including:
+
+- Research analyses
+- Policy evaluation
+- Local ETL pipelines
+- Reproducible data notebooks
+- Lightweight analytical applications
+
+The goal is keeping analytical work organized and reproducible, not building infrastructure.
+
+---
+
+QuackSQL is a small tool, but it makes working with DuckDB projects cleaner and more maintainable, especially in data analysis. By keeping SQL separate from Python orchestration, it supports reproducible workflows and simplifies complex cross-state comparisons. It also makes code review much easier when SQL logic is in dedicated files rather than embedded in Python strings. If you work with DuckDB and want a simple way to organize your queries, give QuackSQL a try!
