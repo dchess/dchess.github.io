@@ -57,7 +57,7 @@ queries/
     proficiency_rate.sql
 ```
 
-Inside assessments.sql:
+Inside the sql files, you write normal SQL. You can use parameters for file paths or other inputs:
 
 ```sql
 -- district_math_averages.sql
@@ -85,12 +85,12 @@ Each named query becomes a callable function in Python:
 ```python
 import quacksql
 
-db = quacksql.connect()
+quacksql.connect()
 quacksql.module('./queries')
 
-districts = db.district_math_averages(path="state_assessment.parquet")
+districts = quacksql.district_math_averages(path="state_assessment.parquet")
 
-growth = db.school_growth()
+growth = quacksql.school_growth()
 ```
 
 There is no ORM or query builder. **SQL stays SQL**.
@@ -139,18 +139,61 @@ group by district_id;
 Python scripts remain clean and readable:
 
 ```python
-db = quacksql.connect("education.duckdb")
+quacksql.connect("education.duckdb")
+quacksql.module('./queries')
 
-enrollment = db.district_enrollment(
+enrollment = quacksql.district_enrollment(
     enrollment_file="enrollment.parquet"
 )
 
-proficiency = db.proficiency_rate(
+proficiency = quacksql.proficiency_rate(
     assessment_file="assessments.parquet"
 )
 ```
 
 This structure allows you to reuse queries across analyses, notebooks, and reports.
+
+## Example: Using Query Parameters in a Lightweight Data App
+
+One place where this pattern becomes particularly useful is in lightweight data applications. Imagine a simple dashboard that allows a user to select a grade level from a dropdown. That selection can be passed directly into a reusable query parameter.
+
+For example, a query that filters assessment results by grade might look like this:
+
+```sql
+-- grade_proficiency.sql
+select
+    district_id,
+    avg(case when proficient = 1 then 1 else 0 end) as proficiency_rate
+from parquet_scan($assessment_file)
+where grade_level = $grade
+group by district_id
+order by proficiency_rate desc;
+```
+
+Because QuackSQL supports named parameters, the same query can serve many different requests.
+
+A lightweight Python endpoint or app function could pass the selected grade directly into the query:
+
+```python
+quacksql.connect("education.duckdb")
+quacksql.module('./queries')
+
+def get_grade_results(grade):
+    return quacksql.grade_proficiency(
+        assessment_file="assessments.parquet",
+        grade=grade
+    )
+```
+
+In a simple web app or dashboard framework, the grade dropdown might feed directly into that function:
+
+```python
+selected_grade = "5"
+
+results = get_grade_results(selected_grade)
+```
+
+This keeps the application logic very small. The filtering logic lives in the sql query, while the interface simply passes user input into a parameter. The same pattern works well for other common filters such as year, subject, or district.
 
 ## Why Not an ORM
 
@@ -159,7 +202,6 @@ ORMS map relational data to objects. They work for transactional applications bu
 - Large aggregations
 - Window functions
 - Cross-file joins
-
 
 SQL expresses these operations naturally. QuackSQL leaves SQL intact and focuses on organization.
 
