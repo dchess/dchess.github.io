@@ -1,0 +1,149 @@
+---
+title: "Ta-Da Lists and Frictionless Notes"
+date: 2026-03-16
+format: html
+image: tada.png
+categories: ["blog"]
+---
+
+Most productivity systems revolve around the **to-do list**: a running inventory of everything you *should* be doing next.
+
+The problem is that to-do lists rarely capture the most motivating part of the day: the things you’ve already finished.
+
+That’s where the idea of a **"ta-da list"** comes in.
+
+A ta-da list flips the script. Instead of only tracking unfinished work, it records what actually happened. Every small win, solved bug, conversation, or idea that moved something forward.
+
+By the end of the day you have a simple log of progress. Not intentions, just actual outcomes.
+
+It turns out this is surprisingly useful:
+
+- It creates a lightweight **work journal**
+- It makes writing weekly updates or retrospectives much easier
+- It’s a nice psychological boost to see what you *did* accomplish
+- It captures context that would otherwise disappear
+
+The trick is making it **fast enough to use**. If logging something takes more than a few seconds, it probably won’t happen.
+
+## A Tiny Tool for Frictionless Logging
+
+To make this easy for myself, I wrote a small bash function called `jot`.
+
+The idea is simple: one command instantly creates (or opens) a markdown file for today's notes. The files are automatically organized by year and date, and the title is generated for you.
+
+```bash
+jot() {
+    local base_dir=~/projects/jot
+    local year=$(date +%Y)
+    local note_dir="${base_dir}/${year}"
+    local day_of_week=$(date +%a | sed 's/Mon/M/;s/Tue/T/;s/Wed/W/;s/Thu/Th/;s/Fri/F/;s/Sat/Sa/;s/Sun/Su/')
+    local date_long=$(date +"%B %d, %Y")
+    local filename
+    local title
+    
+    # Create year directory if it doesn't exist
+    mkdir -p "$note_dir"
+    
+    if [[ -n "$1" ]]; then
+        filename="${note_dir}/$(date +%Y%m%d)_${day_of_week}_${1}.md"
+        title="${1}"
+    else
+        filename="${note_dir}/$(date +%Y%m%d)_${day_of_week}_TADA.md"
+        title="TADA"
+    fi
+    
+    # Create file with title if it doesn't exist
+    if [[ ! -f "$filename" ]]; then
+        echo "# ${title} Daily Log - ${date_long}" > "$filename"
+    fi
+    
+    code "$base_dir" "$filename"
+}
+```
+
+Now throughout the day I can run:
+
+```bash
+jot
+```
+
+and immediately start adding quick notes like:
+
+```markdown
+- Fixed the DuckDB query bug
+- Helped a teammate debug a pipeline issue
+- Sketched an idea for a new data tool
+```
+
+If I want a separate note for something specific, I can pass a name:
+
+```bash
+jot meeting-notes
+```
+
+Because the command is so lightweight, it’s easy to capture moments while they’re still fresh.
+
+## Why This Beats Most Journaling Apps (For Me)
+
+There are plenty of tools designed for daily journaling or note-taking. Apps like Notion, Obsidian, and others all support daily logs in different ways.
+
+But for something as lightweight as a ta-da list, I’ve found a simple filesystem approach works better.
+
+### It's faster
+
+The biggest advantage is speed. One command opens today’s note instantly. No navigating folders, clicking through interfaces, or waiting for an app to load.
+
+When logging something takes two seconds, you actually do it.
+
+### It’s just files
+
+Every note is plain markdown. No proprietary format, no database, no lock-in.
+
+They can be searched with tools like `grep`, versioned with `git`, or edited in any editor.
+
+Future-proof by default.
+
+### It stays out of the way
+
+Most note-taking apps come with features I don’t need for this use case: backlinks, tagging systems, dashboards, plugins, syncing layers, and so on.
+
+Those can be great for knowledge management, but for a simple daily log they can introduce unnecessary friction.
+
+This setup does one thing well: it makes it extremely easy to write something down.
+
+### It scales naturally
+
+After a few months, the directory becomes a chronological record of what actually happened day to day.
+
+That makes it easy to answer questions like:
+
+- What did I work on last Tuesday?
+- When did that bug first show up?
+- What progress did we make this week?
+
+Because everything is structured by date, finding things later is trivial.
+
+### It’s perfect input for AI
+
+Because the notes are stored as simple markdown files, they’re also great input for AI tools.
+
+For example, I can point something like CoPilot, ChatGPT, or Claude at a folder of notes and ask questions like:
+
+- “Summarize what I worked on this week.”
+- “Pull out recurring themes from the last month.”
+- “Draft a weekly status update based on these notes.”
+- “What projects show up most often in these logs?”
+
+Over time the notes become a surprisingly rich dataset about how work actually unfolds: bugs fixed, ideas explored, meetings attended, and decisions made.
+
+Because the data is plain text and locally stored, it’s easy to selectively provide context when I want AI assistance without being locked into any particular platform.
+
+## Small Tools, Durable Notes
+
+This isn’t a sophisticated system. It’s just markdown files and a bash function.
+
+But that’s kind of the point.
+
+The lower the friction, the more likely a habit will stick. Over time, these small ta-da lists become a surprisingly rich record of what you've actually been doing.
+
+And in an era where AI tools can summarize, analyze, and synthesize text effortlessly, a simple folder full of markdown notes can quietly become one of the most useful datasets you own.
