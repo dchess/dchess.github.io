@@ -4,7 +4,7 @@ author: "Dan Hess"
 date: 2026-03-08
 format: html
 image: duckdb.webp
-categories: ["project"]
+categories: ["projects"]
 ---
 
 # QuackSQL: Organizing DuckDB Queries
