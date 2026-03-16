@@ -6,10 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Dan Hess">
-<meta name="dcterms.date" content="2026-03-08">
+<meta name="dcterms.date" content="2026-03-16">
 
-<title>QuackSQL – dchess.org</title>
+<title>Ta-Da Lists and Frictionless Notes – dchess.org</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -156,9 +155,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">QuackSQL</h1>
+      <h1 class="title">Ta-Da Lists and Frictionless Notes</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">projects</div>
+                <div class="quarto-category">blog</div>
               </div>
                   </div>
   </div>
@@ -166,17 +165,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
   <div class="quarto-title-meta">
 
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Dan Hess </p>
-            </div>
-    </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 8, 2026</p>
+        <p class="date">March 16, 2026</p>
       </div>
     </div>
     
@@ -195,185 +188,114 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="quacksql-organizing-duckdb-queries" class="level1">
-<h1>QuackSQL: Organizing DuckDB Queries</h1>
-<p><a href="https://duckdb.org/">DuckDB</a> has quietly become my go-to tool for analytical work in Python. It runs locally, reads Parquet files directly, and handles large analytical queries efficiently. For research projects where the database is part of the analysis rather than a persistent service, DuckDB fits naturally.</p>
-<p>Once projects grow beyond a few exploratory queries, a familiar problem appears: where should the SQL live?</p>
-<section id="common-pattern-in-python-projects" class="level2">
-<h2 class="anchored" data-anchor-id="common-pattern-in-python-projects">Common Pattern in Python Projects</h2>
-<p>Many projects start with queries embedded in Python strings:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> duckdb</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>conn <span class="op">=</span> duckdb.<span class="ex">connect</span>()</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">    select</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">        district_id,</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">        avg(math_score) AS avg_math</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">    from parquet_scan('state_assessment.parquet')</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">    group by district_id</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>district_scores <span class="op">=</span> conn.execute(query).df()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This works for small analyses, but as queries grow, logic is reused, and scripts become longer, sql strings scattered across files become hard to maintain, reuse, and test.</p>
-<p>In the Postgres ecosystem, PugSQL solves this problem:</p>
+<p>Most productivity systems revolve around the <strong>to-do list</strong>: a running inventory of everything you <em>should</em> be doing next.</p>
+<p>The problem is that to-do lists rarely capture the most motivating part of the day: the things you’ve already finished.</p>
+<p>That’s where the idea of a <strong>“ta-da list”</strong> comes in.</p>
+<p>A ta-da list flips the script. Instead of only tracking unfinished work, it records what actually happened. Every small win, solved bug, conversation, or idea that moved something forward.</p>
+<p>By the end of the day you have a simple log of progress. Not intentions, just actual outcomes.</p>
+<p>It turns out this is surprisingly useful:</p>
 <ul>
-<li>Store SQL in .sql files</li>
-<li>Give each query a name</li>
-<li>Load queries as callable Python functions</li>
+<li>It creates a lightweight <strong>work journal</strong></li>
+<li>It makes writing weekly updates or retrospectives much easier</li>
+<li>It’s a nice psychological boost to see what you <em>did</em> accomplish</li>
+<li>It captures context that would otherwise disappear</li>
 </ul>
-<p>I wanted the same workflow for DuckDB. That led to <a href="https://pypi.org/project/quacksql/">QuackSQL</a>.</p>
+<p>The trick is making it <strong>fast enough to use</strong>. If logging something takes more than a few seconds, it probably won’t happen.</p>
+<section id="a-tiny-tool-for-frictionless-logging" class="level2">
+<h2 class="anchored" data-anchor-id="a-tiny-tool-for-frictionless-logging">A Tiny Tool for Frictionless Logging</h2>
+<p>To make this easy for myself, I wrote a small bash function called <code>jot</code>.</p>
+<p>The idea is simple: one command instantly creates (or opens) a markdown file for today’s notes. The files are automatically organized by year and date, and the title is generated for you.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jot()</span> <span class="kw">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">local</span> <span class="va">base_dir</span><span class="op">=</span>~/projects/jot</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">local</span> <span class="va">year</span><span class="op">=</span><span class="va">$(</span><span class="fu">date</span> +%Y<span class="va">)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">local</span> <span class="va">note_dir</span><span class="op">=</span><span class="st">"</span><span class="va">${base_dir}</span><span class="st">/</span><span class="va">${year}</span><span class="st">"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">local</span> <span class="va">day_of_week</span><span class="op">=</span><span class="va">$(</span><span class="fu">date</span> +%a <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/Mon/M/;s/Tue/T/;s/Wed/W/;s/Thu/Th/;s/Fri/F/;s/Sat/Sa/;s/Sun/Su/'</span><span class="va">)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">local</span> <span class="va">date_long</span><span class="op">=</span><span class="va">$(</span><span class="fu">date</span> +<span class="st">"%B %d, %Y"</span><span class="va">)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">local</span> <span class="va">filename</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">local</span> <span class="va">title</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create year directory if it doesn't exist</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mkdir</span> <span class="at">-p</span> <span class="st">"</span><span class="va">$note_dir</span><span class="st">"</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">[[</span> <span class="ot">-n</span> <span class="st">"</span><span class="va">$1</span><span class="st">"</span> <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">filename</span><span class="op">=</span><span class="st">"</span><span class="va">${note_dir}</span><span class="st">/</span><span class="va">$(</span><span class="fu">date</span> +%Y%m%d<span class="va">)</span><span class="st">_</span><span class="va">${day_of_week}</span><span class="st">_</span><span class="va">${1}</span><span class="st">.md"</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">title</span><span class="op">=</span><span class="st">"</span><span class="va">${1}</span><span class="st">"</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">filename</span><span class="op">=</span><span class="st">"</span><span class="va">${note_dir}</span><span class="st">/</span><span class="va">$(</span><span class="fu">date</span> +%Y%m%d<span class="va">)</span><span class="st">_</span><span class="va">${day_of_week}</span><span class="st">_TADA.md"</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">title</span><span class="op">=</span><span class="st">"TADA"</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">fi</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create file with title if it doesn't exist</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">[[</span> <span class="ot">!</span> <span class="ot">-f</span> <span class="st">"</span><span class="va">$filename</span><span class="st">"</span> <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="bu">echo</span> <span class="st">"# </span><span class="va">${title}</span><span class="st"> Daily Log - </span><span class="va">${date_long}</span><span class="st">"</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">$filename</span><span class="st">"</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">fi</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="ex">code</span> <span class="st">"</span><span class="va">$base_dir</span><span class="st">"</span> <span class="st">"</span><span class="va">$filename</span><span class="st">"</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now throughout the day I can run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jot</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>and immediately start adding quick notes like:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fixed the DuckDB query bug</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Helped a teammate debug a pipeline issue</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sketched an idea for a new data tool</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If I want a separate note for something specific, I can pass a name:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jot</span> meeting-notes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Because the command is so lightweight, it’s easy to capture moments while they’re still fresh.</p>
 </section>
-<section id="what-quacksql-does" class="level2">
-<h2 class="anchored" data-anchor-id="what-quacksql-does">What QuackSQL Does</h2>
-<p>QuackSQL is a minimal Python wrapper around DuckDB. It lets you organize queries in SQL files and call them from Python.</p>
-<p>A typical project might look like this:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">queries/</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">district_math_averages.sql</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">school_growth.sql</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">district_enrollment.sql</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">proficiency_rate.sql</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Inside the sql files, you write normal SQL. You can use parameters for file paths or other inputs:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- district_math_averages.sql</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    district_id,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">avg</span>(math_score) <span class="kw">as</span> avg_math_score</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">from</span> parquet_scan($path)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">group</span> <span class="kw">by</span> district_id</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">order</span> <span class="kw">by</span> avg_math_score <span class="kw">desc</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- school_growth.sql</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    school_year,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    school_id,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">avg</span>(math_score) <span class="op">-</span> <span class="fu">lag</span>(<span class="fu">avg</span>(math_score)) <span class="kw">over</span> (</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">partition</span> <span class="kw">by</span> school_id <span class="kw">order</span> <span class="kw">by</span> school_year</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="kw">as</span> growth</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">from</span> assessments</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Each named query becomes a callable function in Python:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> quacksql</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>quacksql.<span class="ex">connect</span>()</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>quacksql.module(<span class="st">'./queries'</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>districts <span class="op">=</span> quacksql.district_math_averages(path<span class="op">=</span><span class="st">"state_assessment.parquet"</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>growth <span class="op">=</span> quacksql.school_growth()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>There is no ORM or query builder. <strong>SQL stays SQL</strong>.</p>
+<section id="why-this-beats-most-journaling-apps-for-me" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-beats-most-journaling-apps-for-me">Why This Beats Most Journaling Apps (For Me)</h2>
+<p>There are plenty of tools designed for daily journaling or note-taking. Apps like Notion, Obsidian, and others all support daily logs in different ways.</p>
+<p>But for something as lightweight as a ta-da list, I’ve found a simple filesystem approach works better.</p>
+<section id="its-faster" class="level3">
+<h3 class="anchored" data-anchor-id="its-faster">It’s faster</h3>
+<p>The biggest advantage is speed. One command opens today’s note instantly. No navigating folders, clicking through interfaces, or waiting for an app to load.</p>
+<p>When logging something takes two seconds, you actually do it.</p>
 </section>
-<section id="why-this-works-with-duckdb" class="level2">
-<h2 class="anchored" data-anchor-id="why-this-works-with-duckdb">Why This Works with DuckDB</h2>
-<p>DuckDB runs inside your process. Analytical workflows often include:</p>
+<section id="its-just-files" class="level3">
+<h3 class="anchored" data-anchor-id="its-just-files">It’s just files</h3>
+<p>Every note is plain markdown. No proprietary format, no database, no lock-in.</p>
+<p>They can be searched with tools like <code>grep</code>, versioned with <code>git</code>, or edited in any editor.</p>
+<p>Future-proof by default.</p>
+</section>
+<section id="it-stays-out-of-the-way" class="level3">
+<h3 class="anchored" data-anchor-id="it-stays-out-of-the-way">It stays out of the way</h3>
+<p>Most note-taking apps come with features I don’t need for this use case: backlinks, tagging systems, dashboards, plugins, syncing layers, and so on.</p>
+<p>Those can be great for knowledge management, but for a simple daily log they can introduce unnecessary friction.</p>
+<p>This setup does one thing well: it makes it extremely easy to write something down.</p>
+</section>
+<section id="it-scales-naturally" class="level3">
+<h3 class="anchored" data-anchor-id="it-scales-naturally">It scales naturally</h3>
+<p>After a few months, the directory becomes a chronological record of what actually happened day to day.</p>
+<p>That makes it easy to answer questions like:</p>
 <ul>
-<li>Reading several Parquet datasets</li>
-<li>Joining them locally</li>
-<li>Computing aggregates</li>
-<li>Exporting results or visualizations</li>
+<li>What did I work on last Tuesday?</li>
+<li>When did that bug first show up?</li>
+<li>What progress did we make this week?</li>
 </ul>
-<p>DuckDB is not a separate dependency. It is part of the analysis. This makes it natural to structure queries as reusable modules with QuackSQL.</p>
-<section id="example-cross-state-education-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="example-cross-state-education-analysis">Example: Cross-State Education Analysis</h3>
-<p>Education research often involves combining datasets from multiple states. Each state may publish:</p>
+<p>Because everything is structured by date, finding things later is trivial.</p>
+</section>
+<section id="its-perfect-input-for-ai" class="level3">
+<h3 class="anchored" data-anchor-id="its-perfect-input-for-ai">It’s perfect input for AI</h3>
+<p>Because the notes are stored as simple markdown files, they’re also great input for AI tools.</p>
+<p>For example, I can point something like CoPilot, ChatGPT, or Claude at a folder of notes and ask questions like:</p>
 <ul>
-<li>Enrollment counts</li>
-<li>Assessment results</li>
-<li>District demographics</li>
+<li>“Summarize what I worked on this week.”</li>
+<li>“Pull out recurring themes from the last month.”</li>
+<li>“Draft a weekly status update based on these notes.”</li>
+<li>“What projects show up most often in these logs?”</li>
 </ul>
-<p>Suppose you normalize these datasets into Parquet files and want to compute district-level indicators and proficiency trends.</p>
-<p>Your SQL files might look like this:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- district_enrollment.sql</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    district_id,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(enrollment) <span class="kw">as</span> total_enrollment</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">from</span> parquet_scan($enrollment_file)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">group</span> <span class="kw">by</span> district_id;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- proficiency_rate.sql</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    district_id,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">avg</span>(<span class="cf">case</span> <span class="cf">when</span> proficient <span class="op">=</span> <span class="dv">1</span> <span class="cf">then</span> <span class="dv">1</span> <span class="cf">else</span> <span class="dv">0</span> <span class="cf">end</span>) <span class="kw">as</span> proficiency_rate</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">from</span> parquet_scan($assessment_file)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">group</span> <span class="kw">by</span> district_id;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Python scripts remain clean and readable:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>quacksql.<span class="ex">connect</span>(<span class="st">"education.duckdb"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>quacksql.module(<span class="st">'./queries'</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>enrollment <span class="op">=</span> quacksql.district_enrollment(</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    enrollment_file<span class="op">=</span><span class="st">"enrollment.parquet"</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>proficiency <span class="op">=</span> quacksql.proficiency_rate(</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    assessment_file<span class="op">=</span><span class="st">"assessments.parquet"</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This structure allows you to reuse queries across analyses, notebooks, and reports.</p>
+<p>Over time the notes become a surprisingly rich dataset about how work actually unfolds: bugs fixed, ideas explored, meetings attended, and decisions made.</p>
+<p>Because the data is plain text and locally stored, it’s easy to selectively provide context when I want AI assistance without being locked into any particular platform.</p>
 </section>
 </section>
-<section id="example-using-query-parameters-in-a-lightweight-data-app" class="level2">
-<h2 class="anchored" data-anchor-id="example-using-query-parameters-in-a-lightweight-data-app">Example: Using Query Parameters in a Lightweight Data App</h2>
-<p>One place where this pattern becomes particularly useful is in lightweight data applications. Imagine a simple dashboard that allows a user to select a grade level from a dropdown. That selection can be passed directly into a reusable query parameter.</p>
-<p>For example, a query that filters assessment results by grade might look like this:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- grade_proficiency.sql</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    district_id,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">avg</span>(<span class="cf">case</span> <span class="cf">when</span> proficient <span class="op">=</span> <span class="dv">1</span> <span class="cf">then</span> <span class="dv">1</span> <span class="cf">else</span> <span class="dv">0</span> <span class="cf">end</span>) <span class="kw">as</span> proficiency_rate</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">from</span> parquet_scan($assessment_file)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">where</span> grade_level <span class="op">=</span> $grade</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">group</span> <span class="kw">by</span> district_id</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">order</span> <span class="kw">by</span> proficiency_rate <span class="kw">desc</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Because QuackSQL supports named parameters, the same query can serve many different requests.</p>
-<p>A lightweight Python endpoint or app function could pass the selected grade directly into the query:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>quacksql.<span class="ex">connect</span>(<span class="st">"education.duckdb"</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>quacksql.module(<span class="st">'./queries'</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_grade_results(grade):</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> quacksql.grade_proficiency(</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        assessment_file<span class="op">=</span><span class="st">"assessments.parquet"</span>,</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        grade<span class="op">=</span>grade</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>In a simple web app or dashboard framework, the grade dropdown might feed directly into that function:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>selected_grade <span class="op">=</span> <span class="st">"5"</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> get_grade_results(selected_grade)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This keeps the application logic very small. The filtering logic lives in the sql query, while the interface simply passes user input into a parameter. The same pattern works well for other common filters such as year, subject, or district.</p>
-</section>
-<section id="why-not-an-orm" class="level2">
-<h2 class="anchored" data-anchor-id="why-not-an-orm">Why Not an ORM</h2>
-<p>ORMS map relational data to objects. They work for transactional applications but make analytical queries harder to read, especially when data involves:</p>
-<ul>
-<li>Large aggregations</li>
-<li>Window functions</li>
-<li>Cross-file joins</li>
-</ul>
-<p>SQL expresses these operations naturally. QuackSQL leaves SQL intact and focuses on organization.</p>
-</section>
-<section id="design-philosophy" class="level2">
-<h2 class="anchored" data-anchor-id="design-philosophy">Design Philosophy</h2>
-<p>QuackSQL follows four simple principles:</p>
-<ol type="1">
-<li>SQL should stay SQL. No DSLs, no query builders.</li>
-<li>Files are the module system. A directory of SQL files becomes a collection of queries.</li>
-<li>The database does the work. DuckDB provides the analytics engine. The library structures access.</li>
-<li>Keep the abstraction small. If QuackSQL disappeared tomorrow, the queries would still work as SQL files.</li>
-</ol>
-</section>
-<section id="why-the-name" class="level2">
-<h2 class="anchored" data-anchor-id="why-the-name">Why the Name</h2>
-<p>DuckDB + SQL suggested the obvious theme. <a href="https://dbquacks.com/">The database quacks</a>! The library organizes SQL. Hence the name QuackSQL.</p>
-</section>
-<section id="where-this-fits" class="level2">
-<h2 class="anchored" data-anchor-id="where-this-fits">Where This Fits</h2>
-<p>QuackSQL is useful for projects between ad hoc analyses and fully engineered pipelines, including:</p>
-<ul>
-<li>Research analyses</li>
-<li>Policy evaluation</li>
-<li>Local ETL pipelines</li>
-<li>Reproducible data notebooks</li>
-<li>Lightweight analytical applications</li>
-</ul>
-<p>The goal is keeping analytical work organized and reproducible, not building infrastructure.</p>
-<hr>
-<p>QuackSQL is a small tool, but it makes working with DuckDB projects cleaner and more maintainable, especially in data analysis. By keeping SQL separate from Python orchestration, it supports reproducible workflows and simplifies complex cross-state comparisons. It also makes code review much easier when SQL logic is in dedicated files rather than embedded in Python strings. If you work with DuckDB and want a simple way to organize your queries, give QuackSQL a try!</p>
+<section id="small-tools-durable-notes" class="level2">
+<h2 class="anchored" data-anchor-id="small-tools-durable-notes">Small Tools, Durable Notes</h2>
+<p>This isn’t a sophisticated system. It’s just markdown files and a bash function.</p>
+<p>But that’s kind of the point.</p>
+<p>The lower the friction, the more likely a habit will stick. Over time, these small ta-da lists become a surprisingly rich record of what you’ve actually been doing.</p>
+<p>And in an era where AI tools can summarize, analyze, and synthesize text effortlessly, a simple folder full of markdown notes can quietly become one of the most useful datasets you own.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

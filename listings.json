@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/tada-and-jot/index.html",
       "/posts/quacksql/index.html",
       "/posts/sql-basics-with-duckdb/sql_basics.html",
       "/posts/pandas-yaml-config/index.html",
