@@ -1,6 +1,6 @@
 ---
 title: "Ta-Da Lists and Frictionless Notes"
-date: 2026-03-16
+date: 2026-03-17
 format: html
 image: tada.png
 categories: ["blog"]
