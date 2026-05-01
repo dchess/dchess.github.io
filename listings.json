@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/data-science-in-a-box/index.html",
       "/posts/tada-and-jot/index.html",
       "/posts/quacksql/index.html",
       "/posts/sql-basics-with-duckdb/sql_basics.html",
@@ -18,8 +19,8 @@
       "/posts/google-classroom-connector/index.html",
       "/posts/manager-readme/index.html",
       "/posts/dev-env-setup/index.html",
-      "/posts/new-years-resolutions/index.html",
       "/posts/how-memes-inform-my-work/index.html",
+      "/posts/new-years-resolutions/index.html",
       "/posts/powerschool-api.md/index.html"
     ]
   }

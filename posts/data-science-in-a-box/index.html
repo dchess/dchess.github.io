@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-06-19">
+<meta name="dcterms.date" content="2026-04-30">
 
-<title>Treating Diagrams Like Code – dchess.org</title>
+<title>Data Science in a Box – dchess.org</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -126,7 +126,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Treating Diagrams Like Code</h1>
+      <h1 class="title">Data Science in a Box</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">blog</div>
               </div>
@@ -140,7 +140,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 19, 2023</p>
+        <p class="date">April 30, 2026</p>
       </div>
     </div>
     
@@ -159,35 +159,141 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>There is a common saying in software development that “code should speak for itself” and while I agree with the ideas behind that statement and the need for code that is inherently readable and “self-documenting”, I often find myself drawing diagrams to explain many things related to code. Such as:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="dsiab.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="300"></p>
+</figure>
+</div>
+<blockquote class="blockquote">
+<p>I didn’t set out to put “data science in a box.”</p>
+</blockquote>
+<section id="the-translation-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-translation-problem">The Translation Problem</h2>
+<p>I was trying to build an end-to-end data system that could handle ingestion, transformation, QA, analysis, and publishing. But I kept running into the same problem: I was stitching together different tools, platforms, and codebases that didn’t really feel like they were meant to work together.</p>
+<p>At a high level, everything was “best in class.” Or at least familiar.</p>
 <ul>
-<li>data models/schemas</li>
-<li>infrastructure components</li>
-<li>workflows</li>
-<li>software architecture</li>
+<li>Fivetran for ingestion. Some custom Python for the rest.</li>
+<li>dbt running on BigQuery with a data lake in GCS.</li>
+<li>Tableau for dashboards, plus occasional Python notebooks or JavaScript visualizations when things got more specific.</li>
+<li>A Django app sitting on top of everything for publishing and sharing outputs.</li>
 </ul>
-<p>Diagrams are useful for a number of reasons. But mostly they are a vehicle for collaboration. Being able to take a complex idea and reduce it to a simpler high level explanation allows easier hand-off and/or onboarding of collaborators. Not only that, but it is helpful for communicating with less technical audiences without completely hand-waving the complexity away as technical wizardry.</p>
-<p>It’s also incredibly useful for crystalizing a strategy into a coherent vision <strong>before</strong> executing. I.E. a low-effort way to vet ideas before spending time building them out.</p>
-<p>That said, I find myself repeatedly at a loss for a good diagramming tool that feels like it is a part of the software development tool chain instead of set apart like any other document. For documentation, I can reach for yaml when writing dbt models and have that feel like a seemless part of my development workflow or markdown in other python repos. But for diagrams, I find myself creating them in some other tool (like Lucidchart) and then having to export them to an image and embed that in my other documentation. That feels lackluster on many levels, not the least of which is the lack of version control to capture the iteration of ideas in the diagrams but also that the <em>source</em> of that diagram is elsewhere.</p>
-<p>I’ve recently discovered <a href="https://mermaid.js.org/#/">mermaid</a> and have begun experimenting with it and so far I am wanting to learn more. It has a ton of potential. The diagrams aren’t the prettiest but the fact that they are code-based and can be expressed in markdown and quarto is pretty exciting.</p>
+<p>It all worked, but it felt like I was assembling a system rather than working inside one.</p>
+<p>The thing is, most of the friction wasn’t in any single tool. <strong>It was in the gaps between them.</strong></p>
+<p>Chasing bugs across systems became normal. A transformation would fail, but it wasn’t always obvious whether it was the ingestion layer, a dbt model, or something downstream in deployment. I spent a lot of time trying to answer a simple question: <em>where did this break?</em></p>
+<p>There was also this constant code switching that felt more expensive than it should have been. One moment I’m thinking in Python for data wrangling, then I’m in SQL for transformations, then I’m in Tableau trying to reason about a dashboard, then I’m back in web development just to publish results.</p>
+<p>It didn’t feel like a coherent system. It felt like a set of interfaces I had to constantly translate between.</p>
+<p>Over time, I started to notice I wasn’t really designing data workflows anymore. I was designing integrations between systems that assumed they were independent.</p>
+</section>
+<section id="thinking-inside-the-box" class="level2">
+<h2 class="anchored" data-anchor-id="thinking-inside-the-box">Thinking Inside the Box</h2>
+<p>That’s where the idea of “data science in a box” started to take shape.</p>
+<p>At its core, it’s a loose attempt to collapse those boundaries into something more monolithic and reproducible.</p>
+<p>Not because monoliths are inherently better, but because for the kind of work I’m doing, the overhead of distribution, separation, and orchestration often outweighs the benefits.</p>
+<p>What I’ve been building toward looks roughly like this:</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">flowchart LR
-  A[Hard edge] --&gt; B(Round edge)
-  B --&gt; C{Decision}
-  C --&gt; D[Result one]
-  C --&gt; E[Result two]
+<pre class="mermaid mermaid-js">flowchart TD
+
+%% =====================
+%% Nodes
+%% =====================
+
+A["📥 Raw Public Data&lt;br/&gt;Excel • CSV • HTML • DBs"] --&gt; B
+
+B["🐍 Python Ingestion&lt;br/&gt;Config-based pandas parser"] --&gt; C
+
+C["🦆 DuckDB + dbt&lt;br/&gt;Local transformations"] --&gt; D
+C --&gt; E
+C --&gt; G
+
+D["🧪 QA Layer&lt;br/&gt;linting • data diffing&lt;br/&gt;CI via GitHub Actions"]
+
+E["📊 Analysis Layer&lt;br/&gt;Python notebooks / ad hoc"]
+
+F["📈 Visualization Layer&lt;br/&gt;Observable JS • Python plots • AI BI"]
+
+G["🧭 Semantic + Context Layer&lt;br/&gt;Code-defined metrics"]
+
+E --&gt; F
+E --&gt; H
+F --&gt; H
+G --&gt; E
+
+H["📝 Quarto Publishing&lt;br/&gt;Static site generation"] --&gt; I["🌐 GitHub Pages"]
+
+%% =====================
+%% Styling
+%% =====================
+
+classDef ingest fill:#FFE8A3,stroke:#C9A227,stroke-width:1px,color:#000;
+classDef transform fill:#BFE3FF,stroke:#2B6CB0,stroke-width:1px,color:#000;
+classDef qa fill:#FFD1DC,stroke:#C53030,stroke-width:1px,color:#000;
+classDef analysis fill:#D6FFD6,stroke:#2F855A,stroke-width:1px,color:#000;
+classDef viz fill:#E9D8FD,stroke:#6B46C1,stroke-width:1px,color:#000;
+classDef semantic fill:#C6F6D5,stroke:#2F855A,stroke-width:1px,color:#000;
+classDef publish fill:#E2E8F0,stroke:#4A5568,stroke-width:1px,color:#000;
+
+class B ingest;
+class C transform;
+class D qa;
+class E analysis;
+class F viz;
+class G semantic;
+class H publish;
+class I publish;
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
+<p>I use Python for ingestion, mostly because the data I deal with is messy and heterogeneous. Public research datasets come in every format you can imagine: Excel files, CSVs, Access databases, scraped HTML, and more. Instead of building separate ingestion systems for each case, I’ve been wrapping common patterns in a <a href="../../posts/pandas-yaml-config/">config-based parser layer on top of pandas</a>.</p>
+<p>Transformations still use dbt, but now running on <a href="https://duckdb.org/">DuckDB</a> instead of a cloud warehouse. That change alone removes a large amount of infrastructure complexity. The goal isn’t to scale infinitely, it’s to make the system understandable end-to-end on a single machine.</p>
+<p>QA is still evolving. I’ve been experimenting with tools like <a href="https://capitalone.github.io/datacompy/">datacompy</a> and <a href="https://reladiff.readthedocs.io/en/latest/index.html">reladiff</a>, along with more code-based statistical checks for outlier detection. The idea is to reduce reliance on manual validation and instead embed comparison and validation directly into the workflow. dbt tests still exist, but they’re not the whole story.</p>
+<p>Visualization is intentionally flexible, but constrained to code-first outputs. Python plotting, Observable-style JavaScript, and emerging AI-generated BI tools like <a href="https://motherduck.com/docs/key-tasks/ai-and-motherduck/dives/">Motherduck Dives</a> all fit here. The key requirement is that outputs are reproducible and version-controlled, not trapped in a proprietary interface.</p>
+<p>And instead of a traditional web application layer, I’ve been using <a href="https://quarto.org/">Quarto</a> as the publishing system (the same tool this blog is built on). It lets me render analysis, narrative, and outputs into static pages that can be deployed directly to something like GitHub Pages or any other static site hosting service. No separate backend. No deployment pipeline that needs its own infrastructure.</p>
+<p>The thing that ties all of this together is not the tools themselves, but the constraint: everything should live in a single codebase, and everything should be reproducible from that codebase alone.</p>
+<p>That includes ingestion, transformation, QA, analysis, and publishing.</p>
+<p>The idea is to avoid the feeling of a distributed system when what you actually want is a single coherent workflow.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="monolith.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+</figure>
+</div>
+</section>
+<section id="what-its-not" class="level1">
+<h1>What It’s Not</h1>
+<p>There’s also a second constraint that matters just as much: this system should be easy to replicate.</p>
+<p>Not in theory, but in practice. If I share the codebase with someone, they should be able to run it locally without standing up a warehouse, configuring cloud infrastructure, or wiring together SaaS tools. Install dependencies, run the pipeline, and you get the full system.</p>
+<p>That simplicity comes with tradeoffs.</p>
+<p>This is not a big data system. It doesn’t try to be. It won’t handle large-scale distributed workloads, and it doesn’t attempt to solve organizational separation of concerns through microservices.</p>
+<p>It’s also not designed for large teams that need strict boundaries between infrastructure layers. Those systems make sense in contexts where scale and coordination are the primary constraints.</p>
+<p>But in my case (and in the context of many other small teams in education data work) those constraints often aren’t the dominant problem. Instead, the dominant problem is fragmentation.</p>
+</section>
+<section id="the-robot-elephant-in-the-room" class="level1">
+<h1>The Robot Elephant in the Room</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="robot_elephant.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+</figure>
+</div>
+<p>There’s another piece of this that’s become more important recently: AI.</p>
+<p>The more I’ve worked with this system, the more I’ve realized that keeping everything code-forward makes it easier to use AI coding assistants effectively. A monolithic structure with heavy use of markdown and explicit transformations gives AI systems more coherent context to work with.</p>
+<p>It effectively becomes a context layer for agents, not just a data pipeline.</p>
+<p>That wasn’t the original goal, but it’s become part of the design space.</p>
+<p>If I step back, “data science in a box” is really just a way of saying:</p>
+<blockquote class="blockquote">
+<p>I’ve been trying to reduce the number of conceptual layers between raw data and a published insight. Not because those layers are bad, but because in practice, I found myself spending more time managing them than learning from the data.</p>
+</blockquote>
+<p>This isn’t perfect, and it’s still evolving. QA is still an open question, especially now that tools like Datafold have shifted their support away from DuckDB-based workflows. Visualization is also in flux as AI-native data viz tools start to change what “analysis” even looks like.</p>
+<p>But for now, this setup solves the problem I actually have.</p>
+<p><em>And that’s usually the tradeoff I’m comfortable with.</em></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
