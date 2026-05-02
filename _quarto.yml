@@ -4,6 +4,7 @@ project:
 website:
   title: "dchess.org"
   favicon: favicon.svg
+  open-graph: true
   navbar:
     background: '#d9411e'
     search: true
