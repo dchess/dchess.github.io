@@ -1,1 +1,18 @@
 /* css styles */
+
+dt {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--bs-secondary-color);
+  margin-top: 1.25rem;
+}
+
+dd {
+  margin-bottom: 0.75rem;
+}
+
+dd .badge {
+  margin-right: 0.25rem;
+  margin-bottom: 0.25rem;
+}
