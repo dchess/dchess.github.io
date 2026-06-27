@@ -176,14 +176,12 @@ ul.task-list li input[type="checkbox"] {
 <blockquote class="blockquote">
 <p>Does putting everything into one box simply create a bigger black box?</p>
 </blockquote>
-<p>I think the opposite is true.</p>
-<p>The more responsibility a platform takes on, the more transparent it should become. A mature analytics platform shouldn’t just produce datasets. It should produce evidence. Every release should explain where it came from, what changed, and why it deserves to be trusted.</p>
-<p>That has led me to think about trust a little differently.</p>
-<p>Rather than treating trust as a dashboard problem or a data quality problem, I’ve started thinking of it as a <strong>release engineering problem</strong>.</p>
+<p>I’d argue it’s the opposite. The more responsibility a platform takes on, the more transparent it should become. A mature analytics platform shouldn’t just produce datasets. It should produce evidence. Every release should explain where it came from, what changed, and why it deserves to be trusted.</p>
+<p>That has led me to think about trust a little differently. Rather than treating trust as a dashboard problem or a data quality problem, I’ve started thinking of it as a <strong>release engineering problem</strong>.</p>
 <section id="trust-is-usually-treated-as-an-afterthought" class="level2">
 <h2 class="anchored" data-anchor-id="trust-is-usually-treated-as-an-afterthought">Trust is usually treated as an afterthought</h2>
 <p>Imagine opening a dashboard on Monday morning and noticing that a familiar metric has changed.</p>
-<p>The first questions are almost always the same.</p>
+<p>The first questions are almost always the same:</p>
 <ul>
 <li>What changed?</li>
 <li>Was the change expected?</li>
@@ -194,26 +192,25 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p>Most analytics platforms don’t have particularly good answers.</p>
 <p>If you’re lucky, there is a pull request describing the code changes. Maybe someone remembers that an upstream provider republished a file. Maybe there’s a CI log showing that the pipeline passed.</p>
-<p>Those things are useful, but they aren’t evidence.</p>
-<p>Once the next deployment runs, much of that context disappears. The warehouse moves forward. CI logs age out. The “latest” tables overwrite yesterday’s state. Six months later, reconstructing why a release happened often becomes an archaeological exercise.</p>
-<p>That feels strange when compared to software engineering.</p>
-<p>Software releases are treated as first-class artifacts. They have versions, release notes, provenance, and deployment history. We expect to be able to answer questions about a release long after it has shipped.</p>
-<p>Data releases deserve the same treatment.</p>
-<p>We tend to think of publishing data as shipping it. The pipeline finishes, the tables are updated, and we move on to the next release.</p>
-<p>But software releases aren’t simply shipped—they’re curated. They carry documentation, version history, release notes, and enough context that someone else can understand exactly what changed and why.</p>
+<p>Those things are useful, but they aren’t the same as evidence.</p>
+<p>Once the next deployment runs, much of that context evaporates. The warehouse moves forward. Logs age out. The “latest” tables overwrite yesterday’s state. Six months later, reconstructing why a release happened often becomes an archaeological excavation.</p>
+<p>We tend to think of publishing data as shipping it. The pipeline builds, the tables are updated, and we move on to the next release.</p>
+<p>But software releases aren’t simply shipped, they’re curated. They carry documentation, version history, release notes, and enough context that someone else can understand exactly what changed and why.</p>
 <p>I think data releases deserve the same level of care.</p>
 <p>Rather than shipping data like sealed crates, we should think about curating releases more like museum exhibits. The data may be the centerpiece, but it’s the surrounding context (the changelog and the validation evidence) that allows someone else to understand what they’re looking at months or even years later.</p>
 <p>That’s the kind of transparency I’m after. Transparency into why a release deserves to be trusted.</p>
 </section>
 <section id="transparency-is-the-feature" class="level2">
 <h2 class="anchored" data-anchor-id="transparency-is-the-feature">Transparency is the feature</h2>
+<p>Before going further, it’s worth saying that this isn’t a universal blueprint. If you’re processing billions of streaming events or continuously rebuilding operational datasets, the economics are different. There may never be a single “release” worth preserving.</p>
+<p>The systems I am building sit at the opposite end of that spectrum. They ingest periodic updates from public agencies, produce curated analytical datasets, and then remain stable until the next release. In that environment, preserving the context around a release is often just as valuable as preserving the data itself.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><a href="release_cycle.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="release_cycle.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="800"></a></p>
 </figure>
 </div>
 <p>A black box asks consumers to trust its outputs. A glass box lets them inspect them. A transparent system produces enough evidence that trust becomes a consequence rather than a requirement.</p>
-<p>It’s a key distinction.</p>
+<p>That’s a key distinction.</p>
 <p>Transparency isn’t about exposing every SQL statement or expecting analysts to inspect execution plans. It means that every published release carries enough context to answer questions like:</p>
 <ul>
 <li>What changed compared to the previous release?</li>
@@ -233,8 +230,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>Thinking in terms of releases changes the shape of the system. A release is no longer just the current contents of a warehouse. It becomes an artifact with its own identity.</p>
 <p>Like a museum exhibit, the data itself is only part of the story. The labels, the historical context, and the documentation are what make the exhibit meaningful.</p>
-<p>A data release should work the same way. The tables are only part of the release.</p>
-<p>Equally important is the information that explains those tables: what changed, how they were produced, why they were considered safe to publish, and whether they can be reproduced in the future.</p>
+<p>A data release should work the same way. The tables in the dataset are only part of the release. Equally important is the information that explains those tables: what changed, how they were produced, why they were considered safe to publish, and whether they can be reproduced in the future.</p>
 <p>That package of contextual information is what I’ll call <strong>release provenance</strong>.</p>
 <p>For a data release, provenance isn’t just an audit log or a lineage graph. It’s the collection of evidence that allows someone months or even years later to understand (and if necessary, reproduce) the release.</p>
 <p>That might include:</p>
@@ -257,11 +253,15 @@ ul.task-list li input[type="checkbox"] {
 <blockquote class="blockquote">
 <p>Can we reproduce exactly what we published last year?</p>
 </blockquote>
-<p>Without release provenance, those questions often become an exercise in digging through Git history, CI logs, and institutional memory.</p>
-<p>With it, every release becomes self-describing.</p>
+<p>Without release provenance, those questions often become an exercise in digging through Git history, CI logs, and institutional memory. You are reliant on people remembering what happened, rather than the system preserving the evidence. With it, every release becomes self-describing.</p>
 </section>
 <section id="the-first-principle-build-then-promote" class="level2">
 <h2 class="anchored" data-anchor-id="the-first-principle-build-then-promote">The first principle: build, then promote</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="critical_moment.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="critical_moment.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="800"></a></p>
+</figure>
+</div>
 <p>One consequence of this way of thinking is that consumers should never observe a warehouse in a partially updated state. A release should be built somewhere isolated. It should be validated completely. Only then should it replace the current production release in a single atomic promotion.</p>
 <p>If validation fails, nothing changes. Consumers continue using the previous release.</p>
 <p>The important point isn’t blue/green deployment itself. It’s the principle that publication is separate from construction.</p>
@@ -271,19 +271,11 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="evidence-should-outlive-the-release-process">Evidence should outlive the release process</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="evidence.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="evidence.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="800"></a></p>
+<p><a href="evidence.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="evidence.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="800"></a></p>
 </figure>
 </div>
-<p>Passing automated tests is necessary, but it isn’t sufficient.</p>
-<p>Tests answer whether a candidate release is internally consistent. They don’t explain how it differs from the version currently in production.</p>
-<p>That comparison only exists briefly.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="critical_moment.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="critical_moment.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="800"></a></p>
-</figure>
-</div>
-<p>Just before promotion, both the current release and the candidate release coexist.</p>
-<p>That’s the moment to capture evidence. Not merely that validation succeeded, but what actually changed.</p>
+<p>Passing automated tests is necessary, but it isn’t sufficient. Tests answer whether a candidate release is internally consistent. They don’t explain how it differs from the version currently in production.</p>
+<p>That comparison only exists briefly. Just before promotion, both the current release and the candidate release coexist. That’s the moment to capture evidence. Not merely that validation succeeded, but what actually changed.</p>
 <p>For me, that evidence includes things like:</p>
 <ul>
 <li>release-to-release data diffs</li>
@@ -293,8 +285,7 @@ ul.task-list li input[type="checkbox"] {
 <li>aggregate statistics</li>
 <li>release metadata</li>
 </ul>
-<p>Unlike CI logs, these artifacts aren’t ephemeral.</p>
-<p>They’re stored alongside each release as durable, queryable records.</p>
+<p>Unlike CI artifacts, these artifacts aren’t ephemeral. Storing test outputs or data diffs in a CI log for 90 days is fine for incremental changes, but it doesn’t preserve the context needed to understand a release months later. That evidence needs to be durable, queryable records.</p>
 <p>Months later, they can still answer:</p>
 <blockquote class="blockquote">
 <p>What changed between version v2026r3 and the version it replaced?</p>
@@ -307,10 +298,8 @@ ul.task-list li input[type="checkbox"] {
 <p><a href="queryable_trust.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="queryable_trust.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a></p>
 </figure>
 </div>
-<p>One realization that surprised me is that QA itself can become data.</p>
-<p>Instead of producing HTML reports or transient CI comments, release validation can produce structured datasets. Those datasets become their own historical record.</p>
-<p>Instead of asking people to remember why a release happened, you can ask the system.</p>
-<p>Not because the system is infallible. Because it preserved the evidence.</p>
+<p>One thing I didn’t expect was that QA itself could become data. Instead of producing HTML reports or transient CI comments, release validation can produce structured datasets. Those datasets become their own historical record.</p>
+<p>Instead of asking people to remember why a release happened, you can ask the system, because it preserved the evidence.</p>
 </section>
 <section id="a-framework-not-a-finished-methodology" class="level2">
 <h2 class="anchored" data-anchor-id="a-framework-not-a-finished-methodology">A framework, not a finished methodology</h2>
@@ -318,19 +307,20 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>How much evidence is worth keeping forever?</li>
 <li>When should validation be exact versus tolerant?</li>
-<li>How much review should remain human?</li>
-<li>What constitutes a release in a continuously rebuilt warehouse?</li>
+<li>How much review should still remain human?</li>
+<li>What constitutes a release?</li>
 </ul>
 <p>I’m still working through those questions, but the direction feels increasingly clear.</p>
-<p>The more I think about analytics platforms, the less convinced I am that trust is something dashboards earn after publication. Trust is something the release process engineers into every published artifact.</p>
-<p>That may be the most important lesson I’ve learned since writing <em>Data Science in a Box</em>.</p>
-<p>Curation is about more than simply preserving artifacts. It preserves the context needed to understand them.</p>
+<p>The more I think about the purpose of analytics, the less convinced I am that trust is something dashboards earn after publication. Trust is something the release process should engineer into every published artifact.</p>
+<p>That might be the most important idea I’ve had since codifying <a href="../../posts/data-science-in-a-box/index.html">Data Science in a Box</a>.</p>
+<p><strong>Curation is about more than simply preserving artifacts. <em>It preserves the context needed to understand them</em></strong>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><a href="release_archive.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="release_archive.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="800"></a></p>
 </figure>
 </div>
-<p>I think mature analytics platforms should do the same. Not just publishing data, but curating releases.</p>
+<p>Curating releases isn’t about expecting trust, it’s about keeping the receipts. Preserving the evidence earns that trust and enables continual improvement, making sure that every release is self-describing, reproducible, and understandable long after the fact.</p>
+<p>No more guesswork and apologies. Just an auditable trail of evidence that ensures explainability. That’s what turns a black box into a glass box. And that’s what makes trust a release engineering problem.</p>
 
 
 </section>
