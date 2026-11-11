@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/agentic-engineering/index.html",
       "/posts/data-science-in-a-glass-box/index.html",
       "/posts/tada-daily-summary-skill/index.html",
       "/posts/data-science-in-a-box/index.html",
@@ -21,8 +22,8 @@
       "/posts/google-classroom-connector/index.html",
       "/posts/manager-readme/index.html",
       "/posts/dev-env-setup/index.html",
-      "/posts/new-years-resolutions/index.html",
       "/posts/how-memes-inform-my-work/index.html",
+      "/posts/new-years-resolutions/index.html",
       "/posts/powerschool-api.md/index.html"
     ]
   }

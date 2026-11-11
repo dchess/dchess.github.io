@@ -1,99 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://dchess.org/index.html</loc>
-    <lastmod>2026-06-27T18:18:31.819Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/how-memes-inform-my-work/index.html</loc>
-    <lastmod>2026-06-27T18:18:31.869Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/quacksql/index.html</loc>
-    <lastmod>2026-06-27T18:18:32.047Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/parsing-texas-assessment-data/parsing-texas-assessment-data.html</loc>
-    <lastmod>2026-06-27T18:18:32.045Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/mermaid-diagrams/index.html</loc>
-    <lastmod>2026-06-27T18:18:31.870Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/powerschool-api.md/index.html</loc>
-    <lastmod>2026-06-27T18:18:32.045Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/manager-readme/index.html</loc>
-    <lastmod>2026-06-27T18:18:31.870Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/new-years-resolutions/index.html</loc>
-    <lastmod>2026-06-27T18:18:31.870Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/python-training/index.html</loc>
-    <lastmod>2026-06-27T18:18:32.046Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/dev-env-setup/index.html</loc>
-    <lastmod>2026-06-27T18:18:31.863Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/pandas-yaml-config/index.html</loc>
-    <lastmod>2026-06-27T18:18:31.959Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/json-normalize/json-normalize.html</loc>
-    <lastmod>2026-06-27T18:18:31.869Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/data-science-in-a-glass-box/index.html</loc>
-    <lastmod>2026-06-27T18:18:31.851Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/student-support-spotlight/index.html</loc>
-    <lastmod>2026-06-27T18:18:32.047Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/tada-daily-summary-skill/index.html</loc>
-    <lastmod>2026-06-27T18:18:32.058Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/tada-and-jot/index.html</loc>
-    <lastmod>2026-06-27T18:18:32.048Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/simple-api/index.html</loc>
-    <lastmod>2026-06-27T18:18:32.047Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dchess.org/posts/quarto-blog/index.html</loc>
-    <lastmod>2026-06-27T18:18:32.047Z</lastmod>
+    <loc>https://dchess.org/about.html</loc>
+    <lastmod>2026-11-11T06:35:59.108Z</lastmod>
   </url>
   <url>
     <loc>https://dchess.org/posts/sql-basics-with-duckdb/sql_basics.html</loc>
-    <lastmod>2026-06-27T18:18:32.047Z</lastmod>
+    <lastmod>2026-11-11T06:35:59.449Z</lastmod>
   </url>
   <url>
-    <loc>https://dchess.org/posts/word-cloud/word-cloud.html</loc>
-    <lastmod>2026-06-27T18:18:32.061Z</lastmod>
+    <loc>https://dchess.org/posts/python-training/index.html</loc>
+    <lastmod>2026-11-11T06:35:59.448Z</lastmod>
   </url>
   <url>
-    <loc>https://dchess.org/posts/how-i-teach-git/index.html</loc>
-    <lastmod>2026-06-27T18:18:31.866Z</lastmod>
+    <loc>https://dchess.org/posts/quarto-blog/index.html</loc>
+    <lastmod>2026-11-11T06:35:59.448Z</lastmod>
   </url>
   <url>
-    <loc>https://dchess.org/posts/google-classroom-connector/index.html</loc>
-    <lastmod>2026-06-27T18:18:31.865Z</lastmod>
+    <loc>https://dchess.org/posts/tada-daily-summary-skill/index.html</loc>
+    <lastmod>2026-11-11T06:35:59.460Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/how-memes-inform-my-work/index.html</loc>
+    <lastmod>2026-11-11T06:35:59.232Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/parsing-texas-assessment-data/parsing-texas-assessment-data.html</loc>
+    <lastmod>2026-11-11T06:35:59.446Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/mermaid-diagrams/index.html</loc>
+    <lastmod>2026-11-11T06:35:59.233Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/tada-and-jot/index.html</loc>
+    <lastmod>2026-11-11T06:35:59.450Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/agentic-engineering/index.html</loc>
+    <lastmod>2026-11-11T06:35:59.154Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/manager-readme/index.html</loc>
+    <lastmod>2026-11-11T06:35:59.233Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/quacksql/index.html</loc>
+    <lastmod>2026-11-11T06:35:59.448Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/simple-api/index.html</loc>
+    <lastmod>2026-11-11T06:35:59.449Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/json-normalize/json-normalize.html</loc>
+    <lastmod>2026-11-11T06:35:59.232Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/powerschool-api.md/index.html</loc>
+    <lastmod>2026-11-11T06:35:59.447Z</lastmod>
   </url>
   <url>
     <loc>https://dchess.org/posts/data-science-in-a-box/index.html</loc>
-    <lastmod>2026-06-27T18:18:31.822Z</lastmod>
+    <lastmod>2026-11-11T06:35:59.185Z</lastmod>
   </url>
   <url>
-    <loc>https://dchess.org/about.html</loc>
-    <lastmod>2026-06-27T18:18:31.819Z</lastmod>
+    <loc>https://dchess.org/posts/pandas-yaml-config/index.html</loc>
+    <lastmod>2026-11-11T06:35:59.341Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/data-science-in-a-glass-box/index.html</loc>
+    <lastmod>2026-11-11T06:35:59.214Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/dev-env-setup/index.html</loc>
+    <lastmod>2026-11-11T06:35:59.226Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/student-support-spotlight/index.html</loc>
+    <lastmod>2026-11-11T06:35:59.449Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/new-years-resolutions/index.html</loc>
+    <lastmod>2026-11-11T06:35:59.233Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/word-cloud/word-cloud.html</loc>
+    <lastmod>2026-11-11T06:35:59.463Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/how-i-teach-git/index.html</loc>
+    <lastmod>2026-11-11T06:35:59.228Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/posts/google-classroom-connector/index.html</loc>
+    <lastmod>2026-11-11T06:35:59.228Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dchess.org/index.html</loc>
+    <lastmod>2026-11-11T06:35:59.108Z</lastmod>
   </url>
 </urlset>

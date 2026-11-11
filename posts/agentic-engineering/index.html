@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-11-10">
+
+<title>Building an Agentic Engineering Team – dchess.org</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.svg" rel="icon" type="image/svg+xml">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-e80b8cc56e52e4b83ada9f98d1d7f69f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Building an Agentic Engineering Team – dchess.org">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://dchess.org/posts/agentic-engineering/agentic_engineering.png">
+<meta property="og:site_name" content="dchess.org">
+<meta property="og:image:height" content="941">
+<meta property="og:image:width" content="1672">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">dchess.org</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://drive.google.com/file/d/1O0-Le26SdL-DhDo2LsOQVWR5BAV4I17F/view"> 
+<span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/dchess"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/dchess"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+            <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Building an Agentic Engineering Team</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">blog</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 10, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content" tabindex="-1">
+
+
+
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="agentic_engineering.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+</figure>
+</div>
+<p>We’ve had to slow down opening new pull requests just to catch up on reviewing the ones already in progress.</p>
+<p>It’s a strange problem to have. Our team can spin up multiple coding agents working in isolated worktrees, implementing changes and opening PRs at a pace that would have been difficult to imagine a couple of years ago. Yet those PRs still have to make their way through code review, CI, and release QA. Sometimes the agents are producing work faster than we can absorb it, and sometimes that means deliberately slowing down the work we’re starting so we can finish the work we’ve already started.</p>
+<p>This is one of several problems I’ve been grappling with while leading an engineering team that increasingly relies on AI coding agents. We’ve developed some practices that work well, and plenty that we’re still reconsidering. More than anything, the experience is changing how I think about the skills engineers need and how to develop them.</p>
+<section id="vibe-coding-vs-agentic-engineering" class="level2">
+<h2 class="anchored" data-anchor-id="vibe-coding-vs-agentic-engineering">Vibe coding vs agentic engineering</h2>
+<p>Before expounding on how we’re building an agentic engineering team, I want to clarify what I mean by agentic engineering and how it’s different from vibe coding. I’ve found it useful to distinguish between vibe coding and agentic engineering using the analogy of a self-driving car.</p>
+<p>Vibe coding is like getting into a self-driving car knowing generally where you want to go, but not knowing how to drive yourself. You trust the car to get you there. You might even recognize when you’ve arrived at the wrong destination, but you probably don’t have the experience to understand why something went wrong or how to correct it.</p>
+<p>Agentic engineering is more like an experienced driver using the same car. You know how to drive, understand the route, and have opinions about how to reach your destination. You also recognize where the automation will outperform you, like navigating real-time traffic conditions or instantaneously reacting to a sudden hazard. You know when to let the car handle things and when to take the wheel.</p>
+<p>I originally thought about this distinction mostly in terms of being able to intervene when an agent makes a mistake. But in practice, the most important interventions are frequently about setting direction in the first place.</p>
+<p>Take something as ordinary as implementing a GitHub issue. We might have a perfectly reasonable specification with acceptance criteria and a proposed implementation. Once the agent starts investigating, it may uncover an assumption that doesn’t hold, an interdependency that wasn’t considered, or an opportunity to solve the problem more broadly. Sometimes the opposite happens and we discover that the scope is unnecessarily ambitious. I might ask the agent to investigate several possible approaches, tell it what evidence I want to see, and then decide which direction to pursue based on what it finds.</p>
+<p>The agent does the investigation, updates the specification, implements the change, and verifies the result. My involvement is increasingly focused on shaping the intent of that work and evaluating the proposed approach. I spend a lot of time thinking about how to establish what “good” looks like before an agent even starts working, because if I haven’t figured that out myself, I’m probably not going to be particularly effective at directing the agent toward it.</p>
+<p>There is still a great deal of engineering involved, even if I’m not personally always writing the code.</p>
+<p>For more on the distinction between vibe coding and agentic engineering, check out <a href="https://www.mindstudio.ai/blog/vibe-coding-vs-agentic-engineering-karpathy-framework">this post</a>. I especially like the quote about how <a href="https://en.wikipedia.org/wiki/Andrej_Karpathy">Karpathy</a> frames the difference:</p>
+<blockquote class="blockquote">
+<p>Karpathy draws a hard line: vibe coding raises the floor for beginners; agentic engineering raises the ceiling for professionals.</p>
+</blockquote>
+</section>
+<section id="curating-the-context-around-the-code" class="level2">
+<h2 class="anchored" data-anchor-id="curating-the-context-around-the-code">Curating the context around the code</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="context_librarian.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+</figure>
+</div>
+<p>One of our larger investments has been building and maintaining a shared context layer for the repository. We have project-wide rules, specialized agent skills, architectural documentation, and conventions for how work gets done. Our skills cover common workflows like creating GitHub issues, opening an isolated worktree for an issue, conducting code reviews, and triaging review feedback.</p>
+<p>The rules themselves range from mundane to fairly sophisticated. For instance, we have rules for line wrapping when writing issues and pull requests. This corrects some default agent behavior that makes the output harder for humans to review. We also have guidance for sharing data between worktrees and specific expectations for reviewing dbt models or ingestion parsers.</p>
+<p>I’ve developed a habit of promoting guidance from my personal agent memory into project rules when it becomes clear that the guidance should apply to everyone. Sometimes I recognize the opportunity myself. Other times, I’ll have an agent examine its memories or look through comments on past PRs for recurring themes.</p>
+<p>A good example is our code review process. If we keep seeing the same kind of feedback about how a dbt model should be structured or how a parser should handle a particular scenario, we have to decide whether the problem is with the implementation or with the guidance we’re giving agents. If the same problem is being corrected over and over again, there’s a reasonable chance we’re missing something in our shared context.</p>
+<p>I also think there’s a subtle distinction between personal agent memory and project context that becomes important when you’re working on a team. An engineer’s personal agent may accumulate a tremendous amount of useful information through repeated interactions. But unless that information finds its way into something shared, the team ends up with different expectations and different development practices depending on who’s directing the agent. That’s not entirely new, of course. Engineers have always had their own preferences and habits. The difference is that agents can reproduce those individual habits across a much larger amount of work.</p>
+<p>Over time, we’ve started treating the context surrounding the repository as something that needs the same kind of attention as the repository itself.</p>
+<p>And we’ve already made some mistakes there.</p>
+<p>We initially developed specialized code review skills for different parts of the codebase, including our dbt models and ingestion parsers. The idea was to provide more focused reviews than the general-purpose capabilities of the coding tools. As those built-in capabilities improved, though, our custom skills began to drift away from them.</p>
+<p>We found ourselves adding increasingly specific instructions to correct how reviews were delivered. Sometimes the agent would identify a legitimate problem but fail to provide useful inline feedback. Other times, it would give suggestions in a format that wasn’t particularly helpful or make claims about factual correctness without doing the investigation we expected.</p>
+<p>We responded by adding more guidance, which worked well enough for a while. But eventually we had to ask whether we were maintaining these skills because they were genuinely better than the defaults or because we’d invested so much in them that we kept trying to make them work.</p>
+<p>We’ve now scoped out development work to reconsider those skills based on what we’ve learned about the review process and the developer experience we want. I suspect we’ll find opportunities to simplify some things and make others more specialized.</p>
+<p>It’s tempting to keep adding instructions whenever an agent does something wrong. I’ve certainly done plenty of that. But the accumulated instructions can eventually become part of the problem, especially as the underlying tools change.</p>
+<section id="onboarding-through-the-context-layer" class="level3">
+<h3 class="anchored" data-anchor-id="onboarding-through-the-context-layer">Onboarding through the context layer</h3>
+<p>We recently onboarded a new engineer, and this gave us an opportunity to test how well our context infrastructure could transfer knowledge to someone unfamiliar with the repository.</p>
+<p>Our codebase had grown large enough that expecting someone to explore and internalize everything on their own seemed unreasonable. We also didn’t want to simply hand over a pile of documentation and hope the new teammate would know which parts were important.</p>
+<p>We started by examining patterns in how our existing engineers worked with the codebase. We looked at frequently used agent skills, important project rules, and how the repository was organized. From that, we built an agent-driven onboarding guide with a tutorial-style prompt that launched an interactive teaching session. It walked the new teammate through setting up their development environment, introduced a few preselected issues designed to teach our workflows, and showed them how to ask questions about the repository using our existing context infrastructure.</p>
+<p>One of the more useful things that came out of this was discovering how much knowledge we still hadn’t captured. There were things that seemed obvious to the existing team because we’d been working with the codebase for so long, but which weren’t documented anywhere useful. We encouraged the new engineer to contribute documentation as those gaps became apparent.</p>
+<p>In retrospect, that probably should have been an explicit goal of the onboarding process from the start. Having someone unfamiliar with the project try to navigate it is a pretty good way to learn what you’ve failed to explain.</p>
+<p>We use code review as part of the learning process as well. One of our skills helps engineers triage review feedback, guiding them through decisions about when to fix something in place, apply feedback more broadly, defer an out-of-scope concern into a separate issue, or decline a suggestion with an explanation.</p>
+<p>That last option is important. Not every review comment is correct, and not every valid observation should result in a change to the current PR. Sometimes a review identifies a legitimate problem that’s outside the scope of what we’re trying to accomplish. In those cases, we want to capture the issue so it isn’t forgotten, while still allowing the original work to move forward.</p>
+<p>There’s a judgment call involved in all of this, and I want engineers to become comfortable making those decisions themselves rather than automatically accepting whatever the reviewing agent suggests.</p>
+<p>We also maintain daily standups for prioritization and direct communication, along with a Slack channel dedicated to sharing things we’ve learned, which we call TIL, or Today I Learned. As our development workflows have become more asynchronous, I’ve been emphasizing proactive communication between teammates, particularly when work needs to be handed off.</p>
+<p>It’s easy to underestimate how much information used to be exchanged simply because engineers needed to collaborate directly on implementation. When people can make progress independently with agents, some of those conversations stop happening naturally. We have to be more deliberate about sharing what we’re learning and communicating changes in direction.</p>
+</section>
+</section>
+<section id="when-the-backlog-starts-to-rot" class="level2">
+<h2 class="anchored" data-anchor-id="when-the-backlog-starts-to-rot">When the backlog starts to rot</h2>
+<p>We’ve spent considerable effort developing standards for writing good GitHub issues. We use templates for different issue types, with rules for categorization, acceptance criteria, implementation guidance, and explicitly documenting what is out of scope.</p>
+<p>Agents help write those issues, and we also use them to capture follow-up work discovered during implementation or code review.</p>
+<p>However, the backlog grows fast. That was true before we started using coding agents, but the pace is different now. It’s easy to identify a problem and have an agent turn it into a reasonably detailed issue while you’re working on something else. There isn’t much friction involved in creating the issue, even if nobody has the capacity to work on it anytime soon.</p>
+<p>And this is where we’ve been running into problems.</p>
+<p>The codebase may change considerably before anyone gets around to implementing an issue. We encounter issues whose implementation details no longer make sense, duplicate work that was captured through separate investigations, and related issues that probably should have been considered together. Sometimes an issue describes a problem that has already been addressed indirectly through another change, but that connection wasn’t obvious enough for anyone to close the original issue.</p>
+<p>This isn’t an entirely new problem. Backlogs have always suffered from neglect, and every engineering team has experienced the frustration of picking up an old ticket only to discover that much of its context is no longer relevant.</p>
+<p>What feels different now is how quickly that happens. We can generate issues faster, but we can also change the codebase faster. An issue that would previously have remained relevant for months might now need substantial reconsideration after only a few weeks (or even days!).</p>
+<p>We have a GitHub project where we manage priorities, deadlines, categorization, and assignments, but keeping the backlog useful requires regular attention. One safeguard we’ve built into our workflow is a human approval step when opening a fix for an issue. The agent investigates the issue and proposes an implementation plan, which the engineer reviews before authorizing the work.</p>
+<p>I frequently use this as an opportunity to redirect the approach or correct assumptions that may no longer hold. If that changes the scope or acceptance criteria, we update the issue itself so the PR remains aligned with the specification.</p>
+<p>We’ve also been experimenting with periodic backlog reviews, agent-assisted searches for duplicates or deprecated issues, and organizing more work into epics. We have a daily task that can automatically start work on simple open bugs.</p>
+<p>There are other approaches we’re considering, including <a href="https://github.github.com/gh-aw/">GitHub Agentic Workflows</a> and more automatic assignment of issues directly to agents. We’re also looking at updating our issue creation and implementation skills to check for duplicate work and reconcile old specifications against the current repository.</p>
+<p>I wouldn’t claim we’ve solved backlog management. We have a growing collection of practices that help, but they still require more attention than I’d like.</p>
+<p>And I have some hesitation about simply automating our way out of the problem. If we automatically assign more issues to agents, they’ll undoubtedly produce more implementations. But if those implementations turn into PRs that wait days for review, we haven’t accomplished much. We’ve just moved the backlog from one part of the development process to another, which is something we’ve already experienced plenty of times.</p>
+</section>
+<section id="the-bottlenecks-move-downstream" class="level2">
+<h2 class="anchored" data-anchor-id="the-bottlenecks-move-downstream">The bottlenecks move downstream</h2>
+<p>Our <a href="https://github.com/resources/articles/ci-cd">CI/CD</a> system has become increasingly sophisticated as we’ve invested in quality assurance. We have extensive <a href="https://docs.getdbt.com/docs/build/data-tests?version=2">dbt testing</a> and <a href="https://docs.datafold.com/data-diff/what-is-data-diff">data diffing</a> in our workflows, with some checks taking 15 to 30 minutes to complete.</p>
+<p>That runtime isn’t inherently unreasonable given the work involved. But consider what happens when you have dozens of open pull requests, each potentially going through multiple rounds of review and fixes. Those checks get triggered repeatedly, and the waiting time adds up.</p>
+<p>We’ve made some smaller changes to avoid unnecessary CI triggers. For example, we’ve adjusted where certain changes are made and kept some feature branches in draft status while stacked PRs are being merged.</p>
+<p>We’ve also made more substantial changes. One of our data-diffing dependencies had become a performance problem, so we redesigned that part of the system and developed a more specialized implementation in place of the open-source library we were using.</p>
+<p>That was a fairly significant change in its own right, but it was motivated by the realization that the amount of validation work our development process was producing had changed. A tool that was perfectly reasonable at one level of activity had become a problem at another.</p>
+<p>I’m also coming to appreciate how much the throughput of the team depends on things that aren’t directly related to implementation. We can improve how quickly an agent generates a solution, but the benefit is limited if that solution spends most of its life waiting to be validated or reviewed.</p>
+<section id="the-code-review-spiral" class="level3">
+<h3 class="anchored" data-anchor-id="the-code-review-spiral">The code review spiral</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="infinite_review_loop.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+</figure>
+</div>
+<p>Code review has been an even bigger challenge.</p>
+<p>We frequently use agentic code review between teammates, allowing an agent with a fresh context to examine an implementation rather than relying on the same agent that wrote it. This catches things that might otherwise be missed, but it’s remarkably easy to get stuck in a review spiral.</p>
+<p>One round of review identifies an issue, and the implementing agent makes a change. The next round uncovers another problem, perhaps introduced by the fix or something that wasn’t caught earlier. As the comment history grows, agents sometimes lose track of previously resolved decisions and reopen discussions that should have been settled.</p>
+<p>We’ve seen review conversations grow long enough that the accumulated context becomes part of the problem. A reviewing agent might make a suggestion that seems reasonable when viewed in isolation, but doesn’t account for something already investigated and deliberately ruled out earlier in the conversation. Then the implementing agent has to explain the previous decision again, or worse, makes another change that moves the implementation back toward an approach we’d already rejected.</p>
+<p>This can get frustrating because it isn’t always obvious that you’re in one of these loops until you’ve already spent considerable time going around it.</p>
+<p>For more significant PRs, we’ve adopted local review loops to catch straightforward issues before requesting teammate review. We use separate review and implementation agents, allowing the implementation agent to work through findings over several iterations.</p>
+<p>We’ve also customized review guidance to help distinguish blockers from reasonable follow-up work. Our review triage process is intended to keep discussions focused and prevent every suggestion from turning into another round of changes.</p>
+<p>These practices help, but they haven’t eliminated the problem. Occasionally, we’ve had to abandon a PR that became stuck in a review loop and started over with a different approach. We call this the “death spiral” of code review.</p>
+<p>I think this has also made me reconsider what the objective of code review should be in an agentic workflow. We don’t want to merge code that hasn’t been properly reviewed, obviously. But we also don’t want a review process that continually expands the scope of an implementation or generates more changes than it resolves.</p>
+<p>At some point, the human engineer needs to decide whether the feedback is materially improving the solution, whether the implementation is ready, or whether it would be better to start over. I’ve found myself making those calls more frequently as the amount of agent-generated review feedback has increased.</p>
+<p>Ironically, these death spirals often arise most when trying to adjust agent rule context or skills. Encoding instructions that can handle complex edge cases is challenging, and small changes to the rules or agent capabilities can have unintended consequences that trigger review after review, creating a cycle that’s difficult to break.</p>
+</section>
+<section id="release-qa-is-a-different-problem" class="level3">
+<h3 class="anchored" data-anchor-id="release-qa-is-a-different-problem">Release QA is a different problem</h3>
+<p>Our third bottleneck is release QA, and it’s a little different from the others because of the kind of data we’re working with.</p>
+<p>We work with large public datasets, and our release process includes automated validation and human sign-off. A passing test suite doesn’t always establish that a data release is correct, since unexpected differences might be caused by a legitimate change in the source, a processing error, or a data quality problem that requires investigation. The volume of data also makes it difficult to establish confidence without substantial oversight.</p>
+<p>We’ve encountered situations where several data drops were being prepared together and an unresolved problem with one prevented the others from being released. Our response has been to isolate data drops into feature branches until we’re ready to investigate them. We’ve also made it easier to withhold a problematic dataset from a release and document that decision in our automated changelogs. This allows validated work to move forward without unnecessarily coupling it to unresolved QA.</p>
+<p>It’s worth spending a little more time on this because I think it illustrates a potential trap in how we evaluate engineering productivity.</p>
+<p>If we looked only at cycle time, QA would appear to be one of our biggest problems. And in a sense, it is. It takes time, it requires attention, and it can prevent otherwise completed work from being released. We could make cycle time look considerably better tomorrow simply by removing some of our QA requirements. But that would be a terrible decision given the importance of publishing reliable data.</p>
+<p>So when we talk about optimizing the process, we need to distinguish between unnecessary waiting and the effort required to establish confidence in what we’re delivering. Some of that effort may be unavoidable, and some of it may be the very friction that makes our work valuable.</p>
+<p>We’re trying to reduce the time and effort required to establish confidence without relaxing the standards themselves. I don’t think we’ll ever reach a point where release QA is entirely hands-off, at least not for the kinds of data we’re publishing. That said, QA today is still our biggest area of improvement from our legacy processes. And its much faster and more reliable than it used to be.</p>
+</section>
+</section>
+<section id="moving-engineers-up-a-level" class="level2">
+<h2 class="anchored" data-anchor-id="moving-engineers-up-a-level">Moving engineers up a level</h2>
+<p>All of this has me reconsidering how we develop engineers.</p>
+<p>I’ve noticed a considerable difference between how more senior engineers work with coding agents and how junior engineers tend to approach them.</p>
+<p>An experienced engineer can sometimes expand their capacity dramatically, almost becoming a team of one. They can direct several independent efforts and bring them together into a coherent implementation. While a junior engineer might see a much smaller improvement, or even slow themselves down as they struggle to coordinate the work.</p>
+<p>I suspect much of this difference comes down to experience with autonomy.</p>
+<p>In traditional engineering teams, junior developers are often given a defined task and expected to focus solely on implementation. Prioritization and higher-level architectural decisions are usually handled by someone more senior. Which is certainly a reasonable division of responsibility when people have limited experience and implementation demands significant effort.</p>
+<p>But an engineer directing coding agents is increasingly being asked to make decisions that resemble those of a technical lead or engineering manager. They need to decide how to decompose the work, which investigations should happen first, when to course correct, and whether the result is good enough. They are no longer just executing, they are supervising and orchestrating the work of multiple agents to achieve a coherent outcome.</p>
+<p>Those aren’t skills that automatically come from knowing how to write code, and many engineers have spent much of their careers working in environments where those decisions were largely someone else’s responsibility.</p>
+<p>I’ve started thinking of this as moving everyone up a level. Managers need to become more strategic leaders, while individual contributors need to develop the skills to direct and coordinate work independently. Agents increasingly take on the implementation work.</p>
+<p>Of course, managing agents isn’t the same as managing humans, and the interpersonal responsibilities of leadership remain very different. I don’t want to suggest that we’re simply turning every engineer into a people manager. But there’s considerable overlap in the skills involved in delegating work and exercising good judgment. And many of the skills that make someone effective at directing an agent are skills we’ve traditionally associated with more senior engineering roles.</p>
+<section id="coaching-the-approach-not-just-the-result" class="level3">
+<h3 class="anchored" data-anchor-id="coaching-the-approach-not-just-the-result">Coaching the approach, not just the result</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="robot_orchestra.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+</figure>
+</div>
+<p>As a team leader, I’m still responsible for much of our issue creation and objective setting. Everyone can create issues, but I spend considerable time determining which work deserves attention and how individual issues relate to broader project objectives.</p>
+<p>Not everything in the backlog is equally important, and keeping the team focused on a cohesive set of priorities requires deliberate effort.</p>
+<p>I’ve been trying to make my reasoning more visible when I redirect an approach or suggest a different priority. Sometimes I don’t identify an opportunity for redirection until code review, which isn’t necessarily ideal, but it still gives us an opportunity to talk about how the work was approached and why I might have done something differently.</p>
+<p>Recently, a junior engineer and I had worked on pull requests with similar scope. I used an agent to analyze our commit histories through the GitHub API and compare how we’d approached the work.</p>
+<p>He had been directing his agent to tackle the problem incrementally, making a series of smaller changes. I’d taken a different approach, directing my agent to experiment with a representative case first, establish and validate a pattern, and then apply that pattern across the broader scope.</p>
+<p>For that particular work, the second approach was more efficient.</p>
+<p>What I found interesting about the comparison was that we were using essentially the same underlying capabilities, but the structure of the work was quite different. His approach involved repeatedly directing the agent through replicating individual changes. And this often meant revisiting or even reversing the same decisions multiple times. Mine involved spending more effort upfront establishing the pattern I wanted the agent to follow, then delegating the broader application of that pattern.</p>
+<p>There are plenty of circumstances where incremental implementation is preferable, particularly when the problem is poorly understood. But this wasn’t one of them, and the difference in approach had a meaningful impact on how efficiently the work progressed.</p>
+<p>We were able to use the commit histories to have a conversation about how to structure the task and when to establish a general solution before applying it more broadly. I found that more productive than simply reviewing the final PR and suggesting changes.</p>
+<p>It also made me wonder how much of our traditional approach to mentoring engineers needs to change. We still need to teach the fundamentals of good software development, but I increasingly find myself discussing how to frame problems, how to evaluate the work of agents, and how to decide when an implementation strategy needs to change.</p>
+<p>We’re also having more discussions about prompting techniques, agent workflows, and tools for coordinating multiple agents. I’ve been looking at agent multiplexers (like <a href="https://herdr.dev/">herdr</a>) as another way to manage parallel work and reduce the amount of manual supervision required.</p>
+<p>And I’m increasingly interested in using the analytics available from these workflows to understand how engineers are approaching their work.</p>
+<p>For example, if an engineer is spending a tremendous amount of AI tokens working through a relatively straightforward problem, I want to understand what’s happening. Perhaps the problem wasn’t as straightforward as it appeared, or perhaps the agent was repeatedly getting stuck because of how the work was being directed.</p>
+<p>These observations can give us opportunities for coaching that we wouldn’t necessarily have had by examining only the final code.</p>
+<p>I’m trying to find appropriate stretch opportunities for teammates while recognizing when I need to intervene and redirect the engineer rather than their agent. This is probably the area where I feel the greatest uncertainty.</p>
+<p>The skills we’re asking engineers to develop have traditionally taken years of accumulated experience. Architects and engineering managers learn judgment through a long history of decisions, including plenty of bad ones.</p>
+<p>I don’t know how to accelerate that learning nearly as effectively as we’ve accelerated code generation.</p>
+<p>I worry about the development path for junior engineers if agents increasingly handle the implementation work through which they would normally gain experience. We can’t simply expect people to develop <em>architectural judgment</em> because we’ve given them access to tools capable of implementing <em>architectural changes</em>. At the same time, I don’t think we should artificially constrain engineers to writing code manually for years just to preserve the traditional career progression.</p>
+<p>I’m not sure where that leaves us yet. I suspect we’ll need to be much more deliberate about giving engineers opportunities to make decisions, take ownership of broader work, and learn from the consequences. But developing that kind of judgment is difficult, and I don’t pretend to have found a shortcut.</p>
+</section>
+</section>
+<section id="measuring-what-slows-us-down" class="level2">
+<h2 class="anchored" data-anchor-id="measuring-what-slows-us-down">Measuring what slows us down</h2>
+<p>We’ve started using agent and development analytics to understand how our team is working.</p>
+<p>We track things like cycle time, review pickup time, stalled PRs, individual throughput, and AI expenditure. I’m especially interested in comparing AI spend with actual progress. If a PR has consumed substantial agent time but remains stuck, I’d like to understand why. Likewise, it’s helpful to identify when a PR was slow to progress as a result of under-utilization of AI.</p>
+<p>Sometimes the problem is a difficult implementation. Other times, it may be how the engineer is directing the work, an ineffective review loop, or a process that introduces unnecessary waiting. Or just plain miscommunication between team members.</p>
+<p>I use these metrics to look for opportunities to improve our workflows and to inform coaching conversations, but they are very much not a competitive leaderboard. I don’t think lines of code, PRs merged, or AI tokens consumed are particularly good measures of an engineer’s contribution. An engineer who recognizes that an entire piece of work is unnecessary might deliver more value than someone who efficiently implements it.</p>
+<p>Our project goals are ultimately about the value we deliver to the people using our data, and those impact outcomes are harder to measure than development activity.</p>
+<p>I’ve found that success is difficult to measure, but failure is often easier to spot. We can identify where PRs stall or where reviews repeatedly bounce between engineers. We can see how much time is spent waiting on CI and where release QA holds up deployments. Those are things we can measure, and they give us a baseline for evaluating whether changes to our process are actually helping.</p>
+<p>But I try to be careful about what conclusions we draw from those measurements. If our average cycle time improves, is that because we’ve become more efficient at delivering meaningful work? Or have we started taking on easier issues? Are we deferring difficult reviews? Have we simply shifted some of the work outside the part of the process we’re measuring?</p>
+<p>The numbers don’t answer those questions on their own.</p>
+<p>And going back to the example of release QA, a bottleneck isn’t necessarily something that should be eliminated. Sometimes the delay is caused by an important safeguard, and the engineering challenge is figuring out how to make that safeguard work as efficiently as possible.</p>
+<p>I keep coming back to this because there’s a temptation to look at the dramatic improvements in coding productivity and assume that everything else in the engineering process should be accelerated to the same degree. I’m not convinced that’s realistic or even desirable in every case.</p>
+</section>
+<section id="learning-to-be-better-engineers" class="level2">
+<h2 class="anchored" data-anchor-id="learning-to-be-better-engineers">Learning to be better engineers</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="better_to_walk.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+</figure>
+</div>
+<p>I don’t know what the ideal agentic engineering team looks like. The tools are changing too quickly, and many of the practices we’re developing will probably need to change with them. Some of our existing skills have already become less useful as the underlying tools improved, and I expect that will keep happening.</p>
+<p>I’m also less convinced that building an “AI-first” engineering team is the right goal in itself. What I’m really trying to do is rethink what makes an effective engineering team, given how much AI has changed the work.</p>
+<p>The qualities I value most in engineers haven’t changed all that much. Domain knowledge matters, as does architectural judgment and the ability to recognize what good work looks like. The ability to make decisions, question assumptions, and think beyond the boundaries of an assigned task has always distinguished experienced engineers.</p>
+<p>AI is making those abilities more important and placing greater demands on engineers who haven’t traditionally been expected to exercise them.</p>
+<p>I suspect engineers who learn to use AI effectively will increasingly outperform those who avoid it. But effective use also means recognizing when the tools aren’t helping, which brings me back to the self-driving car.</p>
+<p>Part of being a good driver is recognizing when the automation can handle a trip better than you can. You set the destination, choose the route, and let the car do what it does well. But sometimes the destination is just a few blocks away, and it might be faster, simpler, and even healthier to just walk.</p>
+<p>I think developing that instinct is one of the most important skills we can teach engineers right now.</p>
+<p>It’s also something I have to keep reminding myself of. Given how capable these tools have become, it’s tempting to look for opportunities to use them everywhere, including in places where the overhead of delegating and validating a task may exceed the effort of simply doing it.</p>
+<p>I’m trying to get better at recognizing those situations while also pushing myself and my team to reconsider the work we’ve traditionally assumed needed to be done manually.</p>
+<p>I expect we’ll keep making mistakes. We’ll probably build new workflows that eventually become obsolete, and I’m sure we’ll encounter bottlenecks we haven’t anticipated yet.</p>
+<p>For now, I’m focusing on improving how our team makes decisions, sharing what we learn through the context surrounding our codebase, and helping engineers become more comfortable directing work instead of only implementing it.</p>
+<p>And as much as I’d like to arrive at a stable set of best practices, my guess is that the more useful skill will be getting comfortable with the fact that those practices are going to keep changing.</p>
+<p>At least that feels like familiar territory for anyone who’s been building software for a while. <strong>Tech never sits still for long.</strong></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/dchess\.org");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
